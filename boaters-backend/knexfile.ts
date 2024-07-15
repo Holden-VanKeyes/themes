@@ -8,9 +8,9 @@ console.log('URL', process.env.POSTGRES_URL)
 const config: Knex.Config = {
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     port: 5432,
-    database: 'dev',
+    database: 'postgres',
   },
   migrations: {
     extension: 'ts',
@@ -18,3 +18,14 @@ const config: Knex.Config = {
 }
 
 export default config
+
+// module.exports = {
+//   development: {
+//     client: 'pg',
+//     connection: {
+//       database: 'postgres',
+//       host: '0.0.0.0',
+//       port: 5432,
+//     },
+//   },
+// }
