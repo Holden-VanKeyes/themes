@@ -1,12 +1,16 @@
 import Image from 'next/image'
 import styles from './page.module.css'
-import knex from '../../knexfile'
+import { knex } from '../utils/knex-db'
 
-console.log('KNEX', knex)
-export default function Home() {
+export default async function Home() {
+  const userTest = await knex('users')
+  console.log('New', userTest)
+
   return (
     <main className={styles.main}>
-      <div>Hello</div>
+      {userTest.map((user: any) => (
+        <h3 key={user.id}> {user.name} </h3>
+      ))}
     </main>
   )
 }
