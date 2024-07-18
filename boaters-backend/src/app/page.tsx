@@ -7,6 +7,8 @@ import { revalidatePath } from 'next/cache'
 
 export default async function Home() {
   const userTest = await knex('users')
+  const oneUser = await knex('users').where('id', 4)
+  console.log('ONE', userTest)
 
   const addUser = async (formData: FormData) => {
     'use server'
@@ -15,7 +17,6 @@ export default async function Home() {
     console.log('BEFORE', userTest)
 
     await knex('users').insert({
-      id: 10,
       name: username,
       email: useremail,
     })
