@@ -9,19 +9,19 @@ const integrationSdk = sharetribeSDK.createInstance({
 export default async function insertToDB() {
   const allUsers = await integrationSdk.users.query()
 
-  await allUsers.data.data.map(async (user: any) => {
-    await knex('marketplace_users').insert({
-      uuid: user.id.uuid,
-      email: user.attributes.email,
-      email_verified: user.attributes.emailVerified,
-      marketplace_onboard_date: user.attributes.createdAt,
-      name: user.attributes.profile.displayName,
-    })
-  })
+  // await allUsers.data.data.map(async (user: any) => {
+  //   await knex('marketplace_users').insert({
+  //     uuid: user.id.uuid,
+  //     email: user.attributes.email,
+  //     email_verified: user.attributes.emailVerified,
+  //     marketplace_onboard_date: user.attributes.createdAt,
+  //     name: user.attributes.profile.displayName,
+  //   })
+  // })
 }
 
 export async function addTimeStamps() {
-  await knex('marketplace_users').update({
+  await knex('test_table').update({
     created_at: knex.fn.now(),
     updated_at: knex.fn.now(),
   })

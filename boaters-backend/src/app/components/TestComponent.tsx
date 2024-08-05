@@ -12,9 +12,9 @@ export default function TestComponent() {
       <Group>
         <Button onClick={() => insertToDB()}>Run DB Insert</Button>
         <Button onClick={() => addTimeStamps()}>Add Time</Button>
-        <Button href="/marketplace" component={Link}>
+        {/* <Button href="/marketplace" component={Link}>
           Navigate
-        </Button>
+        </Button> */}
       </Group>
     </>
   )

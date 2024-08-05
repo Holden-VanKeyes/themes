@@ -10,20 +10,18 @@ import TestComponent from './components/TestComponent'
 import { Navbar } from './components/Navbar'
 
 export default async function Home() {
-  const userTest = await knex('users')
-  const mPlaceUser = await knex('marketplace_users').where(
+  const mPlaceUser = await knex('users').where(
     'uuid',
     '6286b43f-3dce-48b6-9cdb-9f8e87721f79',
   )
-  const mplaceAll = await knex('marketplace_users')
-  const oneUser = await knex('users').where('id', 4)
+  const mplaceAll = await knex('users')
 
   const addUser = async (formData: FormData) => {
     'use server'
     const username = formData.get('name')
     const useremail = formData.get('email')
 
-    await knex('users').insert({
+    await knex('test_table').insert({
       name: username,
       email: useremail,
     })
@@ -37,31 +35,29 @@ export default async function Home() {
 
       <Container m="lg">
         {/* <main>
-        <form action={addUser}>
-          <TextInput
-            withAsterisk
-            label="Name"
-            name="name"
-            placeholder="input name"
-          />
-          <TextInput
-            withAsterisk
-            label="Email"
-            name="email"
-            placeholder="input email"
-          />
+          <form action={addUser}>
+            <TextInput
+              withAsterisk
+              label="Name"
+              name="name"
+              placeholder="input name"
+            />
+            <TextInput
+              withAsterisk
+              label="Email"
+              name="email"
+              placeholder="input email"
+            />
 
-    
-
-          <Group justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
-        </form>
-        {userTest.map((user: any) => (
-          <h3 key={user.id}> {user.name} </h3>
-        ))}
-        Hello
-      </main> */}
+            <Group justify="flex-end" mt="md">
+              <Button type="submit">Submit</Button>
+            </Group>
+          </form>
+          {userTest.map((user: any) => (
+            <h3 key={user.id}> {user.name} </h3>
+          ))}
+          Hello
+        </main> */}
         {/* <MarketplaceDisplay /> */}
 
         <TestComponent />

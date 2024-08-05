@@ -2,11 +2,11 @@
 import { knex } from '@/utils/knex-db'
 
 export default async function create() {
-  const userTest = await knex('users')
-  return userTest
+  const test = await knex('test_table')
+  return test
 }
 
 export async function getMarketUsers() {
-  const allDockUsers = await knex('marketplace_users')
+  const allDockUsers = await knex('users')
   return allDockUsers
 }

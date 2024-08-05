@@ -9,9 +9,9 @@ import Link from 'next/link'
 
 const links = [
   { link: '/marketplace', label: 'Dock Users' },
-  { link: '/pricing', label: 'Pricing' },
-  { link: '/learn', label: 'Learn' },
-  { link: '/community', label: 'Community' },
+  // { link: '/pricing', label: 'Pricing' },
+  // { link: '/learn', label: 'Learn' },
+  // { link: '/community', label: 'Community' },
 ]
 
 export function Navbar() {
@@ -36,7 +36,9 @@ export function Navbar() {
     <Box className={css.header}>
       <Container size="md" className={css.inner}>
         {/* <MantineLogo size={28} /> */}
-        <Image src={logo.src} height={40} />
+        <Link href="/">
+          <Image src={logo.src} height={40} alt="Company Logo" />
+        </Link>
 
         <Group gap={5} visibleFrom="xs">
           {items}
