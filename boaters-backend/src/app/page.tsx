@@ -8,6 +8,7 @@ import MarketplaceDisplay from './components/MarketplaceDisplay'
 import insertToDB from './actions/dbUpdates'
 import TestComponent from './components/TestComponent'
 import { Navbar } from './components/Navbar'
+import React from 'react'
 
 export default async function Home() {
   const mPlaceUser = await knex('users').where(
