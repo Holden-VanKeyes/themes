@@ -1,14 +1,21 @@
 import styles from './page.module.css'
 import { knex } from '@/utils/knex-db'
 import { useForm } from '@mantine/form'
-import { Button, Checkbox, Group, TextInput, Container } from '@mantine/core'
+import {
+  Button,
+  Checkbox,
+  Group,
+  TextInput,
+  Container,
+  Center,
+} from '@mantine/core'
 import getUsers from '@/app/actions/getUsers'
 import { revalidatePath } from 'next/cache'
-import MarketplaceDisplay from './components/MarketplaceDisplay'
+import Grid from './components/GridDisplay'
 import insertToDB from './actions/dbUpdates'
-import TestComponent from './components/TestComponent'
 import { Navbar } from './components/Navbar'
 import React from 'react'
+import GridDisplay from './components/GridDisplay'
 
 export default async function Home() {
   const mPlaceUser = await knex('users').where(
@@ -34,35 +41,9 @@ export default async function Home() {
     <>
       <Navbar />
 
-      <Container m="lg">
-        {/* <main>
-          <form action={addUser}>
-            <TextInput
-              withAsterisk
-              label="Name"
-              name="name"
-              placeholder="input name"
-            />
-            <TextInput
-              withAsterisk
-              label="Email"
-              name="email"
-              placeholder="input email"
-            />
-
-            <Group justify="flex-end" mt="md">
-              <Button type="submit">Submit</Button>
-            </Group>
-          </form>
-          {userTest.map((user: any) => (
-            <h3 key={user.id}> {user.name} </h3>
-          ))}
-          Hello
-        </main> */}
-        {/* <MarketplaceDisplay /> */}
-
-        <TestComponent />
-      </Container>
+      <Center>
+        <GridDisplay />
+      </Center>
     </>
   )
 }

@@ -36,9 +36,6 @@ export function Navbar() {
     <Box className={css.header}>
       <Container size="md" className={css.inner}>
         {/* <MantineLogo size={28} /> */}
-        <Link href="/">
-          <Image src={logo.src} height={40} alt="Company Logo" />
-        </Link>
 
         <Group gap={5} visibleFrom="xs">
           {items}
