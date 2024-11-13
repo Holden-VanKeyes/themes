@@ -16,6 +16,7 @@ import insertToDB from './actions/dbUpdates'
 import { Navbar } from './components/Navbar'
 import React from 'react'
 import GridDisplay from './components/GridDisplay'
+import GameBoard from './components/GameBoard'
 
 export default async function Home() {
   const mPlaceUser = await knex('users').where(
@@ -42,7 +43,8 @@ export default async function Home() {
       <Navbar />
 
       <Center>
-        <GridDisplay />
+        {/* <GridDisplay /> */}
+        <GameBoard />
       </Center>
     </>
   )
