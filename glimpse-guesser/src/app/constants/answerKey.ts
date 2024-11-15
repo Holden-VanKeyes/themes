@@ -1,4 +1,23 @@
-const GAME_MESSAGES = {
+type GameSet = {
+  hint: string
+  answers: string[]
+  correct: string
+  explanation: string
+}
+
+type GameDay = {
+  rule: {
+    pattern: string
+    explanation: string
+  }
+  sets: GameSet[]
+}
+
+type AnswerKey = {
+  [key: string]: GameDay
+}
+
+export const GAME_MESSAGES = {
   win1: 'Perfect!',
   win2: 'Grand!',
   win3: 'Good Job!',
@@ -6,7 +25,7 @@ const GAME_MESSAGES = {
   lose: 'Sorry, No Dice!',
 }
 
-const answerKey = {
+export const answerKey: AnswerKey = {
   '20241112': {
     rule: {
       pattern: 'Words with double consonants',

@@ -37,9 +37,9 @@ export function Navbar() {
       <Container size="md" className={css.inner}>
         {/* <MantineLogo size={28} /> */}
 
-        <Group gap={5} visibleFrom="xs">
+        {/* <Group gap={5} visibleFrom="xs">
           {items}
-        </Group>
+        </Group> */}
 
         <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
       </Container>
