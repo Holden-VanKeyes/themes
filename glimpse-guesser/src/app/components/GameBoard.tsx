@@ -1,40 +1,80 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useDisclosure } from '@mantine/hooks'
 import { answerKey } from '../constants/answerKey'
 import css from './GameBoard.module.scss'
-import { Button, Title } from '@mantine/core'
+import { Button, Modal, Title, Card, ActionIcon, Group } from '@mantine/core'
+import { StatsCard } from './StatsCard'
 
 export default function GameBoard() {
+  const [opened, { open, close }] = useDisclosure(false)
+  const [lostGame, setLostGame] = useState(false)
+  const [wonGame, setWonGame] = useState(false)
+  const [openWonModal, setOpenWonModal] = useState(false)
+  const [openLostModal, setOpenLostModal] = useState(false)
   const [selected, setSelected] = useState(0)
-  const [currentSet, setCurrentSet] = useState(0)
-  const today = new Date()
-    .toISOString()
-    .slice(0, 10)
-    .replace(/-/g, '')
-    .toString()
+  const [gameAdvancer, setGameAdvancer] = useState(0)
+  const [guesses, setGuesses] = useState(4)
+  const date = new Date()
+  const today =
+    date.getFullYear() +
+    String(date.getMonth() + 1).padStart(2, '0') +
+    String(date.getDate()).padStart(2, '0')
   const todaysGame = answerKey[today]
-  console.log('TODAY', todaysGame.sets[0])
+
+  const correctAnswer = todaysGame.sets[gameAdvancer].correct
+  const hint = todaysGame.sets[gameAdvancer].hint
+  const answerSet = todaysGame.sets[gameAdvancer].answers
+  const gamePattern = todaysGame.rule.pattern
+  const gameExplain = todaysGame.sets[gameAdvancer].explanation
+  //   console.log('TODAY', correctAnswer, hint, answerSet)
 
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
+  const remainingGuesses = new Array(guesses).fill(0).map((_, indx) => indx + 1)
 
   const makeGrid = (indx: number) => {
     return (
       <div
         key={indx}
         className={`${css.row} ${selected === indx + 1 ? css.selected : ''}`}
-        id={'row' + `${indx + 1}`}
-        onClick={() => setSelected(indx + 1)}
+        id={'set' + `${gameAdvancer + 1}`}
+        onClick={() =>
+          wonGame || lostGame ? undefined : setSelected(indx + 1)
+        }
       >
         <Title key={indx} order={2}>
-          {todaysGame.sets[0].answers[indx].toUpperCase()}
+          {answerSet[indx].toUpperCase()}
         </Title>
-
-        {/* {todaysGame.sets[currentSet].answers.map((answer, indx) => (
-          <Title key={indx}>{answer[currentSet]}</Title>
-        ))} */}
       </div>
     )
+  }
+
+  const checkAnswer = () => {
+    console.log('LOST', guesses)
+
+    if (guesses - 1 === 0 || guesses === 0) {
+      setGuesses(0)
+      setLostGame(true)
+      setOpenLostModal(true)
+      return
+    }
+    if (lostGame || wonGame) {
+      setOpenWonModal(!openWonModal)
+      setOpenLostModal(!openLostModal)
+      return
+    }
+
+    setGuesses(guesses - 1)
+    const userSelection = answerSet[selected - 1]
+
+    if (userSelection === correctAnswer) {
+      setWonGame(true)
+      setOpenWonModal(true)
+    } else {
+      setSelected(0)
+      gameAdvancer < 3 ? setGameAdvancer(gameAdvancer + 1) : setLostGame(true)
+    }
   }
 
   return (
@@ -42,9 +82,22 @@ export default function GameBoard() {
       <div className={css.gridBoard}>
         <div className={`${css.row} ${css.hintRow}`}>
           <span className={css.hintPrefix}>hint:</span>
-          <Title order={3}>{todaysGame.sets[0].hint.toUpperCase()}</Title>
+          <Title order={3}>{hint.toUpperCase()}</Title>
         </div>
+
         {grid.map((_, indx) => makeGrid(indx))}
+        <Group justify="center" mt="10px">
+          {remainingGuesses.map((_, indx) => (
+            <ActionIcon
+              key={indx}
+              variant="filled"
+              size="xs"
+              radius="xl"
+              color="#333333"
+            />
+          ))}
+        </Group>
+
         <Button
           variant="outline"
           radius="lg"
@@ -55,10 +108,49 @@ export default function GameBoard() {
             color: 'black',
             fontSize: '.9rem',
           }}
+          onClick={() => {
+            checkAnswer()
+          }}
         >
-          Let's Go!
+          {wonGame || lostGame ? 'View Results' : "Let's Go!"}
         </Button>
       </div>
+      <Modal
+        opened={openLostModal}
+        centered
+        onClose={() => {
+          setOpenLostModal(false)
+          close()
+        }}
+        // title="Lose modal"
+        size="70%"
+        radius={0}
+        transitionProps={{ transition: 'fade', duration: 200 }}
+      >
+        <StatsCard
+          gameAdvancer={5}
+          gamePattern={gamePattern}
+          gameExplain={gameExplain}
+        />
+      </Modal>
+      <Modal
+        opened={openWonModal}
+        centered
+        onClose={() => {
+          setOpenWonModal(false)
+          close()
+        }}
+        // title="win modal"
+        size="70%"
+        radius={0}
+        transitionProps={{ transition: 'fade', duration: 200 }}
+      >
+        <StatsCard
+          gameAdvancer={gameAdvancer}
+          gamePattern={gamePattern}
+          gameExplain={gameExplain}
+        />
+      </Modal>
     </>
   )
 }

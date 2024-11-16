@@ -1,0 +1,56 @@
+@import '../../styles/variables';
+
+@function rem($pixels) {
+  @return ($pixels / 16) + rem;
+}
+
+.card {
+  position: relative;
+  overflow: visible;
+}
+
+.icon {
+  position: absolute;
+  top: rem(-30);
+  left: 50%;
+  transform: translateX(-50%); // this is a better way to center horizontally
+  z-index: 1;
+}
+
+.title {
+  font-family: Greycliff CF, var(--mantine-font-family);
+  line-height: 1;
+}
+
+.shareDiv {
+  //   display: grid;
+  //   grid-template-columns: repeat(3, 1fr);
+  border: 1.5px solid #4682b4;
+  border-radius: 6px;
+  width: 50%;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+
+  &[id='1'] {
+    background-color: $color-set1;
+  }
+  &[id='2'] {
+    background-color: $color-set2;
+  }
+  &[id='3'] {
+    background-color: $color-set3;
+  }
+  &[id='4'] {
+    background-color: $color-set4;
+  }
+  &[id='5'] {
+    background-color: red;
+  }
+}

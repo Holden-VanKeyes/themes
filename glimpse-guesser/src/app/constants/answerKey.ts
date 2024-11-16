@@ -17,12 +17,25 @@ type AnswerKey = {
   [key: string]: GameDay
 }
 
-export const GAME_MESSAGES = {
-  win1: 'Perfect!',
-  win2: 'Grand!',
-  win3: 'Good Job!',
-  win4: 'You Squeaked By!',
-  lose: 'Sorry, No Dice!',
+type GameMsgs = {
+  [key: number]: string
+  [key: string]: string
+}
+
+export const GAME_MESSAGES: GameMsgs = {
+  1: 'Perfect!',
+  2: 'Bravo!',
+  3: 'Not Too Shabby!',
+  4: 'Squeaked By!',
+  5: 'Sorry, No Dice!',
+}
+
+export const GAME_EMOJIS: GameMsgs = {
+  1: '🦄',
+  2: '🐳',
+  3: '🐢',
+  4: '🧀',
+  5: '🧊',
 }
 
 export const answerKey: AnswerKey = {
@@ -127,7 +140,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241115': {
+  '20241116': {
     rule: {
       pattern: 'Words with different meanings based on pronunciation',
       explanation:

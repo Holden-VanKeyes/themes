@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .gridBoard {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
@@ -28,6 +30,19 @@
     background-color: rgba(0, 120, 255, 0.05);
     border-color: #385f82; // slightly darker border
     box-shadow: inset 0 0 0 1px rgba(0, 120, 255, 0.1);
+
+    &[id='set1'] {
+      background-color: $color-set1;
+    }
+    &[id='set2'] {
+      background-color: $color-set2;
+    }
+    &[id='set3'] {
+      background-color: $color-set3;
+    }
+    &[id='set4'] {
+      background-color: $color-set4;
+    }
   }
   &.hintRow {
     // background: linear-gradient(to left, #f0f8ff, #e6f3ff);

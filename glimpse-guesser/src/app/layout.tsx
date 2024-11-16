@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import './globals.scss'
 import '@mantine/core/styles.css'
 import { createTheme, MantineProvider } from '@mantine/core'
 import { ColorSchemeScript } from '@mantine/core'
