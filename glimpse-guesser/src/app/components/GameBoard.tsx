@@ -53,15 +53,19 @@ export default function GameBoard() {
   const checkAnswer = () => {
     console.log('LOST', guesses)
 
+    if (wonGame) {
+      setOpenWonModal(!openWonModal)
+      return
+    }
+    if (lostGame) {
+      setOpenLostModal(!openLostModal)
+      return
+    }
+
     if (guesses - 1 === 0 || guesses === 0) {
       setGuesses(0)
       setLostGame(true)
       setOpenLostModal(true)
-      return
-    }
-    if (lostGame || wonGame) {
-      setOpenWonModal(!openWonModal)
-      setOpenLostModal(!openLostModal)
       return
     }
 
@@ -101,6 +105,7 @@ export default function GameBoard() {
         <Button
           variant="outline"
           radius="lg"
+          disabled={selected ? false : true}
           style={{
             margin: '20px auto',
             width: '50%',
@@ -123,6 +128,7 @@ export default function GameBoard() {
           close()
         }}
         // title="Lose modal"
+        fullScreen
         size="70%"
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
@@ -141,6 +147,7 @@ export default function GameBoard() {
           close()
         }}
         // title="win modal"
+        fullScreen
         size="70%"
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
