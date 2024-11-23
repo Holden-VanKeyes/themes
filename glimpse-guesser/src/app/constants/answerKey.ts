@@ -36,6 +36,7 @@ type GameSet = {
   answers: string[]
   correct: string
   explanation: string
+  color?: string
 }
 
 type GameDay = {
@@ -282,7 +283,7 @@ export const answerKey: AnswerKey = {
         hint: 'Chairman',
         answers: ['Harvest', 'Circus', 'Wisdom', 'Wizard', 'Tower'],
         correct: 'Harvest',
-        explanation: 'Har(vest) -> Vest | (Chair)man -> Chair',
+        explanation: 'Har(vest) -> Vest | C(hair)man -> hair',
       },
       {
         hint: 'Pantomime',

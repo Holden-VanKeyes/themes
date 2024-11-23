@@ -55,7 +55,7 @@ export function StatsCard({
       <Progress value={100} mt={10} size="xs" color="#4682b4" />
       <Box mt="md">
         <Text fz="sm" ta="center">
-          Today's Theme
+          Today&apos;s Theme
         </Text>
         <Text fz="sm" c="dimmed" ta="center">
           {gamePattern}
