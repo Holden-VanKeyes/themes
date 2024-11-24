@@ -13,7 +13,6 @@ const today =
   String(date.getMonth() + 1).padStart(2, '0') +
   String(date.getDate()).padStart(2, '0')
 const todaysGame = answerKey[today]
-todaysGame.sets.forEach((set: any) => (set.color = '#333333'))
 
 interface ColorObj {
   [key: number]: string
@@ -25,22 +24,14 @@ const guessDotColors: ColorObj = {
   3: '#333333',
 }
 
+const scoreKeeper = [0, 0, 0, 0]
+
 export default function GameBoard() {
-  const [opened, { open, close }] = useDisclosure(false)
-  const [lostGame, setLostGame] = useState(false)
-  const [wonGame, setWonGame] = useState(false)
-  const [openWonModal, setOpenWonModal] = useState(false)
-  const [openLostModal, setOpenLostModal] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+  const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [gameAdvancer, setGameAdvancer] = useState(0)
-  const [guesses, setGuesses] = useState(4)
-  const [dotColor, setDotColor] = useState(todaysGame.sets[gameAdvancer].color)
-  // const [guessDotColors, setGuessDotColors] = useState<ColorObj>({
-  //   0: '#333333',
-  //   1: '#333333',
-  //   2: '#333333',
-  //   3: '#333333',
-  // })
+  // const [guesses, setGuesses] = useState([0, 0, 0, 0])
 
   const correctAnswer = todaysGame.sets[gameAdvancer].correct
   const hint = todaysGame.sets[gameAdvancer].hint
@@ -49,7 +40,7 @@ export default function GameBoard() {
   const gameExplain = todaysGame.sets[gameAdvancer].explanation
 
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
-  const remainingGuesses = new Array(guesses).fill(0).map((_, indx) => indx + 1)
+  // const remainingGuesses = new Array(guesses).fill(0).map((_, indx) => indx + 1)
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
   const makeGrid = (indx: number) => {
@@ -58,9 +49,7 @@ export default function GameBoard() {
         key={indx}
         className={`${css.row} ${selected === indx + 1 ? css.selected : ''}`}
         id={'set' + `${gameAdvancer + 1}`}
-        onClick={() =>
-          wonGame || lostGame ? undefined : setSelected(indx + 1)
-        }
+        onClick={() => (gameOver ? undefined : setSelected(indx + 1))}
       >
         <Title key={indx} order={2}>
           {answerSet[indx].toUpperCase()}
@@ -70,39 +59,36 @@ export default function GameBoard() {
   }
 
   const checkAnswer = () => {
-    console.log('LOST', guesses)
-
-    if (wonGame) {
-      setOpenWonModal(!openWonModal)
-      return
-    }
-    if (lostGame) {
-      setOpenLostModal(!openLostModal)
+    if (gameOver) {
+      setEndGameModal(!endGameModal)
       return
     }
 
-    if (guesses - 1 === 0 || guesses === 0) {
-      setGuesses(0)
-      setLostGame(true)
-      setOpenLostModal(true)
-      return
-    }
-
-    setGuesses(guesses - 1)
     const userSelection = answerSet[selected - 1]
 
     if (userSelection === correctAnswer) {
-      guessDotColors[gameAdvancer] = 'green'
+      scoreKeeper[gameAdvancer] = 1
+      setSelected(0)
+      guessDotColors[gameAdvancer] = '#0ad904'
 
-      setWonGame(true)
-      setOpenWonModal(true)
+      gameAdvancer < 3 ? setSelected(0) : setSelected(selected)
+      console.log(selected)
     } else {
       setSelected(0)
-      guessDotColors[gameAdvancer] = 'red'
-      gameAdvancer < 3 ? setGameAdvancer(gameAdvancer + 1) : setLostGame(true)
+      guessDotColors[gameAdvancer] = '#FF3C38'
+      gameAdvancer < 3 ? setSelected(0) : setSelected(selected)
+    }
+
+    if (gameAdvancer < 3) {
+      console.log('ADV', gameAdvancer)
+      setGameAdvancer(gameAdvancer + 1)
+      return
+    } else {
+      setGameOver(true)
+      setEndGameModal(true)
+      return
     }
   }
-  console.log('OUt', guessDotColors)
 
   return (
     <>
@@ -140,10 +126,10 @@ export default function GameBoard() {
             checkAnswer()
           }}
         >
-          {wonGame || lostGame ? 'View Results' : "Let's Go!"}
+          {gameOver ? 'View Results' : "Let's Go!"}
         </Button>
       </div>
-      <Modal
+      {/* <Modal
         opened={openLostModal}
         centered
         onClose={() => {
@@ -156,30 +142,21 @@ export default function GameBoard() {
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        <StatsCard
-          gameAdvancer={5}
-          gamePattern={gamePattern}
-          gameExplain={gameExplain}
-        />
-      </Modal>
+  
+      </Modal> */}
       <Modal
-        opened={openWonModal}
+        opened={endGameModal}
         centered
         onClose={() => {
-          setOpenWonModal(false)
+          setEndGameModal(false)
           close()
         }}
-        // title="win modal"
         fullScreen
         size="70%"
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        <StatsCard
-          gameAdvancer={gameAdvancer}
-          gamePattern={gamePattern}
-          gameExplain={gameExplain}
-        />
+        <StatsCard todaysGame={todaysGame} scoreKeeper={scoreKeeper} />
       </Modal>
     </>
   )

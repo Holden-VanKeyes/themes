@@ -31,7 +31,7 @@
 //     ],
 //   },
 
-type GameSet = {
+export type GameSet = {
   hint: string
   answers: string[]
   correct: string
@@ -39,7 +39,7 @@ type GameSet = {
   color?: string
 }
 
-type GameDay = {
+export type GameDay = {
   rule: {
     pattern: string
     explanation: string
@@ -57,19 +57,19 @@ type GameMsgs = {
 }
 
 export const GAME_MESSAGES: GameMsgs = {
-  1: 'Perfect!',
-  2: 'Bravo!',
-  3: 'Not Too Shabby!',
-  4: 'Squeaked By!',
-  5: 'Sorry, No Dice!',
+  4: 'Perfect!',
+  3: 'Bravo!',
+  2: 'Not Too Shabby!',
+  1: 'Squeaked By!',
+  0: 'Sorry, No Dice!',
 }
 
 export const GAME_EMOJIS: GameMsgs = {
-  1: '🦄',
-  2: '🐳',
-  3: '🐢',
-  4: '🧀',
-  5: '🧊',
+  4: '🦄',
+  3: '🐳',
+  2: '🐢',
+  1: '🧀',
+  0: '🧊',
 }
 
 export const answerKey: AnswerKey = {
@@ -281,27 +281,27 @@ export const answerKey: AnswerKey = {
     sets: [
       {
         hint: 'Chairman',
-        answers: ['Harvest', 'Circus', 'Wisdom', 'Wizard', 'Tower'],
+        answers: ['Harvest', 'Circus', 'Wisdom', 'Wizard', ''],
         correct: 'Harvest',
-        explanation: 'Har(vest) -> Vest | C(hair)man -> hair',
+        explanation: 'C(hair)man -> Hair || Har(vest) -> Vest',
       },
       {
-        hint: 'Pantomime',
-        answers: ['Cedar', 'Fountain', 'Pleasure', 'Planet', 'Station'],
+        hint: 'Classic',
+        answers: ['Cedar', 'Mango', 'Pleasure', 'Planet', 'Station'],
         correct: 'Planet',
-        explanation: '(Plan)et -> Plan | (Pant)omime -> Pant',
+        explanation: '(Class)ic -> Class || (Plan)et -> Plan',
       },
       {
         hint: 'Machine',
         answers: ['Compete', 'Pinch', 'Dinner', 'Comfort', 'Cylinder'],
         correct: 'Comfort',
-        explanation: '(Mach)ine -> Mach | Com(fort) -> fort',
+        explanation: 'Com(fort) -> Fort || (Mach)ine -> Mach',
       },
       {
         hint: 'Sparkle',
-        answers: ['Basement', 'Picture', 'Glimmer', 'Whisper', 'Monster'],
+        answers: ['Basement', 'Picture', 'Glimmer', 'Frame', 'Monster'],
         correct: 'Basement',
-        explanation: '(Base)ment -> Base | (Spark)le -> Spark',
+        explanation: '(Spark)le -> Spark || (Base)ment -> Base',
       },
     ],
   },
