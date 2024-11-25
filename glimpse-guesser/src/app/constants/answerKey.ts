@@ -379,7 +379,7 @@ export const answerKey: AnswerKey = {
     rule: {
       pattern: 'Well known company acronyms',
       explanation:
-        'combine the first letter of each word in the hint for a known acronym',
+        'combine the first letter from each word in the hint/answer for a company acronym',
     },
     sets: [
       {
@@ -721,6 +721,130 @@ export const answerKey: AnswerKey = {
         answers: ['Contained', 'Encompassing', 'Different', 'Whole', 'Entire'],
         correct: 'Encompassing',
         explanation: 'Unorthodox -> North | Encompassing -> Compass',
+      },
+    ],
+  },
+  '20241204': {
+    rule: {
+      pattern: 'Missing connector',
+      explanation: 'Each hint answer pair has a word that connects them',
+    },
+    sets: [
+      {
+        hint: 'Bunny',
+        answers: ['Bourbon', 'Whiskey', 'Gin', 'Scotch', 'Vodka'],
+        correct: 'Scotch',
+        explanation: 'Bunny hop | Hopscotch',
+      },
+      {
+        hint: 'Holy',
+        answers: ['Bottle', 'Cheese', 'Death', 'Orange', 'Lunch'],
+        correct: 'Bottle',
+        explanation: 'Holy water | Water bottle',
+      },
+      {
+        hint: 'Car',
+        answers: ['Trunks', 'Tie', 'Jacket', 'Belt', 'Socks'],
+        correct: 'Belt',
+        explanation: 'Car seat | Seat belt',
+      },
+      {
+        hint: 'Easy',
+        answers: ['A', 'Flip', 'Kiss', 'Light', 'Dish'],
+        correct: 'Light',
+        explanation: 'Easy street | Streetlight',
+      },
+    ],
+  },
+  '20241205': {
+    rule: {
+      pattern: 'Popular acronyms',
+      explanation:
+        'Combine 1st letter from each word in the hint/answer for a well-known acronym',
+    },
+    sets: [
+      {
+        hint: 'Pet dog android',
+        answers: [
+          'Cat hair blanket',
+          'Taste my iguana',
+          'Chunky rhino alert',
+          'Slam poet partridge',
+          'Koala bear bank',
+        ],
+        correct: 'Taste my iguana',
+        explanation:
+          'PDA (public display of affection) | TMI (too much information) ',
+      },
+      {
+        hint: 'Dark night ranger',
+        answers: [
+          'Ranch may ketchup',
+          'Sweet potato fries',
+          'Fried pickled okra',
+          'Zest my lime',
+          'Hot wing sauce',
+        ],
+        correct: 'Sweet potato fries',
+        explanation: 'DNR (do not resuscitate) | SPF (sun protection factor)',
+      },
+      {
+        hint: 'Pink ice necklace',
+        answers: [
+          'Snow angel custard',
+          'Hot brownie mud',
+          'Ruby red raindrop',
+          'Sand hat hangover',
+          'Pickled duck feet',
+        ],
+        correct: 'Pickled duck feet',
+        explanation:
+          'PIN (personal identification number) | PDF (portable document format)',
+      },
+      {
+        hint: 'Drink sun tea',
+        answers: [
+          'Feed my porcupine',
+          'Cancel that halo',
+          'Rad old toupee',
+          'Sexy new legs',
+          'Flip your burger',
+        ],
+        correct: 'Sexy new legs',
+        explanation: 'DST (daylight savings time) | SNL (saturday night live)',
+      },
+    ],
+  },
+  '20241206': {
+    rule: {
+      pattern: 'Missing link',
+      explanation:
+        'the answer is linked to the 2nd word of the hint and makes a TV show or movie',
+    },
+    sets: [
+      {
+        hint: 'Hulk Hogan',
+        answers: ['Heroes', 'Villains', 'Cheaters', 'Saviors', 'Snakes'],
+        correct: 'Heroes',
+        explanation: "Hogan's Heroes",
+      },
+      {
+        hint: 'Sally Field',
+        answers: ['Movies', 'Stars', 'Wishes', 'Dreams', 'Awards'],
+        correct: 'Dreams',
+        explanation: 'Field of Dreams',
+      },
+      {
+        hint: 'Prince Charles',
+        answers: ['Credit', 'Charge', 'Cash', 'Check', 'Debt'],
+        correct: 'Charge',
+        explanation: 'Charles in Charge',
+      },
+      {
+        hint: 'Barry White',
+        answers: ['Iris', 'Lotus', 'Rose', 'Daisy', 'Cactus'],
+        correct: 'Lotus',
+        explanation: 'White Lotus',
       },
     ],
   },
