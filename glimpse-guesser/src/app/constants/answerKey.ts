@@ -848,6 +848,135 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
+  '20241207': {
+    rule: {
+      pattern: 'Go Fish',
+      explanation:
+        'Add the hint letter to one of the potential answers to get a fish',
+    },
+    sets: [
+      {
+        hint: 'T',
+        answers: ['Sanitizer', 'Medic', 'Mask', 'Surgeon', 'Nurse'],
+        correct: 'Surgeon',
+        explanation: 'Surgeon + t = Sturgeon',
+      },
+      {
+        hint: 'M',
+        answers: ['Studio', 'Salon', 'Beauty', 'Barber', 'Perm'],
+        correct: 'Salon',
+        explanation: 'Salon + m = Salmon',
+      },
+      {
+        hint: 'P',
+        answers: ['Car', 'Truck', 'Van', 'Plane', 'Canoe'],
+        correct: 'Car',
+        explanation: 'Car + p = Carp',
+      },
+      {
+        hint: 'R',
+        answers: ['Comment', 'Say', 'Talk', 'Speak', 'Tout'],
+        correct: 'Tout',
+        explanation: 'Tout + r = Trout',
+      },
+    ],
+  },
+  '20241208': {
+    rule: {
+      pattern: 'Go Fish',
+      explanation: 'Hint and answer start with the name of a fish',
+    },
+    sets: [
+      {
+        hint: 'Bassoon',
+        answers: ['Oboe', 'Drummer', 'Guitar', 'Clarinet', 'Bongo'],
+        correct: 'Drummer',
+        explanation: '(Bass)oon -> Bass | (Drum)mer -> Drum',
+      },
+      {
+        hint: 'Herringbone',
+        answers: ['Perchance', 'Maybe', 'Possibly', 'Sometimes', 'Never'],
+        correct: 'Perchance',
+        explanation: '(Herring)bone -> Herring | (Perch)ance -> Perch',
+      },
+      {
+        hint: 'Coddle',
+        answers: ['Sugar', 'Garland', 'Flower', 'Lei', 'Honey'],
+        correct: 'Garland',
+        explanation: '(Cod)dle -> Cod | (Gar)land -> Gar',
+      },
+      {
+        hint: 'Charcoal',
+        answers: ['Tile', 'Window', 'Wood', 'Stone', 'Carpet'],
+        correct: 'Carpet',
+        explanation: '(Char)coal -> Char | (Carp)et -> Carp',
+      },
+    ],
+  },
+  '20241209': {
+    rule: {
+      pattern: 'Hidden Trees',
+      explanation: 'the name of a tree is hidden in hint and answer',
+    },
+    sets: [
+      {
+        hint: 'Cloak',
+        answers: ['Sword', 'Captain', 'Helm', 'Guide', 'Shield'],
+        correct: 'Helm',
+        explanation: 'Cl(oak) -> Oak | H(elm) -> Elm',
+      },
+      {
+        hint: 'Steak',
+        answers: ['Claim', 'Money', 'Gold', 'Cash', 'Award'],
+        correct: 'Cash',
+        explanation: 'S(teak) -> Teak | C(ash) -> Ash',
+      },
+      {
+        hint: 'Spine',
+        answers: ['Confirm', 'Agree', 'Deny', 'Knee', 'Hip'],
+        correct: 'Confirm',
+        explanation: 'S(pine) -> Pine | Con(fir)m -> Fir',
+      },
+      {
+        hint: 'Naplam',
+        answers: ['Maim', 'Scar', 'Difigure', 'Explode', 'Erupt'],
+        correct: 'Disfigure',
+        explanation: 'Na(palm) -> Palm | Dis(fig)ure -> Fig',
+      },
+    ],
+  },
+  '20241210': {
+    rule: {
+      pattern: 'Adam or Addams',
+      explanation: 'associated with Adam or Addams',
+    },
+    sets: [
+      {
+        hint: 'Driver',
+        answers: ['Flea', 'Worm', 'Gnat', 'Moth', 'Ant'],
+        correct: 'Ant',
+        explanation: 'Adam Driver | Adam Ant',
+      },
+      {
+        hint: 'Eve',
+        answers: ['Thigh', 'Wing', 'Rib', 'Loin', 'Shank'],
+        correct: 'Rib',
+        explanation: "Adam and Eve | Adam's Rib",
+      },
+      {
+        hint: 'West',
+        answers: ['Apple', 'Orange', 'Pear', 'Plum', 'Peach'],
+        correct: 'Apple',
+        explanation: "Adam West | Adam's Apple",
+      },
+      {
+        hint: 'Family',
+        answers: ['Sunday', 'Monday', 'Week', 'Wednesday', 'Month'],
+        correct: 'Wednesday',
+        explanation: 'Addams Family | Wednesday Addams',
+      },
+    ],
+  },
 }
 // the first 2 letters of the hint reference a state abbreviation and the answer is a neighboring state of the hint
 //  -- Arrange & Laugh (Arkansas | Louisiana)

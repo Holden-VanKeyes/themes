@@ -10,13 +10,23 @@ import {
   Box,
   Button,
   ActionIcon,
+  Notification,
+  Alert,
+  Transition,
 } from '@mantine/core'
-import { IconStarFilled, IconRocket, IconCheese } from '@tabler/icons-react'
+import {
+  IconStarFilled,
+  IconRocket,
+  IconCheese,
+  IconX,
+  IconCheck,
+} from '@tabler/icons-react'
 import css from './StatsCard.module.scss'
 import { GAME_MESSAGES } from '../constants/answerKey'
 import { GAME_EMOJIS } from '../constants/answerKey'
 import type { GameSet } from '../constants/answerKey'
 import type { GameDay } from '../constants/answerKey'
+import { useState } from 'react'
 
 interface GameProps {
   // gameAdvancer: number
@@ -24,11 +34,63 @@ interface GameProps {
   // gameExplain: string
   todaysGame: GameDay
   scoreKeeper: number[]
+  today: string
 }
 
-export function StatsCard({ todaysGame, scoreKeeper }: GameProps) {
-  console.log('HERE', scoreKeeper)
+interface AlertState {
+  type: 'success' | 'error' | ''
+  show: boolean
+}
+
+export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
+  const clipboardData = scoreKeeper.map((score) => {
+    if (score === 1) {
+      return '✅'
+    } else return '❌'
+  })
+  const isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)
+  const [clipboardAlert, setClipboardAlert] = useState<AlertState>({
+    type: '',
+    show: false,
+  })
+  const getGameNumber = () => {
+    const firstGameDate = new Date('2024-11-17') // Your first game date
+    const formattedDate = today.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')
+
+    const currentGameDate = new Date(formattedDate)
+    const diffTime = currentGameDate.getTime() - firstGameDate.getTime()
+    return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1
+  }
+
+  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />
+  const errorIcon = <IconX style={{ width: rem(20), height: rem(20) }} />
+
+  const handleShare = async () => {
+    const gameNumber = getGameNumber()
+    console.log('NUM', gameNumber)
+    if (!isMobile) {
+      try {
+        await navigator.clipboard.writeText(
+          `Brain Snack - Game #${gameNumber}\n` +
+            // '\n' +
+            // `x ${numberOfGuesses} correct\n` +
+            clipboardData.join(' '),
+        )
+        setClipboardAlert({
+          type: 'success',
+          show: true,
+        })
+        setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
+      } catch (error) {
+        setClipboardAlert({
+          type: 'error',
+          show: true,
+        })
+        setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
+      }
+    }
+  }
   return (
     <Paper className={css.card} mt={40} p="xl">
       <ThemeIcon className={css.icon} size={60} radius={60} style={{}}>
@@ -53,15 +115,39 @@ export function StatsCard({ todaysGame, scoreKeeper }: GameProps) {
 
       <Progress value={100} mt={10} size="xs" color="#4682b4" />
       <Box mt="md">
-        <Text fz="sm" ta="center">
-          Today&apos;s Theme
-        </Text>
-        <Text fz="sm" c="dimmed" ta="center">
-          {todaysGame.rule.pattern}
-        </Text>
+        {clipboardAlert.show ? (
+          <Center>
+            <Alert
+              icon={clipboardAlert.type === 'error' ? errorIcon : checkIcon}
+              color={clipboardAlert.type === 'error' ? 'red' : 'teal'}
+              variant="filled"
+              title={
+                clipboardAlert.type === 'error'
+                  ? 'Failed to copy to clipboard'
+                  : 'Copied to clipboard!'
+              }
+            />
+          </Center>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: '55.7px',
+            }}
+          >
+            <Text fz="sm" ta="center">
+              Today&apos;s Theme
+            </Text>
+            <Text fz="sm" c="dimmed" ta="center">
+              {todaysGame.rule.pattern}
+            </Text>
+          </div>
+        )}
       </Box>
 
-      <Progress value={100} mt="lg" size="xs" color="#4682b4" />
+      <Progress value={100} mt="sm" size="xs" color="#4682b4" />
       <Box mt="md">
         <Text fz="sm" ta="center">
           Answers Explained
@@ -90,7 +176,6 @@ export function StatsCard({ todaysGame, scoreKeeper }: GameProps) {
           </Text>
         </Group>
 
-        {/* <div className={css.shareDiv} id={`${numberOfGuesses}`} /> */}
         <div className={css.shareContainer}>
           <div
             className={`${css.shareSquares} ${
@@ -124,6 +209,7 @@ export function StatsCard({ todaysGame, scoreKeeper }: GameProps) {
             color: 'black',
             fontSize: '.9rem',
           }}
+          onClick={() => handleShare()}
         >
           Share Results
         </Button>

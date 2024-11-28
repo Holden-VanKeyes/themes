@@ -156,7 +156,11 @@ export default function GameBoard() {
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        <StatsCard todaysGame={todaysGame} scoreKeeper={scoreKeeper} />
+        <StatsCard
+          todaysGame={todaysGame}
+          scoreKeeper={scoreKeeper}
+          today={today}
+        />
       </Modal>
     </>
   )
