@@ -69,6 +69,7 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
   const handleShare = async () => {
     const gameNumber = getGameNumber()
     console.log('NUM', gameNumber)
+    console.log('CHECK GIT STUFF')
     if (!isMobile) {
       try {
         await navigator.clipboard.writeText(
