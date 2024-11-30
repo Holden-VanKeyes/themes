@@ -7,8 +7,7 @@ const integrationSdk = sharetribeSDK.createInstance({
 })
 
 export default async function insertToDB() {
-  const allUsers = await integrationSdk.users.query()
-
+  // const allUsers = await integrationSdk.users.query()
   // await allUsers.data.data.map(async (user: any) => {
   //   await knex('marketplace_users').insert({
   //     uuid: user.id.uuid,
