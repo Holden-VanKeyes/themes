@@ -3,14 +3,16 @@ require('dotenv').config({ path: '.env.development' })
 import type { Knex } from 'knex'
 
 // Update with your config settings.
+console.log('ENV', process.env.NODE_ENV)
 
+const dev = process.env.NODE_ENV === 'development'
 const config: Knex.Config = {
   client: 'pg',
-  connection: process.env.DATABASE_URL || {
+  connection: {
     host: '0.0.0.0',
     port: 5432,
-    database: 'postgres',
-    ssl: { rejectUnauthorized: false },
+    database: dev ? 'postgres' : process.env.DATABASE_URL,
+    ssl: dev ? undefined : { rejectUnauthorized: false },
   },
   migrations: {
     extension: 'ts',
