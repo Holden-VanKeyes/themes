@@ -134,10 +134,10 @@ export default function GameBoard() {
         centered
         onClose={() => {
           setEndGameModal(false)
-          close()
+          // close()
         }}
-        // fullScreen
-        // size="70%"
+        fullScreen
+        size="70%"
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
