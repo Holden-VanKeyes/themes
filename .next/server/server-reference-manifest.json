@@ -1,0 +1,14 @@
+{
+  "node": {
+    "b4d5bdb30c7e83ecf3f7d1927d0488d6c550a121": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fabramshook%2FDevelopment%2Fboaters-life%2Fboaters-backend%2Fsrc%2Fapp%2Fpage.tsx%22%2C%5B%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "gq8JvOeogT93n+VHYN3XcslM6ZRAszEQju1vHv5dA+8="
+}

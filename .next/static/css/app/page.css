@@ -1,0 +1,220 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[9].use[5]!./src/app/components/GameBoard.module.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.GameBoard_gridBoard__P1qVJ {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 18px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 360px;
+  height: 545px;
+}
+
+.GameBoard_row__sLWPS {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1.5px solid #4682b4;
+  border-radius: 6px;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.GameBoard_row__sLWPS.GameBoard_selected__zaG7M {
+  background-color: rgba(0, 120, 255, 0.05);
+  border-color: #385f82;
+  box-shadow: inset 0 0 0 1px rgba(0, 120, 255, 0.1);
+}
+.GameBoard_row__sLWPS.GameBoard_selected__zaG7M[id=set1] {
+  background-color: #e8ddb5;
+}
+.GameBoard_row__sLWPS.GameBoard_selected__zaG7M[id=set2] {
+  background-color: #95b8d1;
+}
+.GameBoard_row__sLWPS.GameBoard_selected__zaG7M[id=set3] {
+  background-color: #59c9a5;
+}
+.GameBoard_row__sLWPS.GameBoard_selected__zaG7M[id=set4] {
+  background-color: #dec5e3;
+}
+.GameBoard_row__sLWPS.GameBoard_hintRow__vFzba {
+  width: 50%;
+  margin: 0 auto;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1.5px solid #4682b4;
+  margin-bottom: 10px;
+}
+.GameBoard_row__sLWPS .GameBoard_hintPrefix___Bs3R {
+  color: #4682b4;
+  font-size: 1.1rem;
+  margin-right: 8px;
+}
+.GameBoard_row__sLWPS .GameBoard_submitBtn__XYEwH {
+  margin-top: 10px;
+  width: 50%;
+}
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[13].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[13].oneOf[9].use[5]!./src/app/components/StatsCard.module.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.StatsCard_card__bNhpT {
+  position: relative;
+  overflow: visible;
+}
+
+.StatsCard_icon__dGWoB {
+  position: absolute;
+  top: -1.875rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.StatsCard_title___IPf9 {
+  font-family: Greycliff CF, var(--mantine-font-family);
+  line-height: 1;
+}
+
+.StatsCard_shareDiv__G7ndM {
+  border: 1.5px solid #4682b4;
+  border-radius: 6px;
+  width: 50%;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.StatsCard_shareDiv__G7ndM[id="1"] {
+  background-color: #e8ddb5;
+}
+.StatsCard_shareDiv__G7ndM[id="2"] {
+  background-color: #95b8d1;
+}
+.StatsCard_shareDiv__G7ndM[id="3"] {
+  background-color: #59c9a5;
+}
+.StatsCard_shareDiv__G7ndM[id="4"] {
+  background-color: #dec5e3;
+}
+.StatsCard_shareDiv__G7ndM[id="5"] {
+  background-color: red;
+}
+
+.StatsCard_shareContainer__qifJE {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 18px;
+  margin-top: 16px;
+  box-sizing: border-box;
+  width: 270px;
+  height: 55px;
+}
+
+.StatsCard_shareSquares__OPhgl {
+  border: 1.5px solid;
+  border-radius: 6px;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: bold;
+  vertical-align: middle;
+  box-sizing: border-box;
+  position: relative; /* Add this to position the X relative to the square */
+}
+.StatsCard_shareSquares__OPhgl.StatsCard_right__zPlob {
+  background-color: aquamarine;
+}
+.StatsCard_shareSquares__OPhgl.StatsCard_wrong__oE2Ce {
+  background-color: #ff8d9f;
+}
+.StatsCard_shareSquares__OPhgl.StatsCard_wrong__oE2Ce::before, .StatsCard_shareSquares__OPhgl.StatsCard_wrong__oE2Ce::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+}
+.StatsCard_shareSquares__OPhgl.StatsCard_wrong__oE2Ce::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.StatsCard_shareSquares__OPhgl.StatsCard_wrong__oE2Ce::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/app/components/Navbar.module.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+.Navbar_header__y9z_U {
+    height: calc(3.5rem * var(--mantine-scale));
+
+    margin-bottom: calc(4.375rem * var(--mantine-scale));
+    background-color: var(--mantine-color-body);
+    border-bottom: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-gray-3);
+  }
+    [data-mantine-color-scheme='dark'] .Navbar_header__y9z_U {
+    border-bottom: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4);
+}
+  
+  .Navbar_inner__F5fLj {
+    height: calc(3.5rem * var(--mantine-scale));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .Navbar_link__36SAs {
+    display: block;
+    line-height: 1;
+    padding: calc(0.5rem * var(--mantine-scale)) calc(0.75rem * var(--mantine-scale));
+    border-radius: var(--mantine-radius-sm);
+    text-decoration: none;
+    color: var(--mantine-color-gray-7);
+  }
+  
+  [data-mantine-color-scheme='dark'] .Navbar_link__36SAs {
+    color: var(--mantine-color-dark-0);
+}
+  
+  .Navbar_link__36SAs {
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 500;
+}
+  
+  @media (hover: hover) {
+    .Navbar_link__36SAs:hover {
+      background-color: var(--mantine-color-gray-0);
+    }
+      [data-mantine-color-scheme='dark'] .Navbar_link__36SAs:hover {
+      background-color: var(--mantine-color-dark-6);
+    }
+}
+  
+  @media (hover: none) {
+    .Navbar_link__36SAs:active {
+      background-color: var(--mantine-color-gray-0);
+    }
+      [data-mantine-color-scheme='dark'] .Navbar_link__36SAs:active {
+      background-color: var(--mantine-color-dark-6);
+    }
+}
+  
+  [data-mantine-color-scheme] .Navbar_link__36SAs[data-active] {
+      background-color: var(--mantine-color-blue-filled);
+      color: var(--mantine-color-white);
+    }
