@@ -93,15 +93,16 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
       try {
         await navigator.share({
           title: `Themes - Game #${gameNumber}`,
-          text: clipboardData.join(' '),
+          text: `Themes - Game #${gameNumber}\n` + clipboardData.join(' '),
           // url: window.location.href,
         })
       } catch (error) {
-        setClipboardAlert({
-          type: 'error',
-          show: true,
-        })
-        setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
+        console.log('error copying to clipboard')
+        // setClipboardAlert({
+        //   type: 'error',
+        //   show: true,
+        // })
+        // setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
       }
     }
   }
