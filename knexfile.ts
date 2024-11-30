@@ -10,9 +10,8 @@ const config: Knex.Config = {
     host: '0.0.0.0',
     port: 5432,
     database: 'postgres',
+    ssl: true,
   },
-  //@ts-ignore
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
   migrations: {
     extension: 'ts',
   },
