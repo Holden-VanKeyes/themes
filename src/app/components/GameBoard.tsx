@@ -137,7 +137,7 @@ export default function GameBoard() {
           close()
         }}
         // fullScreen
-        size="70%"
+        // size="70%"
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}
       >

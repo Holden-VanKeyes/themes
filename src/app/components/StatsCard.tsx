@@ -68,21 +68,34 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
 
   const handleShare = async () => {
     const gameNumber = getGameNumber()
-    console.log('NUM', gameNumber)
-    console.log('CHECK GIT STUFF')
+
     if (!isMobile) {
       try {
         await navigator.clipboard.writeText(
-          `Brain Snack - Game #${gameNumber}\n` +
+          `Themes - Game #${gameNumber}\n` +
             // '\n' +
             // `x ${numberOfGuesses} correct\n` +
-            clipboardData.join(' '),
+            clipboardData.join(' ')
         )
         setClipboardAlert({
           type: 'success',
           show: true,
         })
         setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
+      } catch (error) {
+        setClipboardAlert({
+          type: 'error',
+          show: true,
+        })
+        setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
+      }
+    } else {
+      try {
+        await navigator.share({
+          title: `Themes - Game #${gameNumber}`,
+          text: clipboardData.join(' '),
+          // url: window.location.href,
+        })
       } catch (error) {
         setClipboardAlert({
           type: 'error',
@@ -167,7 +180,7 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
             {GAME_EMOJIS[numberOfGuesses]}
           </Title>
         </ActionIcon> */}
-        <Group gap="5px">
+        {/* <Group gap="5px">
           <Title order={2} ta="center">
             {GAME_EMOJIS[numberOfGuesses]}
           </Title>
@@ -175,7 +188,7 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
             Correct = x
             {numberOfGuesses === 5 ? numberOfGuesses - 1 : numberOfGuesses}
           </Text>
-        </Group>
+        </Group> */}
 
         <div className={css.shareContainer}>
           <div

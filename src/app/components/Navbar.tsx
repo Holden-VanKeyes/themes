@@ -1,6 +1,14 @@
 'use client'
 import { useState } from 'react'
-import { Container, Group, Burger, Image, ActionIcon, Box } from '@mantine/core'
+import {
+  Container,
+  Group,
+  Burger,
+  Image,
+  ActionIcon,
+  Box,
+  Title,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import logo from '../assets/boaterslist-logo-horizontal-color-white.png'
 import BoatersLogo from '../assets/boaters-logo.svg'
@@ -36,12 +44,13 @@ export function Navbar() {
     <Box className={css.header}>
       <Container size="md" className={css.inner}>
         {/* <MantineLogo size={28} /> */}
+        {/* <Title order={2}>THEMES</Title> */}
 
         {/* <Group gap={5} visibleFrom="xs">
           {items}
         </Group> */}
 
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+        {/* <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" /> */}
       </Container>
     </Box>
   )
