@@ -6,7 +6,7 @@ import type { Knex } from 'knex'
 
 const config: Knex.Config = {
   client: 'pg',
-  connection: {
+  connection: process.env.DATABASE_URL || {
     host: '0.0.0.0',
     port: 5432,
     database: 'postgres',
