@@ -129,21 +129,6 @@ export default function GameBoard() {
           {gameOver ? 'View Results' : "Let's Go!"}
         </Button>
       </div>
-      {/* <Modal
-        opened={openLostModal}
-        centered
-        onClose={() => {
-          setOpenLostModal(false)
-          close()
-        }}
-        // title="Lose modal"
-        fullScreen
-        size="70%"
-        radius={0}
-        transitionProps={{ transition: 'fade', duration: 200 }}
-      >
-  
-      </Modal> */}
       <Modal
         opened={endGameModal}
         centered
@@ -151,7 +136,7 @@ export default function GameBoard() {
           setEndGameModal(false)
           close()
         }}
-        fullScreen
+        // fullScreen
         size="70%"
         radius={0}
         transitionProps={{ transition: 'fade', duration: 200 }}

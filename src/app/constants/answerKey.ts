@@ -543,27 +543,27 @@ export const answerKey: AnswerKey = {
     sets: [
       {
         hint: 'Barf',
-        answers: ['Chewy', 'Green', 'Puke', 'Swallow', 'Choke'],
+        answers: ['Chewy', 'Vomit', 'Puke', 'Crunchy', 'Sick'],
         correct: 'Chewy',
-        explanation: 'Spaceballs | Star Wars',
+        explanation: 'Barf = Spaceballs | Chewy = Star Wars',
       },
       {
         hint: 'Rocket',
         answers: ['Gadget', 'Thingy', 'Whatchamacallit', 'Gizmo', 'Doohickey'],
         correct: 'Gizmo',
-        explanation: 'Guardians of the Galaxy | Gremlins',
+        explanation: 'Rocket = Guardians of the Galaxy | Gizmo = Gremlins',
       },
       {
         hint: 'Wicket',
         answers: ['Cricket', 'Hem', 'Birdie', 'Sew', 'Stitch'],
         correct: 'Stitch',
-        explanation: 'Star Wars | Lilo & Stitch',
+        explanation: 'Wicket = Star Wars | Stitch = Lilo & Stitch',
       },
       {
         hint: 'Alf',
-        answers: ['Whorf', 'Tribbles', 'Spock', 'Jar Jar', 'Jabba'],
+        answers: ['Data', 'Tribbles', 'Spock', 'Jar Jar', 'Jabba'],
         correct: 'Tribbles',
-        explanation: 'Alf | Star Trek',
+        explanation: 'Alf = Alf | Tribbles = Star Trek',
       },
     ],
   },
