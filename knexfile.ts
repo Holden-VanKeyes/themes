@@ -3,7 +3,7 @@ require('dotenv').config({ path: '.env.development' })
 import type { Knex } from 'knex'
 
 // Update with your config settings.
-console.log('ENV', process.env.NODE_ENV)
+console.log('ENV FROM HEROKU', process.env.DATABASE_URL)
 
 const dev = process.env.NODE_ENV === 'development'
 const config: Knex.Config = {
