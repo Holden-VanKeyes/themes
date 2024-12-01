@@ -162,7 +162,7 @@
   \********************************************************************************************************************************************************************************************************************************************************************************/
 .Navbar_header__y9z_U {
   height: calc(3.5rem * var(--mantine-scale));
-  margin-bottom: calc(1.25rem * var(--mantine-scale));
+  /* margin-bottom: rem(20px); */
   background-color: var(--mantine-color-body);
   border-bottom: calc(0.0625rem * var(--mantine-scale)) solid
     var(--mantine-color-gray-3);

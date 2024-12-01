@@ -131,7 +131,7 @@ export function Navbar() {
                     submit
                   </Badge>{' '}
                 </span>
-                or tap
+                or tap{' '}
                 <span>
                   <Badge variant="outline" radius="sm">
                     next
