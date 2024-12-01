@@ -17,12 +17,6 @@ const todaysGame = answerKey[today]
 interface ColorObj {
   [key: number]: string
 }
-const guessDotColors: ColorObj = {
-  0: '#333333',
-  1: '#333333',
-  2: '#333333',
-  3: '#333333',
-}
 
 const scoreKeeper = [0, 0, 0, 0]
 
@@ -31,7 +25,14 @@ export default function GameBoard() {
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [gameAdvancer, setGameAdvancer] = useState(0)
-  // const [guesses, setGuesses] = useState([0, 0, 0, 0])
+  const [guessDotColors, setGuessDotColors] = useState<ColorObj>({
+    0: '#333333',
+    1: '#888888',
+    2: '#888888',
+    3: '#888888',
+  })
+  const redDot = '#FF3C38'
+  const greenDot = '#0ad904'
 
   const correctAnswer = todaysGame.sets[gameAdvancer].correct
   const hint = todaysGame.sets[gameAdvancer].hint
@@ -40,7 +41,6 @@ export default function GameBoard() {
   const gameExplain = todaysGame.sets[gameAdvancer].explanation
 
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
-  // const remainingGuesses = new Array(guesses).fill(0).map((_, indx) => indx + 1)
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
   const makeGrid = (indx: number) => {
@@ -90,6 +90,17 @@ export default function GameBoard() {
     }
   }
 
+  const handleNext = () => {
+    if (guessDotColors[gameAdvancer] != redDot || greenDot) {
+      console.log(true)
+    }
+
+    if (gameAdvancer === 3) {
+      setGameAdvancer(0)
+      return
+    } else setGameAdvancer(gameAdvancer + 1)
+  }
+
   return (
     <>
       <div className={css.gridBoard}>
@@ -132,7 +143,6 @@ export default function GameBoard() {
           <Button
             variant="outline"
             radius="lg"
-            disabled
             style={{
               margin: '20px auto',
               width: '40%',
@@ -141,9 +151,9 @@ export default function GameBoard() {
               color: 'black',
               fontSize: '.9rem',
             }}
-            // onClick={() => {
-            //   checkAnswer()
-            // }}
+            onClick={() => {
+              handleNext()
+            }}
           >
             Next
           </Button>
