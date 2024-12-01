@@ -640,15 +640,15 @@ export const answerKey: AnswerKey = {
       {
         hint: 'Toolbox',
         answers: ['Stranger', 'River', 'Planet', 'Cocktail', 'Dough'],
-        correct: 'Coctail',
+        correct: 'Cocktail',
         explanation:
           'A toolbox holds a screwdriver and a screwdriver is a cocktail',
       },
       {
         hint: 'Actor',
         answers: ['Role', 'Cher', 'Power', 'Biology', 'Code'],
-        correct: 'An actor reads a script and a script is a piece of code',
-        explanation: '',
+        correct: 'Code',
+        explanation: 'An actor reads a script and a script is a piece of code',
       },
       {
         hint: 'Landscaper',
