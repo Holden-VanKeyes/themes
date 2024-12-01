@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { answerKey } from '../constants/answerKey'
 import css from './GameBoard.module.scss'
@@ -18,21 +18,32 @@ interface ColorObj {
   [key: number]: string
 }
 
-const scoreKeeper = [0, 0, 0, 0]
+interface SubmittedSet {
+  setNumber: number
+  selectedRow: number
+}
+
+//8 = hasn't submitted | 0 = incorrect | 1 = correct
+const scoreKeeper = [8, 8, 8, 8]
 
 export default function GameBoard() {
+  const redDot = '#FF3C38'
+  const greenDot = '#0ad904'
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [gameAdvancer, setGameAdvancer] = useState(0)
+  // const [submittedSets, setSubmittedSets] = useState<Set<SubmittedSet>>(
+  //   new Set()
+  // )
+  const [submittedSets, setSubmittedSets] = useState<Record<number, number>>({})
+
   const [guessDotColors, setGuessDotColors] = useState<ColorObj>({
-    0: '#333333',
+    0: '#888888',
     1: '#888888',
     2: '#888888',
     3: '#888888',
   })
-  const redDot = '#FF3C38'
-  const greenDot = '#0ad904'
 
   const correctAnswer = todaysGame.sets[gameAdvancer].correct
   const hint = todaysGame.sets[gameAdvancer].hint
@@ -44,6 +55,14 @@ export default function GameBoard() {
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
   const makeGrid = (indx: number) => {
+    useEffect(() => {
+      if (!(gameAdvancer in submittedSets)) {
+        setSelected(0)
+      } else {
+        setSelected(submittedSets[gameAdvancer])
+      }
+    }, [gameAdvancer])
+
     return (
       <div
         key={indx}
@@ -59,6 +78,8 @@ export default function GameBoard() {
   }
 
   const checkAnswer = () => {
+    setSubmittedSets((prev) => ({ ...prev, [gameAdvancer]: selected }))
+
     if (gameOver) {
       setEndGameModal(!endGameModal)
       return
@@ -68,19 +89,18 @@ export default function GameBoard() {
 
     if (userSelection === correctAnswer) {
       scoreKeeper[gameAdvancer] = 1
-      setSelected(0)
-      guessDotColors[gameAdvancer] = '#0ad904'
+      // setSelected(0)
+      // guessDotColors[gameAdvancer] = '#0ad904'
+      setGuessDotColors((prev) => ({ ...prev, [gameAdvancer]: greenDot }))
 
-      gameAdvancer < 3 ? setSelected(0) : setSelected(selected)
-      console.log(selected)
+      // gameAdvancer < 3 ? setSelected(0) : setSelected(selected)
     } else {
-      setSelected(0)
-      guessDotColors[gameAdvancer] = '#FF3C38'
-      gameAdvancer < 3 ? setSelected(0) : setSelected(selected)
+      // setSelected(0)
+      setGuessDotColors((prev) => ({ ...prev, [gameAdvancer]: redDot }))
+      // gameAdvancer < 3 ? setSelected(0) : setSelected(selected)
     }
 
     if (gameAdvancer < 3) {
-      console.log('ADV', gameAdvancer)
       setGameAdvancer(gameAdvancer + 1)
       return
     } else {
@@ -91,10 +111,6 @@ export default function GameBoard() {
   }
 
   const handleNext = () => {
-    if (guessDotColors[gameAdvancer] != redDot || greenDot) {
-      console.log(true)
-    }
-
     if (gameAdvancer === 3) {
       setGameAdvancer(0)
       return
@@ -125,7 +141,9 @@ export default function GameBoard() {
           <Button
             variant="outline"
             radius="lg"
-            disabled={selected ? false : true}
+            disabled={
+              selected === 0 || submittedSets[gameAdvancer] ? true : false
+            }
             style={{
               margin: '20px auto',
               width: '40%',
