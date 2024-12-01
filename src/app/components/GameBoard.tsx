@@ -110,24 +110,44 @@ export default function GameBoard() {
             />
           ))}
         </Group>
-
-        <Button
-          variant="outline"
-          radius="lg"
-          disabled={selected ? false : true}
-          style={{
-            margin: '20px auto',
-            width: '50%',
-            border: '1.5px solid #4682b4',
-            color: 'black',
-            fontSize: '.9rem',
-          }}
-          onClick={() => {
-            checkAnswer()
-          }}
-        >
-          {gameOver ? 'View Results' : "Let's Go!"}
-        </Button>
+        <Group>
+          <Button
+            variant="outline"
+            radius="lg"
+            disabled={selected ? false : true}
+            style={{
+              margin: '20px auto',
+              width: '40%',
+              height: '75%',
+              border: '1.5px solid #4682b4',
+              color: 'black',
+              fontSize: '.9rem',
+            }}
+            onClick={() => {
+              checkAnswer()
+            }}
+          >
+            {gameOver ? 'View Results' : 'Submit'}
+          </Button>
+          <Button
+            variant="outline"
+            radius="lg"
+            disabled
+            style={{
+              margin: '20px auto',
+              width: '40%',
+              height: '75%',
+              border: '1.5px solid #4682b4',
+              color: 'black',
+              fontSize: '.9rem',
+            }}
+            // onClick={() => {
+            //   checkAnswer()
+            // }}
+          >
+            Next
+          </Button>
+        </Group>
       </div>
       <Modal
         opened={endGameModal}

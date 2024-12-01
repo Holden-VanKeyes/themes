@@ -162,7 +162,6 @@
   \********************************************************************************************************************************************************************************************************************************************************************************/
 .Navbar_header__y9z_U {
   height: calc(3.5rem * var(--mantine-scale));
-
   margin-bottom: calc(1.25rem * var(--mantine-scale));
   background-color: var(--mantine-color-body);
   border-bottom: calc(0.0625rem * var(--mantine-scale)) solid
@@ -175,29 +174,53 @@
 
 .Navbar_inner__F5fLj {
   height: calc(3.5rem * var(--mantine-scale));
+  padding-right: calc(1.875rem * var(--mantine-scale));
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-direction: row-reverse;
 }
 
+.Navbar_rules__MBVFt {
+  border-width: 2px;
+}
+.Navbar_title__ycAaV {
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.Navbar_section__wzkh5 {
+  padding: 5px;
+  margin-top: 20px;
+}
+.Navbar_section__wzkh5:first-child {
+  margin-top: 10px;
+}
+
+.Navbar_example__ipUD2 {
+  padding: 5px;
+  margin-top: 20px;
+  border: 1px, solid black;
+  border-radius: var(--mantine-radius-md);
+  background-color: #95b8d121;
+}
+.Navbar_example__ipUD2:last-child {
+  margin-top: 28px;
+}
 .Navbar_link__36SAs {
   display: block;
   line-height: 1;
   padding: calc(0.5rem * var(--mantine-scale)) calc(0.75rem * var(--mantine-scale));
-  border-radius: var(--mantine-radius-sm);
+  border-radius: var(--mantine-radius-xs);
   text-decoration: none;
   color: var(--mantine-color-gray-7);
 }
-
 [data-mantine-color-scheme='dark'] .Navbar_link__36SAs {
   color: var(--mantine-color-dark-0);
 }
-
 .Navbar_link__36SAs {
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
 }
-
 @media (hover: hover) {
   .Navbar_link__36SAs:hover {
     background-color: var(--mantine-color-gray-0);
@@ -206,7 +229,6 @@
     background-color: var(--mantine-color-dark-6);
   }
 }
-
 @media (hover: none) {
   .Navbar_link__36SAs:active {
     background-color: var(--mantine-color-gray-0);
@@ -215,7 +237,6 @@
     background-color: var(--mantine-color-dark-6);
   }
 }
-
 [data-mantine-color-scheme] .Navbar_link__36SAs[data-active] {
     background-color: var(--mantine-color-blue-filled);
     color: var(--mantine-color-white);
