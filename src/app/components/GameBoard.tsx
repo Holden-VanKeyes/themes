@@ -4,7 +4,15 @@ import React, { useState, useEffect } from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { answerKey } from '../constants/answerKey'
 import css from './GameBoard.module.scss'
-import { Button, Modal, Title, Card, ActionIcon, Group } from '@mantine/core'
+import {
+  Button,
+  Modal,
+  Title,
+  Card,
+  ActionIcon,
+  Group,
+  Badge,
+} from '@mantine/core'
 import { StatsCard } from './StatsCard'
 import {
   IconStarFilled,
@@ -13,6 +21,7 @@ import {
   IconX,
   IconCheck,
 } from '@tabler/icons-react'
+import { useGameMode } from '../globalHelpers/GameMode'
 
 const date = new Date()
 const today =
@@ -30,19 +39,59 @@ interface SubmittedSet {
   selectedRow: number
 }
 
-//8 = hasn't submitted | 0 = incorrect | 1 = correct
-const scoreKeeper = [8, 8, 8, 8]
+// 0 = incorrect | 1 = correct
+const scoreKeeper = [0, 0, 0, 0]
 
 export default function GameBoard() {
-  const redDot = '#FF3C38'
-  const greenDot = '#0ad904'
+  const [submittedSets, setSubmittedSets] = useState<Record<number, number>>({})
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
+
+  useEffect(() => {
+    // window.localStorage.clear()
+    // Load saved sets on mount
+    const savedSets = window.localStorage.getItem('submittedSets')
+    if (savedSets) {
+      setSubmittedSets(JSON.parse(savedSets))
+      const parsedSets = JSON.parse(savedSets)
+      if (Object.keys(parsedSets).length === 4) {
+        setGameOver(true)
+        setEndGameModal(true)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (Object.keys(submittedSets).length === 0) return
+
+    const lastPlayed = window.localStorage.getItem('lastGamePlayed')
+    if (today !== lastPlayed) {
+      window.localStorage.clear()
+      // setSubmittedSets({})
+      window.localStorage.setItem('lastGamePlayed', today)
+
+      return
+    }
+
+    window.localStorage.setItem('submittedSets', JSON.stringify(submittedSets))
+  }, [submittedSets])
+
+  // useEffect(() => {
+  //   console.log('I RAN', Object.entries(submittedSets).length)
+  //   if (Object.entries(submittedSets).length === 4) {
+  //     console.log('THIS SHOULD FIRE')
+  //     setGameOver(true)
+  //     setEndGameModal(true)
+  //     return
+  //   }
+  // }, [])
+
+  const redDot = '#FF3C38'
+  const greenDot = '#0ad904'
+
   const [selected, setSelected] = useState(0)
   const [gameAdvancer, setGameAdvancer] = useState(0)
-
-  const [submittedSets, setSubmittedSets] = useState<Record<number, number>>({})
-
+  const { isEasyMode } = useGameMode()
   const [guessDotColors, setGuessDotColors] = useState<ColorObj>({
     0: '#888888',
     1: '#888888',
@@ -55,6 +104,8 @@ export default function GameBoard() {
   const answerSet = todaysGame.sets[gameAdvancer].answers
   // const gamePattern = todaysGame.rule.pattern
   // const gameExplain = todaysGame.sets[gameAdvancer].explanation
+
+  const highlightAnswer = isEasyMode ? answerSet.indexOf(correctAnswer) : null
 
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
@@ -80,6 +131,10 @@ export default function GameBoard() {
         key={indx}
         className={`${css.row} ${selected === indx + 1 ? css.selected : ''} ${
           submittedSets[gameAdvancer] ? css.disabled : ''
+        } ${
+          highlightAnswer === indx && submittedSets[gameAdvancer]
+            ? css.highlightAnswer
+            : ''
         }`}
         id={'set' + `${gameAdvancer + 1}`}
         onClick={() => handleGuessSelect(indx)}
@@ -92,14 +147,17 @@ export default function GameBoard() {
   }
 
   const checkAnswer = () => {
+    //keep track of sets user has answered in a submittedSets obj where:
+    //key = set they answered and value = selected answer
     setSubmittedSets((prev) => ({ ...prev, [gameAdvancer]: selected }))
-    console.log('HERE', Object.entries(submittedSets).length)
 
+    //check if there are 4 submittedSets (total possible)
     if (Object.entries(submittedSets).length === 3) {
       setGameOver(true)
       setEndGameModal(true)
     }
 
+    //handles allowing user to open/clos stats modal after game is over
     if (gameOver) {
       setEndGameModal(!endGameModal)
       return
@@ -118,15 +176,7 @@ export default function GameBoard() {
       setGameAdvancer(gameAdvancer + 1)
       return
     } else {
-      console.log('last else')
       setGameAdvancer(0)
-      // if (Object.entries(submittedSets).length !== 4) {
-      //   setGameAdvancer(0)
-      //   return
-      // }
-      // setGameOver(true)
-      // setEndGameModal(true)
-      // return
     }
   }
 
@@ -139,9 +189,16 @@ export default function GameBoard() {
   return (
     <>
       <div className={css.gridBoard}>
-        <div className={`${css.row} ${css.hintRow}`}>
-          <span className={css.hintPrefix}>hint:</span>
-          <Title order={3}>{hint.toUpperCase()}</Title>
+        <div className={css.setHeader}>
+          <div className={`${css.row} ${css.hintRow}`}>
+            <span className={css.hintPrefix}>hint:</span>
+            <Title order={3}>{hint.toUpperCase()}</Title>
+          </div>
+          {isEasyMode ? (
+            <Badge variant="outline" color="#59c9a5" size="sm" mt="xs">
+              Easy Mode On
+            </Badge>
+          ) : null}
         </div>
 
         {grid.map((_, indx) => makeGrid(indx))}

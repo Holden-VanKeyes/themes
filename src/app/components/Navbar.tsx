@@ -34,6 +34,7 @@ import logo from '../assets/boaterslist-logo-horizontal-color-white.png'
 import BoatersLogo from '../assets/boaters-logo.svg'
 import css from './Navbar.module.css'
 import Link from 'next/link'
+import { useGameMode } from '../globalHelpers/GameMode'
 
 const links = [
   { link: '/marketplace', label: 'Dock Users' },
@@ -45,6 +46,7 @@ const links = [
 export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
+  const { isEasyMode, toggleGameMode } = useGameMode()
 
   const [active, setActive] = useState(links[0].link)
 
@@ -114,7 +116,7 @@ export function Navbar() {
         </div>
 
         <div className={css.section}>
-          <List spacing="xs" size="sm" center>
+          <List spacing="xs" size="sm" center listStyleType="none">
             <List.Item
               icon={
                 <ThemeIcon color="blue" size={24} radius="md">
@@ -124,20 +126,16 @@ export function Navbar() {
                 </ThemeIcon>
               }
             >
-              <Text fz="md" ml="sm">
+              <Text fz="md" ml="sm" span>
                 Select your answer and tap{' '}
-                <span>
-                  <Badge variant="outline" radius="sm">
-                    submit
-                  </Badge>{' '}
-                </span>
+                <Badge variant="outline" radius="sm">
+                  submit
+                </Badge>{' '}
                 or tap{' '}
-                <span>
-                  <Badge variant="outline" radius="sm">
-                    next
-                  </Badge>{' '}
-                  to skip to the next set.
-                </span>{' '}
+                <Badge variant="outline" radius="sm">
+                  next
+                </Badge>{' '}
+                to skip to the next set.
               </Text>
             </List.Item>
           </List>
@@ -191,59 +189,62 @@ export function Navbar() {
         <div className={css.example}>
           <Text fw={600} ml="sm">
             Theme Examples:
-            <List listStyleType="disc" withPadding>
-              <List.Item mt="xs">
-                Remove a letter to make a new word <br />
-                <Text fs="italic" fw={500}>
-                  Hint
-                  <Text span fs="normal">
-                    {' '}
-                    = Chief
-                  </Text>
-                </Text>
-                <Text fs="italic" fw={500}>
-                  Answer
-                  <Text span fs="normal">
-                    {' '}
-                    = Chef
-                  </Text>
-                </Text>
-              </List.Item>
-              <List.Item mt="sm">
-                One to the other <br />
-                <Text fs="italic" fw={500}>
-                  Hint
-                  <Text span fs="normal">
-                    {' '}
-                    = Alter Trip
-                  </Text>
-                </Text>
-                <Text fs="italic" fw={500}>
-                  Answer
-                  <Text span fs="normal">
-                    {' '}
-                    = Ego (Alter Ego | Ego Trip)
-                  </Text>
-                </Text>
-              </List.Item>
-            </List>
           </Text>
+
+          <List listStyleType="disc" withPadding>
+            <List.Item mt="xs">
+              Remove a letter to make a new word <br />
+              <Text fs="italic" fw={500}>
+                Hint
+                <Text span fs="normal">
+                  {' '}
+                  = Chief
+                </Text>
+              </Text>
+              <Text fs="italic" fw={500}>
+                Answer
+                <Text span fs="normal">
+                  {' '}
+                  = Chef
+                </Text>
+              </Text>
+            </List.Item>
+            <List.Item mt="sm">
+              One to the other <br />
+              <Text fs="italic" fw={500}>
+                Hint
+                <Text span fs="normal">
+                  {' '}
+                  = Alter Trip
+                </Text>
+              </Text>
+              <Text fs="italic" fw={500}>
+                Answer
+                <Text span fs="normal">
+                  {' '}
+                  = Ego (Alter Ego | Ego Trip)
+                </Text>
+              </Text>
+            </List.Item>
+          </List>
           {/* </List.Item>
           </List> */}
         </div>
 
         <div className={css.example}>
           <Switch
+            styles={{
+              track: { cursor: 'pointer' },
+            }}
             size="lg"
             color="teal"
             m="sm"
-            // label="easy mode"
             aria-label="easy mode toggle"
             radius="lg"
-            checked={checked}
+            checked={isEasyMode}
             onLabel="ON"
             offLabel="OFF"
-            onChange={(event) => setChecked(event.currentTarget.checked)}
+            onChange={toggleGameMode}
             thumbIcon={
               checked ? (
                 <IconCheck

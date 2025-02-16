@@ -17,6 +17,7 @@ import { Navbar } from './components/Navbar'
 import React from 'react'
 import GridDisplay from './components/GridDisplay'
 import GameBoard from './components/GameBoard'
+import { GameModeProvider } from './globalHelpers/GameMode'
 
 export default async function Home() {
   // const mPlaceUser = await knex('users').where(
@@ -40,12 +41,13 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
-
-      <Center>
-        {/* <GridDisplay /> */}
-        <GameBoard />
-      </Center>
+      <GameModeProvider>
+        <Navbar />
+        <Center>
+          {/* <GridDisplay /> */}
+          <GameBoard />
+        </Center>
+      </GameModeProvider>
     </>
   )
 }

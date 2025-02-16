@@ -8,6 +8,7 @@
 
 .inner {
   height: rem(56px);
+  gap: 15px;
   padding-right: rem(30px);
   display: flex;
   align-items: center;
@@ -61,4 +62,7 @@
     background-color: var(--mantine-color-blue-filled);
     color: var(--mantine-color-white);
   }
+}
+.switch {
+  cursor: 'pointer';
 }

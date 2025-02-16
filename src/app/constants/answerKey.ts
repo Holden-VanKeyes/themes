@@ -73,7 +73,7 @@ export const GAME_EMOJIS: GameMsgs = {
 }
 
 export const answerKey: AnswerKey = {
-  '20250215': {
+  '20250216': {
     rule: {
       pattern: 'Words with double consonants',
       explanation:
@@ -84,25 +84,25 @@ export const answerKey: AnswerKey = {
         hint: 'strawberry',
         answers: ['peel', 'bread', 'monkey', 'cheddar', 'grape'],
         correct: 'cheddar',
-        explanation: "Contains 'dd'",
+        explanation: "cheddar -> 'dd'",
       },
       {
         hint: 'pinnacle',
         answers: ['acme', 'mountain', 'climber', 'craggy', 'volcano'],
         correct: 'craggy',
-        explanation: "Contains 'gg'",
+        explanation: "craggy -> 'gg'",
       },
       {
         hint: 'baseball',
         answers: ['bat', 'strike', 'mitt', 'umpire', 'natural'],
         correct: 'mitt',
-        explanation: "Contains 'tt'",
+        explanation: "mitt -> 'tt'",
       },
       {
         hint: 'channel',
         answers: ['television', 'England', 'teller', 'loch', 'remote'],
         correct: 'teller',
-        explanation: "Contains 'll'",
+        explanation: "teller -> 'll'",
       },
     ],
   },
