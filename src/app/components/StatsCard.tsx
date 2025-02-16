@@ -43,6 +43,7 @@ interface AlertState {
 }
 
 export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
+  console.log('SCORE', scoreKeeper)
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
   const clipboardData = scoreKeeper.map((score) => {
     if (score === 1) {
@@ -217,13 +218,7 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
         <Button
           variant="outline"
           radius="lg"
-          style={{
-            margin: '30px auto',
-            // width: '50%',
-            border: '1.5px solid #4682b4',
-            color: 'black',
-            fontSize: '.9rem',
-          }}
+          className={css.shareResultsBtn}
           onClick={() => handleShare()}
         >
           Share Results

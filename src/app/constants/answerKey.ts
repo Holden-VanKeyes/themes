@@ -73,7 +73,7 @@ export const GAME_EMOJIS: GameMsgs = {
 }
 
 export const answerKey: AnswerKey = {
-  '20241117': {
+  '20250215': {
     rule: {
       pattern: 'Words with double consonants',
       explanation:

@@ -44,6 +44,9 @@
       background-color: $color-set4;
     }
   }
+  &.disabled {
+    background-color: #e0e0e0;
+  }
   &.hintRow {
     // background: linear-gradient(to left, #f0f8ff, #e6f3ff);
     // background-color: #4682b4;
@@ -65,11 +68,11 @@
     margin-right: 8px;
   }
 
-  .submitBtn {
-    margin-top: 10px;
-    width: 50%;
-    // margin: 0 auto;
-  }
+  // .submitBtn {
+  //   margin-top: 10px;
+  //   width: 50%;
+  //   // margin: 0 auto;
+  // }
 }
 
 // .row.hintRow {
@@ -79,3 +82,81 @@
 //   cursor: default;
 //   padding: 8px;
 // }
+.guessDots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+
+  .dot {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+
+    // Base state (unguessed)
+    &.unguessed {
+      background-color: #888888;
+    }
+
+    // Correct guess
+    &.correct {
+      background-color: #0ad904;
+    }
+
+    // Wrong guess
+    &.wrong {
+      background-color: #ff0000;
+    }
+
+    // Selected state - using your existing style patterns
+    &.selected {
+      box-shadow: 0 0 0 1.5px #fff, 0 0 0 3.5px #385f82;
+    }
+
+    // Icon styling
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      color: white;
+    }
+  }
+}
+
+.gameButton {
+  margin: 20px 0;
+  width: 40%;
+  height: 75%;
+  border: 1.5px solid #4682b4;
+  color: black;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: rgba(70, 130, 180, 0.1); // Light blue hover
+    border-color: #385f82; // Darker border on hover
+  }
+
+  &:disabled {
+    background-color: #cdcdcd; // More distinct gray
+    border-color: #9e9e9e; // Darker border
+    color: #757575; // Darker text
+    cursor: not-allowed;
+    opacity: 0.8; // Additional visual difference
+  }
+}
+
+.submitButton {
+  @extend .gameButton;
+  // Add any submit-specific styles
+}
+
+.nextButton {
+  @extend .gameButton;
+  // Add any next-specific styles
+}
