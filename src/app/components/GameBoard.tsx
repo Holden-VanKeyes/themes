@@ -8,19 +8,13 @@ import {
   Button,
   Modal,
   Title,
-  Card,
   ActionIcon,
   Group,
   Badge,
+  LoadingOverlay,
 } from '@mantine/core'
 import { StatsCard } from './StatsCard'
-import {
-  IconStarFilled,
-  IconRocket,
-  IconCheese,
-  IconX,
-  IconCheck,
-} from '@tabler/icons-react'
+import { IconX, IconCheck } from '@tabler/icons-react'
 import { useGameMode } from '../globalHelpers/GameMode'
 
 const date = new Date()
@@ -30,88 +24,71 @@ const today =
   String(date.getDate()).padStart(2, '0')
 const todaysGame = answerKey[today]
 
-interface ColorObj {
-  [key: number]: string
+interface GameState {
+  submittedSets: Record<number, number>
+  guessDotColors: Record<number, string>
+  scoreKeeper: number[]
+  gameAdvancer: number
+  lastPlayed: string
 }
-
-interface SubmittedSet {
-  setNumber: number
-  selectedRow: number
-}
-
-// 0 = incorrect | 1 = correct
-const scoreKeeper = [0, 0, 0, 0]
 
 export default function GameBoard() {
-  const [submittedSets, setSubmittedSets] = useState<Record<number, number>>({})
-  const [gameOver, setGameOver] = useState(false)
-  const [endGameModal, setEndGameModal] = useState(false)
-
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [gameState, setGameState] = useState<GameState>({
+    submittedSets: {},
+    guessDotColors: {
+      0: '#888888',
+      1: '#888888',
+      2: '#888888',
+      3: '#888888',
+    },
+    scoreKeeper: [0, 0, 0, 0],
+    gameAdvancer: 0,
+    lastPlayed: '',
+  })
   useEffect(() => {
-    // window.localStorage.clear()
-    // Load saved sets on mount
-    const savedSets = window.localStorage.getItem('submittedSets')
-    if (savedSets) {
-      setSubmittedSets(JSON.parse(savedSets))
-      const parsedSets = JSON.parse(savedSets)
-      if (Object.keys(parsedSets).length === 4) {
-        setGameOver(true)
-        setEndGameModal(true)
+    const initGame = () => {
+      const savedGame = window.localStorage.getItem('gameState')
+      const lastPlayed = window.localStorage.getItem('lastPlayed')
+      console.log('RUN', savedGame)
+
+      // If it's a new day or no saved game, return fresh state
+      if (lastPlayed !== today || !savedGame) {
+        window.localStorage.clear()
+        window.localStorage.setItem('lastPlayed', today)
+        return
       }
+
+      // Return saved game state
+      const parsedState = JSON.parse(savedGame)
+      setGameState(parsedState)
+      setIsInitialized(true)
     }
+    initGame()
   }, [])
 
-  useEffect(() => {
-    if (Object.keys(submittedSets).length === 0) return
-
-    const lastPlayed = window.localStorage.getItem('lastGamePlayed')
-    if (today !== lastPlayed) {
-      window.localStorage.clear()
-      // setSubmittedSets({})
-      window.localStorage.setItem('lastGamePlayed', today)
-
-      return
-    }
-
-    window.localStorage.setItem('submittedSets', JSON.stringify(submittedSets))
-  }, [submittedSets])
-
-  // useEffect(() => {
-  //   console.log('I RAN', Object.entries(submittedSets).length)
-  //   if (Object.entries(submittedSets).length === 4) {
-  //     console.log('THIS SHOULD FIRE')
-  //     setGameOver(true)
-  //     setEndGameModal(true)
-  //     return
-  //   }
-  // }, [])
+  const [gameOver, setGameOver] = useState(false)
+  const [endGameModal, setEndGameModal] = useState(false)
+  const [selected, setSelected] = useState(0)
+  const { isEasyMode } = useGameMode()
 
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
-
-  const [selected, setSelected] = useState(0)
-  const [gameAdvancer, setGameAdvancer] = useState(0)
-  const { isEasyMode } = useGameMode()
-  const [guessDotColors, setGuessDotColors] = useState<ColorObj>({
-    0: '#888888',
-    1: '#888888',
-    2: '#888888',
-    3: '#888888',
-  })
-
-  const correctAnswer = todaysGame.sets[gameAdvancer].correct
-  const hint = todaysGame.sets[gameAdvancer].hint
-  const answerSet = todaysGame.sets[gameAdvancer].answers
-  // const gamePattern = todaysGame.rule.pattern
-  // const gameExplain = todaysGame.sets[gameAdvancer].explanation
-
+  const correctAnswer = todaysGame.sets[gameState.gameAdvancer].correct
+  const hint = todaysGame.sets[gameState.gameAdvancer].hint
+  const answerSet = todaysGame.sets[gameState.gameAdvancer].answers
   const highlightAnswer = isEasyMode ? answerSet.indexOf(correctAnswer) : null
-
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
+  // Save game state whenever it changes
+  useEffect(() => {
+    if (!isInitialized) return
+    localStorage.setItem('gameState', JSON.stringify(gameState))
+  }, [gameState])
+
   const handleGuessSelect = (indx: number) => {
-    if (gameOver || gameAdvancer in submittedSets) {
+    if (gameOver || gameState.gameAdvancer in gameState.submittedSets) {
       return
     }
     setSelected(indx + 1)
@@ -119,24 +96,24 @@ export default function GameBoard() {
 
   const makeGrid = (indx: number) => {
     useEffect(() => {
-      if (!(gameAdvancer in submittedSets)) {
+      if (!(gameState.gameAdvancer in gameState.submittedSets)) {
         setSelected(0)
       } else {
-        setSelected(submittedSets[gameAdvancer])
+        setSelected(gameState.submittedSets[gameState.gameAdvancer])
       }
-    }, [gameAdvancer])
-
+    }, [gameState.gameAdvancer])
     return (
       <div
         key={indx}
         className={`${css.row} ${selected === indx + 1 ? css.selected : ''} ${
-          submittedSets[gameAdvancer] ? css.disabled : ''
+          gameState.submittedSets[gameState.gameAdvancer] ? css.disabled : ''
         } ${
-          highlightAnswer === indx && submittedSets[gameAdvancer]
+          highlightAnswer === indx &&
+          gameState.submittedSets[gameState.gameAdvancer]
             ? css.highlightAnswer
             : ''
         }`}
-        id={'set' + `${gameAdvancer + 1}`}
+        id={'set' + `${gameState.gameAdvancer + 1}`}
         onClick={() => handleGuessSelect(indx)}
       >
         <Title key={indx} order={2}>
@@ -146,45 +123,52 @@ export default function GameBoard() {
     )
   }
 
+  const updateGameState = (updates: Partial<GameState>) => {
+    setGameState((prev) => ({
+      ...prev,
+      ...updates,
+    }))
+  }
+
   const checkAnswer = () => {
+    const userSelection = answerSet[selected - 1]
+    const newGameState = { ...gameState }
     //keep track of sets user has answered in a submittedSets obj where:
     //key = set they answered and value = selected answer
-    setSubmittedSets((prev) => ({ ...prev, [gameAdvancer]: selected }))
+    newGameState.submittedSets[gameState.gameAdvancer] = selected
 
     //check if there are 4 submittedSets (total possible)
-    if (Object.entries(submittedSets).length === 3) {
+    if (Object.entries(gameState.submittedSets).length === 4) {
       setGameOver(true)
       setEndGameModal(true)
     }
 
-    //handles allowing user to open/clos stats modal after game is over
+    //handles allowing user to open/close stats modal after game is over
     if (gameOver) {
       setEndGameModal(!endGameModal)
       return
     }
 
-    const userSelection = answerSet[selected - 1]
-
     if (userSelection === correctAnswer) {
-      scoreKeeper[gameAdvancer] = 1
-      setGuessDotColors((prev) => ({ ...prev, [gameAdvancer]: greenDot }))
+      newGameState.scoreKeeper[gameState.gameAdvancer] = 1
+      newGameState.guessDotColors[gameState.gameAdvancer] = greenDot
     } else {
-      setGuessDotColors((prev) => ({ ...prev, [gameAdvancer]: redDot }))
+      newGameState.guessDotColors[gameState.gameAdvancer] = redDot
     }
 
-    if (gameAdvancer < 3) {
-      setGameAdvancer(gameAdvancer + 1)
-      return
+    if (gameState.gameAdvancer < 3) {
+      newGameState.gameAdvancer += 1
     } else {
-      setGameAdvancer(0)
+      newGameState.gameAdvancer = 0
     }
+    updateGameState(newGameState)
   }
 
   const handleNext = () => {
-    if (gameAdvancer === 3) {
-      setGameAdvancer(0)
+    if (gameState.gameAdvancer === 3) {
+      updateGameState({ gameAdvancer: 0 })
       return
-    } else setGameAdvancer(gameAdvancer + 1)
+    } else updateGameState({ gameAdvancer: gameState.gameAdvancer + 1 })
   }
   return (
     <>
@@ -207,20 +191,25 @@ export default function GameBoard() {
             <ActionIcon
               className={`
              ${css.dot}
-              ${gameAdvancer === indx ? css.selected : ''}
-              ${guessDotColors[indx] === '#888888' ? css.unguessed : ''}
-              ${guessDotColors[indx] === greenDot ? css.correct : ''}
-              ${guessDotColors[indx] === redDot ? css.wrong : ''}
+              ${gameState.gameAdvancer === indx ? css.selected : ''}
+              ${
+                gameState.guessDotColors[indx] === '#888888'
+                  ? css.unguessed
+                  : ''
+              }
+              ${gameState.guessDotColors[indx] === greenDot ? css.correct : ''}
+              ${gameState.guessDotColors[indx] === redDot ? css.wrong : ''}
+
             `}
               key={indx}
               variant="filled"
               size="xs"
               radius="xl"
             >
-              {guessDotColors[indx] === greenDot && (
+              {gameState.guessDotColors[indx] === greenDot && (
                 <IconCheck className="w-3 h-3 text-white" />
               )}
-              {guessDotColors[indx] === redDot && (
+              {gameState.guessDotColors[indx] === redDot && (
                 <IconX className="w-3 h-3 text-white" />
               )}
             </ActionIcon>
@@ -239,7 +228,8 @@ export default function GameBoard() {
             disabled={
               gameOver
                 ? false
-                : selected === 0 || submittedSets[gameAdvancer]
+                : selected === 0 ||
+                  gameState.submittedSets[gameState.gameAdvancer]
                 ? true
                 : false
             }
@@ -278,7 +268,7 @@ export default function GameBoard() {
       >
         <StatsCard
           todaysGame={todaysGame}
-          scoreKeeper={scoreKeeper}
+          scoreKeeper={gameState.scoreKeeper}
           today={today}
         />
       </Modal>
