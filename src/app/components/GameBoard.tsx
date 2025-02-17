@@ -34,6 +34,7 @@ interface GameState {
 
 export default function GameBoard() {
   const [isInitialized, setIsInitialized] = useState(false)
+  const { isEasyMode } = useGameMode()
   const [gameState, setGameState] = useState<GameState>({
     submittedSets: {},
     guessDotColors: {
@@ -46,31 +47,9 @@ export default function GameBoard() {
     gameAdvancer: 0,
     lastPlayed: '',
   })
-  useEffect(() => {
-    const initGame = () => {
-      const savedGame = window.localStorage.getItem('gameState')
-      const lastPlayed = window.localStorage.getItem('lastPlayed')
-      console.log('RUN', savedGame)
-
-      // If it's a new day or no saved game, return fresh state
-      if (lastPlayed !== today || !savedGame) {
-        window.localStorage.clear()
-        window.localStorage.setItem('lastPlayed', today)
-        return
-      }
-
-      // Return saved game state
-      const parsedState = JSON.parse(savedGame)
-      setGameState(parsedState)
-      setIsInitialized(true)
-    }
-    initGame()
-  }, [])
-
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
-  const { isEasyMode } = useGameMode()
 
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
@@ -81,6 +60,26 @@ export default function GameBoard() {
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
+  useEffect(() => {
+    const initGame = () => {
+      const savedGame = window.localStorage.getItem('gameState')
+      const lastPlayed = window.localStorage.getItem('lastPlayed')
+
+      // If it's a new day or no saved game, return fresh state
+      if (lastPlayed !== today || !savedGame) {
+        window.localStorage.clear()
+        window.localStorage.setItem('lastPlayed', today)
+        setIsInitialized(true)
+        return
+      }
+
+      // Return saved game state
+      const parsedState = JSON.parse(savedGame)
+      setGameState(parsedState)
+      setIsInitialized(true)
+    }
+    initGame()
+  }, [])
   // Save game state whenever it changes
   useEffect(() => {
     if (!isInitialized) return
@@ -94,14 +93,14 @@ export default function GameBoard() {
     setSelected(indx + 1)
   }
 
+  useEffect(() => {
+    if (!(gameState.gameAdvancer in gameState.submittedSets)) {
+      setSelected(0)
+    } else {
+      setSelected(gameState.submittedSets[gameState.gameAdvancer])
+    }
+  }, [gameState.gameAdvancer])
   const makeGrid = (indx: number) => {
-    useEffect(() => {
-      if (!(gameState.gameAdvancer in gameState.submittedSets)) {
-        setSelected(0)
-      } else {
-        setSelected(gameState.submittedSets[gameState.gameAdvancer])
-      }
-    }, [gameState.gameAdvancer])
     return (
       <div
         key={indx}
@@ -157,9 +156,9 @@ export default function GameBoard() {
     }
 
     if (gameState.gameAdvancer < 3) {
-      newGameState.gameAdvancer += 1
+      isEasyMode ? null : (newGameState.gameAdvancer += 1)
     } else {
-      newGameState.gameAdvancer = 0
+      isEasyMode ? null : (newGameState.gameAdvancer = 0)
     }
     updateGameState(newGameState)
   }
@@ -173,83 +172,94 @@ export default function GameBoard() {
   return (
     <>
       <div className={css.gridBoard}>
-        <div className={css.setHeader}>
-          <div className={`${css.row} ${css.hintRow}`}>
-            <span className={css.hintPrefix}>hint:</span>
-            <Title order={3}>{hint.toUpperCase()}</Title>
-          </div>
-          {isEasyMode ? (
-            <Badge variant="outline" color="#59c9a5" size="sm" mt="xs">
-              Easy Mode On
-            </Badge>
-          ) : null}
-        </div>
-
-        {grid.map((_, indx) => makeGrid(indx))}
-        <Group justify="center" mt="10px" className={css.guessDots}>
-          {guessDots.map((_, indx) => (
-            <ActionIcon
-              className={`
-             ${css.dot}
-              ${gameState.gameAdvancer === indx ? css.selected : ''}
-              ${
-                gameState.guessDotColors[indx] === '#888888'
-                  ? css.unguessed
-                  : ''
-              }
-              ${gameState.guessDotColors[indx] === greenDot ? css.correct : ''}
-              ${gameState.guessDotColors[indx] === redDot ? css.wrong : ''}
-
-            `}
-              key={indx}
-              variant="filled"
-              size="xs"
-              radius="xl"
+        {!isInitialized ? (
+          <LoadingOverlay visible={true} />
+        ) : (
+          <>
+            <div className={css.setHeader}>
+              <div className={`${css.row} ${css.hintRow}`}>
+                <span className={css.hintPrefix}>hint:</span>
+                <Title order={3}>{hint.toUpperCase()}</Title>
+              </div>
+              {isEasyMode ? (
+                <Badge variant="outline" color="#59c9a5" size="sm" mt="xs">
+                  Easy Mode On
+                </Badge>
+              ) : null}
+            </div>
+            {grid.map((_, indx) => makeGrid(indx))}
+            <Group justify="center" mt="10px" className={css.guessDots}>
+              {guessDots.map((_, indx) => (
+                <ActionIcon
+                  className={`
+                    ${css.dot}
+                    ${gameState.gameAdvancer === indx ? css.selected : ''}
+                    ${
+                      gameState.guessDotColors[indx] === '#888888'
+                        ? css.unguessed
+                        : ''
+                    }
+                    ${
+                      gameState.guessDotColors[indx] === greenDot
+                        ? css.correct
+                        : ''
+                    }
+                    ${
+                      gameState.guessDotColors[indx] === redDot ? css.wrong : ''
+                    }
+                  `}
+                  key={indx}
+                  variant="filled"
+                  size="xs"
+                  radius="xl"
+                  onClick={() => updateGameState({ gameAdvancer: indx })}
+                >
+                  {gameState.guessDotColors[indx] === greenDot && (
+                    <IconCheck className="w-3 h-3 text-white" />
+                  )}
+                  {gameState.guessDotColors[indx] === redDot && (
+                    <IconX className="w-3 h-3 text-white" />
+                  )}
+                </ActionIcon>
+              ))}
+            </Group>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
             >
-              {gameState.guessDotColors[indx] === greenDot && (
-                <IconCheck className="w-3 h-3 text-white" />
-              )}
-              {gameState.guessDotColors[indx] === redDot && (
-                <IconX className="w-3 h-3 text-white" />
-              )}
-            </ActionIcon>
-          ))}
-        </Group>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Button
-            className={css.submitButton}
-            variant="outline"
-            radius="lg"
-            disabled={
-              gameOver
-                ? false
-                : selected === 0 ||
-                  gameState.submittedSets[gameState.gameAdvancer]
-                ? true
-                : false
-            }
-            onClick={() => {
-              checkAnswer()
-            }}
-          >
-            {gameOver ? 'View Results' : 'Submit'}
-          </Button>
-          <Button
-            className={css.nextButton}
-            variant="outline"
-            radius="lg"
-            onClick={() => {
-              handleNext()
-            }}
-          >
-            Next
-          </Button>
-        </div>
+              <Button
+                className={css.submitButton}
+                variant="outline"
+                radius="lg"
+                disabled={
+                  gameOver
+                    ? false
+                    : selected === 0 ||
+                      gameState.submittedSets[gameState.gameAdvancer]
+                    ? true
+                    : false
+                }
+                onClick={() => {
+                  checkAnswer()
+                }}
+              >
+                {gameOver ? 'View Results' : 'Submit'}
+              </Button>
+              <Button
+                className={css.nextButton}
+                variant="outline"
+                radius="lg"
+                onClick={() => {
+                  handleNext()
+                }}
+              >
+                Next
+              </Button>
+            </div>
+          </>
+        )}
       </div>
       <Modal
         opened={endGameModal}
