@@ -32,6 +32,7 @@ interface GameState {
   lastPlayed: string
   skips: number
 }
+export const dynamic = 'force-dynamic'
 
 export default function GameBoard() {
   const [isInitialized, setIsInitialized] = useState(false)
