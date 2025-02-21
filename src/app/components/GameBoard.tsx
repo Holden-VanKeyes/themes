@@ -23,7 +23,6 @@ const today =
   date.getFullYear() +
   String(date.getMonth() + 1).padStart(2, '0') +
   String(date.getDate()).padStart(2, '0')
-const todaysGame = answerKey[today]
 
 interface GameState {
   submittedSets: Record<number, number>
@@ -53,6 +52,7 @@ export default function GameBoard() {
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
+  const todaysGame = answerKey[today]
 
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
