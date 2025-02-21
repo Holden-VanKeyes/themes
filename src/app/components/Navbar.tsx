@@ -2,13 +2,13 @@
 import { useState } from 'react'
 import {
   Container,
-  Group,
-  Burger,
   Image,
+  Stack,
+  Button,
   ActionIcon,
   Box,
   Title,
-  Card,
+  Popover,
   Text,
   Modal,
   Switch,
@@ -16,17 +16,21 @@ import {
   ThemeIcon,
   rem,
   Badge,
+  em,
+  Flex,
 } from '@mantine/core'
 import {
   IconStarFilled,
   IconQuestionMark,
-  IconSquareDot,
-  IconBulb,
+  IconInfoCircle,
+  IconInfoSmall,
+  IconBrandPaypal,
+  IconCash,
   IconX,
   IconCheck,
   IconCircleFilled,
   IconArrowBigRightFilled,
-  IconEyeFilled,
+  IconCoffee,
   IconDiamondFilled,
 } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
@@ -35,6 +39,8 @@ import BoatersLogo from '../assets/boaters-logo.svg'
 import css from './Navbar.module.css'
 import Link from 'next/link'
 import { useGameMode } from '../globalHelpers/GameMode'
+import { useMediaQuery } from '@mantine/hooks'
+import { useScrollIntoView } from '@mantine/hooks'
 
 const links = [
   { link: '/marketplace', label: 'Dock Users' },
@@ -47,6 +53,8 @@ export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
   const { isEasyMode, toggleGameMode } = useGameMode()
+  const [paypalOpened, setPaypalOpened] = useState(false)
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
   const [active, setActive] = useState(links[0].link)
 
@@ -68,26 +76,91 @@ export function Navbar() {
     <>
       <Box className={css.header}>
         <div className={css.inner}>
-          {/* <MantineLogo size={28} /> */}
-          {/* <Title order={2}>THEMES</Title> */}
+          <div className={css.leftSection}>
+            <Popover width={200} position="bottom" withArrow shadow="md">
+              <Popover.Target>
+                <Button
+                  variant="outline"
+                  leftSection={<IconCoffee size={16} />}
+                  size="sm"
+                  mr="md"
+                >
+                  Support The Game
+                </Button>
+              </Popover.Target>
+              <Popover.Dropdown>
+                <Stack gap="xs">
+                  <Text size="sm" fw={500} ta="center">
+                    Thanks for playing!
+                  </Text>
+                  <Text size="xs" color="dimmed" ta="center">
+                    Your support helps keep the game running
+                  </Text>
+                  <Button
+                    onClick={() => {
+                      setPaypalOpened(true)
+                    }}
+                    fullWidth
+                    variant="outline"
+                    leftSection={<IconBrandPaypal size={16} />}
+                    size="sm"
+                  >
+                    PayPal
+                  </Button>
+                  <Button
+                    component="a"
+                    href="https://venmo.com/u/Abram-Shook"
+                    target="_blank"
+                    fullWidth
+                    variant="outline"
+                    leftSection={<IconCash size={16} />}
+                    size="sm"
+                  >
+                    Venmo
+                  </Button>
+                </Stack>
+              </Popover.Dropdown>
+            </Popover>
+          </div>
 
-          {/* <Group gap={5} visibleFrom="xs">
-          {items}
-        </Group> */}
-
-          <ActionIcon
-            variant="outline"
-            radius="lg"
-            className={css.rules}
-            onClick={toggle}
-          >
-            <IconQuestionMark />
-          </ActionIcon>
+          <div className={css.rightSection}>
+            <ActionIcon
+              variant="outline"
+              radius="lg"
+              className={css.rules}
+              onClick={toggle}
+            >
+              <IconQuestionMark />
+            </ActionIcon>
+          </div>
 
           {/* <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" /> */}
         </div>
       </Box>
-      <Modal opened={opened} onClose={toggle} fullScreen>
+      <>
+        <Modal
+          opened={paypalOpened}
+          onClose={() => setPaypalOpened(false)}
+          title="Scan to support via PayPal"
+          centered
+          zIndex={1000}
+        >
+          <Image
+            src="/images/paypalQR.jpg"
+            alt="PayPal QR Code"
+            // fit="contain"
+          />
+          <Text size="sm" c="dimmed" ta="center" mt="md">
+            Thank you for your support!
+          </Text>
+        </Modal>
+      </>
+
+      <Modal
+        opened={opened}
+        onClose={toggle}
+        fullScreen={isMobile ? true : false}
+      >
         <Title order={2} fw={700} className={css.title}>
           Game Play
         </Title>

@@ -12,6 +12,7 @@ import {
   Group,
   Badge,
   LoadingOverlay,
+  Center,
 } from '@mantine/core'
 import { StatsCard } from './StatsCard'
 import { IconX, IconCheck } from '@tabler/icons-react'
@@ -30,6 +31,7 @@ interface GameState {
   scoreKeeper: number[]
   gameAdvancer: number
   lastPlayed: string
+  skips: number
 }
 
 export default function GameBoard() {
@@ -46,6 +48,7 @@ export default function GameBoard() {
     scoreKeeper: [0, 0, 0, 0],
     gameAdvancer: 0,
     lastPlayed: '',
+    skips: 0,
   })
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
@@ -61,6 +64,7 @@ export default function GameBoard() {
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
   useEffect(() => {
+    window.localStorage.clear()
     const initGame = () => {
       const savedGame = window.localStorage.getItem('gameState')
       const lastPlayed = window.localStorage.getItem('lastPlayed')
@@ -162,8 +166,9 @@ export default function GameBoard() {
     }
     updateGameState(newGameState)
   }
-
   const handleNext = () => {
+    updateGameState({ skips: gameState.skips + 1 })
+
     if (gameState.gameAdvancer === 3) {
       updateGameState({ gameAdvancer: 0 })
       return
@@ -212,7 +217,10 @@ export default function GameBoard() {
                   variant="filled"
                   size="xs"
                   radius="xl"
-                  onClick={() => updateGameState({ gameAdvancer: indx })}
+                  onClick={() => {
+                    updateGameState({ gameAdvancer: indx })
+                    updateGameState({ skips: gameState.skips + 1 })
+                  }}
                 >
                   {gameState.guessDotColors[indx] === greenDot && (
                     <IconCheck className="w-3 h-3 text-white" />
@@ -223,10 +231,16 @@ export default function GameBoard() {
                 </ActionIcon>
               ))}
             </Group>
+            <Center>
+              <Badge variant="outline" color="#4682b4" size="sm" mt="xs">
+                Skips: +{gameState.skips}
+              </Badge>
+            </Center>
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
+                alignItems: 'center',
               }}
             >
               <Button
