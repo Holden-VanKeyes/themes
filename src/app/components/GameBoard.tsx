@@ -32,7 +32,7 @@ interface GameState {
   lastPlayed: string
   skips: number
 }
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 export default function GameBoard() {
   const [isInitialized, setIsInitialized] = useState(false)
@@ -53,7 +53,8 @@ export default function GameBoard() {
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
-  const todaysGame = answerKey[today]
+  const fallbackGame = answerKey['20250220']
+  const todaysGame = answerKey[today] || fallbackGame
 
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
