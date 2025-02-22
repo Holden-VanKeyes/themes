@@ -53,7 +53,6 @@ export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
   const { isEasyMode, toggleGameMode } = useGameMode()
-  const [paypalOpened, setPaypalOpened] = useState(false)
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
   const [active, setActive] = useState(links[0].link)
@@ -77,52 +76,18 @@ export function Navbar() {
       <Box className={css.header}>
         <div className={css.inner}>
           <div className={css.leftSection}>
-            <Popover width={200} position="bottom" withArrow shadow="md">
-              <Popover.Target>
-                <Button
-                  variant="outline"
-                  leftSection={<IconCoffee size={16} />}
-                  size="sm"
-                  mr="md"
-                >
-                  Support The Game
-                </Button>
-              </Popover.Target>
-              <Popover.Dropdown>
-                <Stack gap="xs">
-                  <Text size="sm" fw={500} ta="center">
-                    Thanks for playing!
-                  </Text>
-                  <Text size="xs" color="dimmed" ta="center">
-                    Your support helps keep the game running
-                  </Text>
-                  <Button
-                    onClick={() => {
-                      setPaypalOpened(true)
-                    }}
-                    fullWidth
-                    variant="outline"
-                    leftSection={<IconBrandPaypal size={16} />}
-                    size="sm"
-                  >
-                    PayPal
-                  </Button>
-                  <Button
-                    component="a"
-                    href="https://venmo.com/u/Abram-Shook"
-                    target="_blank"
-                    fullWidth
-                    variant="outline"
-                    leftSection={<IconCash size={16} />}
-                    size="sm"
-                  >
-                    Venmo
-                  </Button>
-                </Stack>
-              </Popover.Dropdown>
-            </Popover>
+            <Button
+              component="a"
+              href="https://www.paypal.com/ncp/payment/E5JPA56Y4TU82"
+              target="_blank"
+              variant="outline"
+              leftSection={<IconCoffee size={16} />}
+              size="sm"
+              mr="md"
+            >
+              Support The Game
+            </Button>
           </div>
-
           <div className={css.rightSection}>
             <ActionIcon
               variant="outline"
@@ -133,28 +98,9 @@ export function Navbar() {
               <IconQuestionMark />
             </ActionIcon>
           </div>
-
-          {/* <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" /> */}
         </div>
       </Box>
-      <>
-        <Modal
-          opened={paypalOpened}
-          onClose={() => setPaypalOpened(false)}
-          title="Scan to support via PayPal"
-          centered
-          zIndex={1000}
-        >
-          <Image
-            src="/images/paypalQR.jpg"
-            alt="PayPal QR Code"
-            // fit="contain"
-          />
-          <Text size="sm" c="dimmed" ta="center" mt="md">
-            Thank you for your support!
-          </Text>
-        </Modal>
-      </>
+      <></>
 
       <Modal
         opened={opened}
@@ -300,8 +246,6 @@ export function Navbar() {
               </Text>
             </List.Item>
           </List>
-          {/* </List.Item>
-          </List> */}
         </div>
 
         <div className={css.example}>

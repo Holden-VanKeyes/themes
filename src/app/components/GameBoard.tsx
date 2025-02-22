@@ -32,7 +32,9 @@ interface GameState {
   lastPlayed: string
   skips: number
 }
-// export const dynamic = 'force-dynamic'
+interface SkipState {
+  [key: number]: boolean
+}
 
 export default function GameBoard() {
   const [isInitialized, setIsInitialized] = useState(false)
@@ -50,9 +52,16 @@ export default function GameBoard() {
     lastPlayed: '',
     skips: 0,
   })
+  const [skipState, setSkipState] = useState<SkipState>({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+  })
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
+  const [justSubmitted, setJustSubmitted] = useState(false)
   const fallbackGame = answerKey['20250220']
   const todaysGame = answerKey[today] || fallbackGame
 
@@ -136,6 +145,7 @@ export default function GameBoard() {
   }
 
   const checkAnswer = () => {
+    setJustSubmitted(true)
     const userSelection = answerSet[selected - 1]
     const newGameState = { ...gameState }
     //keep track of sets user has answered in a submittedSets obj where:
@@ -161,20 +171,67 @@ export default function GameBoard() {
       newGameState.guessDotColors[gameState.gameAdvancer] = redDot
     }
 
-    if (gameState.gameAdvancer < 3) {
-      isEasyMode ? null : (newGameState.gameAdvancer += 1)
-    } else {
-      isEasyMode ? null : (newGameState.gameAdvancer = 0)
-    }
+    // if (gameState.gameAdvancer < 3) {
+    //   isEasyMode ? null : (newGameState.gameAdvancer += 1)
+    // } else {
+    //   isEasyMode ? null : (newGameState.gameAdvancer = 0)
+    // }
     updateGameState(newGameState)
   }
-  const handleNext = () => {
-    updateGameState({ skips: gameState.skips + 1 })
 
-    if (gameState.gameAdvancer === 3) {
+  //1st time nexting from an answered set then change to true - next time if true then add a skip
+  //if the gameSet you're on has already been answered then do nothing - don't add skips when landing on answered set
+  //consider not charging skip if all but one answered
+  const handleNext = () => {
+    const localPosition =
+      gameState.gameAdvancer === 3 ? 0 : gameState.gameAdvancer + 1
+    if (localPosition === 0) {
       updateGameState({ gameAdvancer: 0 })
-      return
     } else updateGameState({ gameAdvancer: gameState.gameAdvancer + 1 })
+
+    // if (gameState.submittedSets[localPosition]) {
+
+    // }
+    console.log(justSubmitted)
+    if (justSubmitted || gameState.submittedSets[localPosition]) {
+      setJustSubmitted(false)
+    } else {
+      updateGameState({ skips: gameState.skips + 1 })
+      setJustSubmitted(false)
+    }
+    return
+    //don't add skip if they've answered the set they land on
+
+    // if (
+    //   gameState.submittedSets[gameState.gameAdvancer] &&
+    //   !skipState[gameState.gameAdvancer]
+    // ) {
+    //   setSkipState({
+    //     ...skipState,
+    //     [gameState.gameAdvancer]: true,
+    //   })
+    //   return
+    // } else updateGameState({ skips: gameState.skips + 1 })
+  }
+  //TODO - get this working so users can also toggle by dots and not just skip
+  const handleSkips = (indx: number) => {
+    updateGameState({ gameAdvancer: indx })
+    if (gameState.submittedSets[indx] || justSubmitted) {
+      setJustSubmitted(false)
+    } else {
+      updateGameState({ skips: gameState.skips + 1 })
+      setJustSubmitted(false)
+    }
+
+    // if (!skipState[indx] && gameState.submittedSets[indx - 1]) {
+    //   setSkipState({
+    //     ...skipState,
+    //     [indx]: true,
+    //   })
+    //   return
+    // }
+
+    // updateGameState({ skips: gameState.skips + 1 })
   }
   return (
     <>
@@ -219,10 +276,7 @@ export default function GameBoard() {
                   variant="filled"
                   size="xs"
                   radius="xl"
-                  onClick={() => {
-                    updateGameState({ gameAdvancer: indx })
-                    updateGameState({ skips: gameState.skips + 1 })
-                  }}
+                  onClick={() => handleSkips(indx)}
                 >
                   {gameState.guessDotColors[indx] === greenDot && (
                     <IconCheck className="w-3 h-3 text-white" />

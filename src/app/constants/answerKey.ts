@@ -505,33 +505,34 @@ export const answerKey: AnswerKey = {
   },
   '20241129': {
     rule: {
-      pattern: 'Vowel swap',
-      explanation: 'Change a vowel for new word',
+      pattern: 'Subtract To Make New',
+      explanation:
+        'Remove letters from the end of the hint and pair with answer to get something else',
     },
     sets: [
       {
-        hint: 'Crush',
-        answers: ['Candy', 'Craving', 'Crash', 'Clobber', 'Crunch'],
-        correct: 'Crash',
-        explanation: 'u → a',
+        hint: 'Guard',
+        answers: ['Mint', 'Breath', 'Toothpaste', 'Mouthwash', 'Gum'],
+        correct: 'Gum',
+        explanation: 'Guard - d = Guar Gum',
       },
       {
-        hint: 'Sweet',
-        answers: ['Swell', 'Swear', 'Sweat', 'Swoon', 'Swipe'],
-        correct: 'Sweat',
-        explanation: 'e → a',
+        hint: 'Highlight',
+        answers: ['Times', 'Plus', 'Minus', 'Sine', 'Equals'],
+        correct: 'Times',
+        explanation: 'Highlight - light = High Times (magazine)',
       },
       {
-        hint: 'Knit',
-        answers: ['Naught', 'Knot', 'Not', 'Knife', 'Knight'],
-        correct: 'Knot',
-        explanation: 'i → o',
+        hint: 'Freeway',
+        answers: ['Electrician', 'Plumber', 'Framer', 'Mason', 'Boss'],
+        correct: 'Mason',
+        explanation: 'Freeway - way = Free Mason',
       },
       {
-        hint: 'Flush',
-        answers: ['Film', 'Fluster', 'Fling', 'Fresh', 'Flash'],
-        correct: 'Flash',
-        explanation: 'u → a',
+        hint: 'Brief',
+        answers: ['Smile', 'Cheese', 'Pose', 'Grin', 'Laugh'],
+        correct: 'Cheese',
+        explanation: 'Brief - f = Brie Cheese',
       },
     ],
   },
@@ -977,7 +978,105 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
+  '20241211': {
+    rule: {
+      pattern: 'Hidden Public Figures',
+      explanation:
+        'Remove letters from the end of the hint and pair with answer to get a public figure',
+    },
+    sets: [
+      {
+        hint: 'Rude',
+        answers: ['John', 'Paul', 'George', 'Ringo', 'Billy'],
+        correct: 'Paul',
+        explanation: 'Rude - de = RuPaul',
+      },
+      {
+        hint: 'Question',
+        answers: ['Happiness', 'Live', 'Laugh', 'Love', 'Hate'],
+        correct: 'Love',
+        explanation: 'Question - ion = Quest Love',
+      },
+      {
+        hint: 'Tomato',
+        answers: ['Green', 'Red', 'Cherry', 'Plum', 'Paste'],
+        correct: 'Green',
+        explanation: 'Tomato - ato = Tom Green',
+      },
+      {
+        hint: 'Abetted',
+        answers: ['Kennedy', 'Reagan', 'Nixon', 'Taft', 'Lincoln'],
+        correct: 'Lincoln',
+        explanation: 'Abetted - tted = Abe Lincoln',
+      },
+    ],
+  },
+  '20241212': {
+    rule: {
+      pattern: 'Vowel swap',
+      explanation: 'Change a vowel for new word',
+    },
+    sets: [
+      {
+        hint: 'Crush',
+        answers: ['Candy', 'Craving', 'Crash', 'Clobber', 'Crunch'],
+        correct: 'Crash',
+        explanation: 'u → a',
+      },
+      {
+        hint: 'Sweet',
+        answers: ['Swell', 'Swear', 'Sweat', 'Swoon', 'Swipe'],
+        correct: 'Sweat',
+        explanation: 'e → a',
+      },
+      {
+        hint: 'Knit',
+        answers: ['Naught', 'Knot', 'Not', 'Knife', 'Knight'],
+        correct: 'Knot',
+        explanation: 'i → o',
+      },
+      {
+        hint: 'Flush',
+        answers: ['Film', 'Fluster', 'Fling', 'Fresh', 'Flash'],
+        correct: 'Flash',
+        explanation: 'u → a',
+      },
+    ],
+  },
 }
+
+// '20241201': {
+//     rule: {
+//       pattern: '',
+//       explanation: '',
+//     },
+//     sets: [
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//     ],
+//   },
 // the first 2 letters of the hint reference a state abbreviation and the answer is a neighboring state of the hint
 //  -- Arrange & Laugh (Arkansas | Louisiana)
 //  -- Insert & Illicit (Indiana | Illinois) -- Gain & Scar (Georgia | South Carolina)
