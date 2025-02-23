@@ -31,14 +31,12 @@ interface GameState {
   gameAdvancer: number
   lastPlayed: string
   skips: number
-}
-interface SkipState {
-  [key: number]: boolean
+  hardMode: boolean
 }
 
 export default function GameBoard() {
   const [isInitialized, setIsInitialized] = useState(false)
-  const { isEasyMode } = useGameMode()
+  const { isHardMode, setIsLocked, isLocked } = useGameMode()
   const [gameState, setGameState] = useState<GameState>({
     submittedSets: {},
     guessDotColors: {
@@ -51,13 +49,9 @@ export default function GameBoard() {
     gameAdvancer: 0,
     lastPlayed: '',
     skips: 0,
+    hardMode: isHardMode,
   })
-  const [skipState, setSkipState] = useState<SkipState>({
-    0: false,
-    1: false,
-    2: false,
-    3: false,
-  })
+
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
@@ -70,12 +64,11 @@ export default function GameBoard() {
   const correctAnswer = todaysGame.sets[gameState.gameAdvancer].correct
   const hint = todaysGame.sets[gameState.gameAdvancer].hint
   const answerSet = todaysGame.sets[gameState.gameAdvancer].answers
-  const highlightAnswer = isEasyMode ? answerSet.indexOf(correctAnswer) : null
+  const highlightAnswer = !isHardMode ? answerSet.indexOf(correctAnswer) : null
   const grid = new Array(5).fill(0).map((_, indx) => indx + 1)
   const guessDots = new Array(4).fill(0).map((_, indx) => indx + 1)
 
   useEffect(() => {
-    window.localStorage.clear()
     const initGame = () => {
       const savedGame = window.localStorage.getItem('gameState')
       const lastPlayed = window.localStorage.getItem('lastPlayed')
@@ -95,11 +88,31 @@ export default function GameBoard() {
     }
     initGame()
   }, [])
+
+  useEffect(() => {
+    setGameState((prev) => ({
+      ...prev,
+      hardMode: isHardMode,
+    }))
+  }, [isHardMode])
+
   // Save game state whenever it changes
   useEffect(() => {
     if (!isInitialized) return
+    if (Object.keys(gameState.submittedSets).length > 0 && !isLocked) {
+      setIsLocked(true)
+    }
     localStorage.setItem('gameState', JSON.stringify(gameState))
   }, [gameState])
+
+  useEffect(() => {
+    if (isInitialized && Object.keys(gameState.submittedSets).length > 0) {
+      const fromStorage = gameState.submittedSets[gameState.gameAdvancer]
+      if (fromStorage) {
+        setSelected(fromStorage)
+      }
+    }
+  }, [isInitialized])
 
   const handleGuessSelect = (indx: number) => {
     if (gameOver || gameState.gameAdvancer in gameState.submittedSets) {
@@ -115,6 +128,7 @@ export default function GameBoard() {
       setSelected(gameState.submittedSets[gameState.gameAdvancer])
     }
   }, [gameState.gameAdvancer])
+
   const makeGrid = (indx: number) => {
     return (
       <div
@@ -146,6 +160,7 @@ export default function GameBoard() {
 
   const checkAnswer = () => {
     setJustSubmitted(true)
+
     const userSelection = answerSet[selected - 1]
     const newGameState = { ...gameState }
     //keep track of sets user has answered in a submittedSets obj where:
@@ -171,11 +186,6 @@ export default function GameBoard() {
       newGameState.guessDotColors[gameState.gameAdvancer] = redDot
     }
 
-    // if (gameState.gameAdvancer < 3) {
-    //   isEasyMode ? null : (newGameState.gameAdvancer += 1)
-    // } else {
-    //   isEasyMode ? null : (newGameState.gameAdvancer = 0)
-    // }
     updateGameState(newGameState)
   }
 
@@ -189,10 +199,6 @@ export default function GameBoard() {
       updateGameState({ gameAdvancer: 0 })
     } else updateGameState({ gameAdvancer: gameState.gameAdvancer + 1 })
 
-    // if (gameState.submittedSets[localPosition]) {
-
-    // }
-    console.log(justSubmitted)
     if (justSubmitted || gameState.submittedSets[localPosition]) {
       setJustSubmitted(false)
     } else {
@@ -200,20 +206,7 @@ export default function GameBoard() {
       setJustSubmitted(false)
     }
     return
-    //don't add skip if they've answered the set they land on
-
-    // if (
-    //   gameState.submittedSets[gameState.gameAdvancer] &&
-    //   !skipState[gameState.gameAdvancer]
-    // ) {
-    //   setSkipState({
-    //     ...skipState,
-    //     [gameState.gameAdvancer]: true,
-    //   })
-    //   return
-    // } else updateGameState({ skips: gameState.skips + 1 })
   }
-  //TODO - get this working so users can also toggle by dots and not just skip
   const handleSkips = (indx: number) => {
     updateGameState({ gameAdvancer: indx })
     if (gameState.submittedSets[indx] || justSubmitted) {
@@ -222,16 +215,6 @@ export default function GameBoard() {
       updateGameState({ skips: gameState.skips + 1 })
       setJustSubmitted(false)
     }
-
-    // if (!skipState[indx] && gameState.submittedSets[indx - 1]) {
-    //   setSkipState({
-    //     ...skipState,
-    //     [indx]: true,
-    //   })
-    //   return
-    // }
-
-    // updateGameState({ skips: gameState.skips + 1 })
   }
   return (
     <>
@@ -245,9 +228,9 @@ export default function GameBoard() {
                 <span className={css.hintPrefix}>hint:</span>
                 <Title order={3}>{hint.toUpperCase()}</Title>
               </div>
-              {isEasyMode ? (
-                <Badge variant="outline" color="#59c9a5" size="sm" mt="xs">
-                  Easy Mode On
+              {isHardMode ? (
+                <Badge variant="outline" color="#C5283D" size="sm" mt="xs">
+                  Hard Mode On
                 </Badge>
               ) : null}
             </div>
@@ -304,7 +287,7 @@ export default function GameBoard() {
                 variant="outline"
                 radius="lg"
                 disabled={
-                  gameOver
+                  Object.keys(gameState.submittedSets).length === 4
                     ? false
                     : selected === 0 ||
                       gameState.submittedSets[gameState.gameAdvancer]
@@ -315,7 +298,9 @@ export default function GameBoard() {
                   checkAnswer()
                 }}
               >
-                {gameOver ? 'View Results' : 'Submit'}
+                {Object.keys(gameState.submittedSets).length === 4
+                  ? 'View Results'
+                  : 'Submit'}
               </Button>
               <Button
                 className={css.nextButton}
@@ -350,6 +335,7 @@ export default function GameBoard() {
           todaysGame={todaysGame}
           scoreKeeper={gameState.scoreKeeper}
           today={today}
+          skips={gameState.skips}
         />
       </Modal>
     </>

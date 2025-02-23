@@ -3,7 +3,7 @@ import { useState } from 'react'
 import {
   Container,
   Image,
-  Stack,
+  Group,
   Button,
   ActionIcon,
   Box,
@@ -52,7 +52,7 @@ const links = [
 export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
-  const { isEasyMode, toggleGameMode } = useGameMode()
+  const { isHardMode, toggleGameMode, isLocked } = useGameMode()
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
   const [active, setActive] = useState(links[0].link)
@@ -249,38 +249,44 @@ export function Navbar() {
         </div>
 
         <div className={css.example}>
-          <Switch
-            styles={{
-              track: { cursor: 'pointer' },
-            }}
-            size="lg"
-            color="teal"
-            m="sm"
-            aria-label="easy mode toggle"
-            radius="lg"
-            checked={isEasyMode}
-            onLabel="ON"
-            offLabel="OFF"
-            onChange={toggleGameMode}
-            thumbIcon={
-              checked ? (
-                <IconCheck
-                  style={{ width: rem(18), height: rem(18) }}
-                  color="green"
-                  stroke={3}
-                />
-              ) : (
-                <IconX
-                  style={{ width: rem(18), height: rem(18) }}
-                  color="grey"
-                  stroke={3}
-                />
-              )
-            }
-          />
+          <Group gap="xs">
+            <Switch
+              disabled={isLocked}
+              styles={{
+                track: { cursor: 'pointer' },
+              }}
+              size="lg"
+              color="teal"
+              m="xs"
+              aria-label="hard mode toggle"
+              radius="lg"
+              checked={isHardMode}
+              onLabel="ON"
+              offLabel="OFF"
+              onChange={toggleGameMode}
+              thumbIcon={
+                checked ? (
+                  <IconCheck
+                    style={{ width: rem(18), height: rem(18) }}
+                    stroke={3}
+                  />
+                ) : (
+                  <IconX
+                    style={{ width: rem(18), height: rem(18) }}
+                    stroke={3}
+                  />
+                )
+              }
+            />
+            {isLocked && (
+              <Text size="xs" c="dimmed" style={{ fontStyle: 'italic' }}>
+                Mode locked after game play begins
+              </Text>
+            )}
+          </Group>
           <Text px="sm" py="xs">
-            Easy mode shows you the correct answer for each set after submitting
-            your guess.
+            In hard mode, correct answers are not revealed after guessing, and
+            viewing any set (even completed ones) counts as a skip.
           </Text>
         </div>
       </Modal>

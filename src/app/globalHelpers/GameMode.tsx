@@ -1,14 +1,18 @@
 'use client'
-import { useState, createContext, useContext } from 'react'
+import { useState, createContext, useContext, useEffect } from 'react'
 
 interface GameModeContextType {
-  isEasyMode: boolean
+  isHardMode: boolean
   toggleGameMode: () => void
+  isLocked: boolean
+  setIsLocked: (locked: boolean) => void
 }
 
 const GameModeContext = createContext<GameModeContextType>({
-  isEasyMode: false,
+  isHardMode: false,
   toggleGameMode: () => {},
+  isLocked: false,
+  setIsLocked: () => {},
 })
 
 export const GameModeProvider = ({
@@ -16,12 +20,42 @@ export const GameModeProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [isEasyMode, setIsEasyMode] = useState(false)
+  const [isHardMode, setIsHardMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      //   window.localStorage.clear()
+      const storedMode = localStorage.getItem('hardMode')
+      return storedMode === 'true'
+    }
+    return false
+  })
+  const [isLocked, setIsLocked] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const storedLocked = localStorage.getItem('modeLocked')
+      return storedLocked === 'true'
+    }
+    return false
+  })
+  const toggleGameMode = () => {
+    if (!isLocked) {
+      setIsHardMode((prev) => {
+        const newMode = !prev
+        localStorage.setItem('hardMode', newMode.toString())
+        return newMode
+      })
+    }
+  }
 
-  const toggleGameMode = () => setIsEasyMode((prev) => !prev)
+  // Update localStorage when lock state changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('modeLocked', isLocked.toString())
+    }
+  }, [isLocked])
 
   return (
-    <GameModeContext.Provider value={{ isEasyMode, toggleGameMode }}>
+    <GameModeContext.Provider
+      value={{ isHardMode, toggleGameMode, isLocked, setIsLocked }}
+    >
       {children}
     </GameModeContext.Provider>
   )

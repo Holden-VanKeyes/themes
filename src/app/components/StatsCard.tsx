@@ -12,7 +12,7 @@ import {
   ActionIcon,
   Notification,
   Alert,
-  Transition,
+  Badge,
 } from '@mantine/core'
 import {
   IconStarFilled,
@@ -35,6 +35,7 @@ interface GameProps {
   todaysGame: GameDay
   scoreKeeper: number[]
   today: string
+  skips: number
 }
 
 interface AlertState {
@@ -42,13 +43,17 @@ interface AlertState {
   show: boolean
 }
 
-export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
-  console.log('SCORE', scoreKeeper)
+export function StatsCard({
+  todaysGame,
+  scoreKeeper,
+  today,
+  skips,
+}: GameProps) {
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
   const clipboardData = scoreKeeper.map((score) => {
     if (score === 1) {
-      return '✅'
-    } else return '❌'
+      return '🟢'
+    } else return '⭕'
   })
   const isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent)
   const [clipboardAlert, setClipboardAlert] = useState<AlertState>({
@@ -76,7 +81,8 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
           `Themes - Game #${gameNumber}\n` +
             // '\n' +
             // `x ${numberOfGuesses} correct\n` +
-            clipboardData.join(' ')
+            `${clipboardData.join(' ')}\n` +
+            `Skips: ${skips}`
         )
         setClipboardAlert({
           type: 'success',
@@ -93,8 +99,11 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
     } else {
       try {
         await navigator.share({
-          title: `Themes - Game #${gameNumber}`,
-          text: `Themes - Game #${gameNumber}\n` + clipboardData.join(' '),
+          // title: `Themes - Game #${gameNumber}`,
+          text:
+            `Themes - Game #${gameNumber}\n` +
+            `${clipboardData.join(' ')}\n` +
+            `Skips: ${skips}`,
           // url: window.location.href,
         })
       } catch (error) {
@@ -191,6 +200,9 @@ export function StatsCard({ todaysGame, scoreKeeper, today }: GameProps) {
             {numberOfGuesses === 5 ? numberOfGuesses - 1 : numberOfGuesses}
           </Text>
         </Group> */}
+        <Badge variant="outline" color="#4682b4" size="sm" mt="xs">
+          Skips: +{skips}
+        </Badge>
 
         <div className={css.shareContainer}>
           <div
