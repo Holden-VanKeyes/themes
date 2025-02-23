@@ -106,7 +106,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241118': {
+  '20250223': {
     rule: {
       pattern: 'Things typically found or used in pairs',
       explanation:
@@ -140,7 +140,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241119': {
+  '20250224': {
     rule: {
       pattern:
         'Words that become different words when the last letter is removed',
@@ -174,7 +174,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241120': {
+  '20250225': {
     rule: {
       pattern: 'Words with different meanings based on pronunciation',
       explanation:
@@ -207,7 +207,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241121': {
+  '20250226': {
     rule: {
       pattern: 'A double vowel somewhere in the answer',
       explanation:
@@ -240,7 +240,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241122': {
+  '20250227': {
     rule: {
       pattern: 'Words containing animals',
       explanation: 'Each word has the name of an animal within the spelling',
@@ -272,7 +272,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241123': {
+  '20250228': {
     rule: {
       pattern: 'Words containing other 4-letter words',
       explanation:
@@ -305,7 +305,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241124': {
+  '20250301': {
     rule: {
       pattern: 'Popular shades of pink',
       explanation: 'all answers are a shade of pink',
@@ -343,7 +343,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241125': {
+  '20250302': {
     rule: {
       pattern: "Last names of 80's wrestlers",
       explanation: "The 80's were wild y'all!",
@@ -375,7 +375,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241126': {
+  '20250303': {
     rule: {
       pattern: 'Well known company acronyms',
       explanation:
@@ -432,7 +432,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241127': {
+  '20250304': {
     rule: {
       pattern: 'Types of chili pepper',
       explanation: '🌶️',
@@ -470,7 +470,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241128': {
+  '20250305': {
     rule: {
       pattern: 'State abbreviations',
       explanation:
@@ -503,7 +503,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241129': {
+  '20250306': {
     rule: {
       pattern: 'Subtract To Make New',
       explanation:
@@ -536,7 +536,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241130': {
+  '20250307': {
     rule: {
       pattern: 'Hairy Creatures',
       explanation: 'Famous hairy/furry creatures from another planet',
@@ -568,7 +568,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241131': {
+  '20250308': {
     rule: {
       pattern: 'Word associations',
       explanation:
@@ -625,7 +625,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241201': {
+  '20250309': {
     rule: {
       pattern: 'One removed',
       explanation: 'the hint and answer are tied together by a common word',
@@ -660,7 +660,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241202': {
+  '20250310': {
     rule: {
       pattern: 'One to the other',
       explanation: 'A word that connects hint to answer',
@@ -692,7 +692,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241203': {
+  '20250311': {
     rule: {
       pattern: 'hidden words associated with atlas/map',
       explanation:
@@ -725,7 +725,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241204': {
+  '20250312': {
     rule: {
       pattern: 'Missing connector',
       explanation: 'Each hint answer pair has a word that connects them',
@@ -757,7 +757,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241205': {
+  '20250313': {
     rule: {
       pattern: 'Popular acronyms',
       explanation:
@@ -816,7 +816,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241206': {
+  '20250314': {
     rule: {
       pattern: 'Missing link',
       explanation:
@@ -849,7 +849,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241207': {
+  '20250315': {
     rule: {
       pattern: 'Go Fish',
       explanation:
@@ -882,7 +882,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241208': {
+  '20250316': {
     rule: {
       pattern: 'Go Fish',
       explanation: 'Hint and answer start with the name of a fish',
@@ -914,7 +914,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241209': {
+  '20250317': {
     rule: {
       pattern: 'Hidden Trees',
       explanation: 'the name of a tree is hidden in hint and answer',
@@ -946,7 +946,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241210': {
+  '20250318': {
     rule: {
       pattern: 'Adam or Addams',
       explanation: 'associated with Adam or Addams',
@@ -978,7 +978,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241211': {
+  '20250319': {
     rule: {
       pattern: 'Hidden Public Figures',
       explanation:
@@ -1011,7 +1011,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20241212': {
+  '20250320': {
     rule: {
       pattern: 'Vowel swap',
       explanation: 'Change a vowel for new word',
