@@ -115,8 +115,8 @@ export const answerKey: AnswerKey = {
     sets: [
       {
         hint: 'ear',
-        answers: ['nose', 'nostril', 'finger', 'snot', 'hair'],
-        correct: 'nose',
+        answers: ['canal', 'nostril', 'worm', 'snot', 'hair'],
+        correct: 'nostril',
         explanation: 'We have two ears and two nostrils',
       },
       {
@@ -133,7 +133,7 @@ export const answerKey: AnswerKey = {
       },
       {
         hint: 'a turtle dove',
-        answers: ['a pear tree', 'christmas', 'boot', 'beard', 'reindeer'],
+        answers: ['a pear tree', 'christmas', 'boot', 'beard', 'santa'],
         correct: 'boot',
         explanation:
           'Boots are worn as a pair and Turtle Doves come in pairs in a famous Christmas song',
@@ -142,35 +142,34 @@ export const answerKey: AnswerKey = {
   },
   '20250224': {
     rule: {
-      pattern:
-        'Words that become different words when the last letter is removed',
+      pattern: 'Drop the last letter',
       explanation:
         'Remove the last letter of each correct answer to find another valid word',
     },
     sets: [
       {
         hint: 'paint',
-        answers: ['coat', 'hue', 'kind', 'color', 'plain'],
+        answers: ['coat', 'hue', 'kind', 'color', 'enamel'],
         correct: 'kind',
-        explanation: 'kind → kin | paint → pain',
+        explanation: 'paint - t = pain & kind - k = kin',
       },
       {
         hint: 'waver',
         answers: ['staff', 'wizard', 'story', 'theme', 'legend'],
         correct: 'theme',
-        explanation: 'theme → them | waver → wave',
+        explanation: 'waver - r = wave & theme - e = them',
       },
       {
         hint: 'spare',
         answers: ['chain', 'rope', 'extra', 'empty', 'gone'],
         correct: 'chain',
-        explanation: 'chain → chai | spare → spar',
+        explanation: 'spare - e = spar & chain - n = chai',
       },
       {
         hint: 'meant',
         answers: ['deserted', 'bare', 'spice', 'understood', 'felt'],
         correct: 'bare',
-        explanation: 'bare → bar | meant → mean',
+        explanation: 'meant - t = mean & bare - e = bar',
       },
     ],
   },
@@ -185,7 +184,7 @@ export const answerKey: AnswerKey = {
         hint: 'conduct',
         answers: ['grow', 'flower', 'record', 'garden', 'seed'],
         correct: 'record',
-        explanation: 'REcord (noun) vs reCORD (verb)',
+        explanation: 'REcord (noun) VS. reCORD (verb) ',
       },
       {
         hint: 'conflict',
@@ -307,8 +306,8 @@ export const answerKey: AnswerKey = {
   },
   '20250301': {
     rule: {
-      pattern: 'Popular shades of pink',
-      explanation: 'all answers are a shade of pink',
+      pattern: 'The color pink',
+      explanation: 'all answers are associted with pink',
     },
     sets: [
       {
@@ -568,6 +567,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
+  //TODO this one needs work
   '20250308': {
     rule: {
       pattern: 'Word associations',
