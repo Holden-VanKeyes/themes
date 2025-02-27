@@ -77,6 +77,7 @@ export default function GameBoard() {
       if (lastPlayed !== today || !savedGame) {
         window.localStorage.clear()
         window.localStorage.setItem('lastPlayed', today)
+        setIsLocked(false)
         setIsInitialized(true)
         return
       }
