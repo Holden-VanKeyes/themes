@@ -4,16 +4,13 @@ import {
   Spectral,
   Libre_Baskerville,
   Source_Serif_4,
-  Courier_Prime,
-  Cormorant,
-  Space_Mono,
-  Crimson_Text,
   JetBrains_Mono,
 } from 'next/font/google'
 import './globals.scss'
 import '@mantine/core/styles.css'
 import { createTheme, MantineProvider } from '@mantine/core'
 import { ColorSchemeScript } from '@mantine/core'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 const spectral = Spectral({ subsets: ['latin'], weight: ['400', '700'] })
@@ -42,6 +39,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <MantineProvider theme={theme}>{children}</MantineProvider>
+        <Analytics />
       </body>
     </html>
   )
