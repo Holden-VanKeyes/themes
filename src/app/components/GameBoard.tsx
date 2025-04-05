@@ -284,6 +284,16 @@ export default function GameBoard() {
               }}
             >
               <Button
+                className={css.nextButton}
+                variant="outline"
+                radius="lg"
+                onClick={() => {
+                  handleNext()
+                }}
+              >
+                Next
+              </Button>
+              <Button
                 className={css.submitButton}
                 variant="outline"
                 radius="lg"
@@ -302,16 +312,6 @@ export default function GameBoard() {
                 {Object.keys(gameState.submittedSets).length === 4
                   ? 'View Results'
                   : 'Submit'}
-              </Button>
-              <Button
-                className={css.nextButton}
-                variant="outline"
-                radius="lg"
-                onClick={() => {
-                  handleNext()
-                }}
-              >
-                Next
               </Button>
             </div>
           </>

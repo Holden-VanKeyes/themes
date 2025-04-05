@@ -8,13 +8,6 @@
 }
 
 .inner {
-  /* height: rem(56px);
-  gap: 15px;
-  padding-right: rem(30px);
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse; */
-
   height: rem(56px);
   display: flex;
   justify-content: space-between;
@@ -29,8 +22,8 @@
 
 .rightSection {
   display: flex;
-  align-items: center;
-  gap: rem(10);
+  align-items: baseline;
+  gap: rem(12);
 }
 
 @media (max-width: 480px) {

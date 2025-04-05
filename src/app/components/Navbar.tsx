@@ -26,12 +26,15 @@ import {
   IconInfoSmall,
   IconBrandPaypal,
   IconCash,
+  IconRobot,
+  IconRobotFace,
   IconX,
   IconCheck,
   IconCircleFilled,
   IconArrowBigRightFilled,
   IconCoffee,
   IconDiamondFilled,
+  IconBulb,
 } from '@tabler/icons-react'
 import { useDisclosure } from '@mantine/hooks'
 import logo from '../assets/boaterslist-logo-horizontal-color-white.png'
@@ -81,7 +84,7 @@ export function Navbar() {
               href="https://www.paypal.com/ncp/payment/E5JPA56Y4TU82"
               target="_blank"
               variant="outline"
-              leftSection={<IconCoffee size={16} />}
+              leftSection={<IconRobot size={16} />}
               size="sm"
               mr="md"
             >
@@ -90,12 +93,22 @@ export function Navbar() {
           </div>
           <div className={css.rightSection}>
             <ActionIcon
+              variant="transparent"
+              className={css.rules}
+              // onClick={toggle}
+
+              size="lg"
+            >
+              <IconBulb size={32} />
+            </ActionIcon>
+
+            <ActionIcon
               variant="outline"
               radius="lg"
               className={css.rules}
               onClick={toggle}
             >
-              <IconQuestionMark />
+              <IconQuestionMark size={28} />
             </ActionIcon>
           </div>
         </div>
