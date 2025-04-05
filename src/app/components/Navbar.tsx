@@ -92,7 +92,7 @@ export function Navbar() {
             </Button>
           </div>
           <div className={css.rightSection}>
-            <ActionIcon
+            {/* <ActionIcon
               variant="transparent"
               className={css.rules}
               // onClick={toggle}
@@ -100,7 +100,7 @@ export function Navbar() {
               size="lg"
             >
               <IconBulb size={32} />
-            </ActionIcon>
+            </ActionIcon> */}
 
             <ActionIcon
               variant="outline"
