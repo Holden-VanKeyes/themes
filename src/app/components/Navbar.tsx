@@ -17,7 +17,7 @@ import {
   rem,
   Badge,
   em,
-  Flex,
+  TextInput,
 } from '@mantine/core'
 import {
   IconStarFilled,
@@ -44,35 +44,26 @@ import Link from 'next/link'
 import { useGameMode } from '../globalHelpers/GameMode'
 import { useMediaQuery } from '@mantine/hooks'
 import { useScrollIntoView } from '@mantine/hooks'
-
-const links = [
-  { link: '/marketplace', label: 'Dock Users' },
-  // { link: '/pricing', label: 'Pricing' },
-  // { link: '/learn', label: 'Learn' },
-  // { link: '/community', label: 'Community' },
-]
+import { useForm } from '@mantine/form'
 
 export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
+  const [submissions, setSubmissions] = useState(false)
   const { isHardMode, toggleGameMode, isLocked } = useGameMode()
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
 
-  const [active, setActive] = useState(links[0].link)
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+      termsOfService: false,
+    },
 
-  const items = links.map((link) => (
-    <Link
-      key={link.label}
-      href={link.link}
-      className={css.link}
-      data-active={active === link.link || undefined}
-      onClick={(event) => {
-        setActive(link.link)
-      }}
-    >
-      {link.label}
-    </Link>
-  ))
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  })
 
   return (
     <>
@@ -92,15 +83,14 @@ export function Navbar() {
             </Button>
           </div>
           <div className={css.rightSection}>
-            {/* <ActionIcon
+            <ActionIcon
               variant="transparent"
               className={css.rules}
-              // onClick={toggle}
-
+              onClick={() => setSubmissions(!submissions)}
               size="lg"
             >
               <IconBulb size={32} />
-            </ActionIcon> */}
+            </ActionIcon>
 
             <ActionIcon
               variant="outline"
@@ -113,7 +103,52 @@ export function Navbar() {
           </div>
         </div>
       </Box>
-      <></>
+
+      <Modal
+        opened={submissions}
+        onClose={() => setSubmissions(false)}
+        fullScreen={isMobile ? true : false}
+      >
+        <Title order={2} fw={700} className={css.title}>
+          Player-Created Puzzles Coming Soon!
+        </Title>
+        <List spacing="xs" size="sm" center>
+          <List.Item>
+            <Text fz="sm" fw={500} ml="sm" className={css.title}>
+              Design and submit your own{' '}
+              <Text fs="italic" c="#46B1C9" span>
+                themantics{' '}
+              </Text>
+              challenges.
+            </Text>
+          </List.Item>
+          <List.Item>
+            <Text fz="sm" fw={500} ml="sm" className={css.title}>
+              Community puzzles will be featured every Monday & Friday.
+            </Text>
+          </List.Item>
+          <List.Item>
+            <Text fz="sm" fw={500} ml="sm" className={css.title}>
+              Join our waiting list to be notified when submissions open!
+            </Text>
+          </List.Item>
+        </List>
+        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+          <TextInput
+            withAsterisk
+            label="Email"
+            placeholder="your@email.com"
+            key={form.key('email')}
+            {...form.getInputProps('email')}
+          />
+
+          <Group justify="flex-end" mt="md">
+            <Button type="submit" variant="outline">
+              Submit
+            </Button>
+          </Group>
+        </form>
+      </Modal>
 
       <Modal
         opened={opened}
@@ -162,8 +197,10 @@ export function Navbar() {
                 Select your answer and tap{' '}
                 <Badge variant="outline" radius="sm">
                   submit
-                </Badge>{' '}
-                or tap{' '}
+                </Badge>
+                <Text ml="sm" span>
+                  or tap{' '}
+                </Text>
                 <Badge variant="outline" radius="sm">
                   next
                 </Badge>{' '}
