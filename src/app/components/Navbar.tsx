@@ -17,7 +17,8 @@ import {
   rem,
   Badge,
   em,
-  Flex,
+  TextInput,
+  Alert,
 } from '@mantine/core'
 import {
   IconStarFilled,
@@ -27,7 +28,7 @@ import {
   IconBrandPaypal,
   IconCash,
   IconRobot,
-  IconRobotFace,
+  IconHeartHandshake,
   IconX,
   IconCheck,
   IconCircleFilled,
@@ -44,35 +45,55 @@ import Link from 'next/link'
 import { useGameMode } from '../globalHelpers/GameMode'
 import { useMediaQuery } from '@mantine/hooks'
 import { useScrollIntoView } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
 
-const links = [
-  { link: '/marketplace', label: 'Dock Users' },
-  // { link: '/pricing', label: 'Pricing' },
-  // { link: '/learn', label: 'Learn' },
-  // { link: '/community', label: 'Community' },
-]
+interface FormProps {
+  email: string
+}
 
 export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+  const [submissions, setSubmissions] = useState(false)
   const { isHardMode, toggleGameMode, isLocked } = useGameMode()
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
+  const icon = <IconHeartHandshake />
 
-  const [active, setActive] = useState(links[0].link)
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+    },
 
-  const items = links.map((link) => (
-    <Link
-      key={link.label}
-      href={link.link}
-      className={css.link}
-      data-active={active === link.link || undefined}
-      onClick={(event) => {
-        setActive(link.link)
-      }}
-    >
-      {link.label}
-    </Link>
-  ))
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  })
+
+  const handleSubmit = async (values: FormProps) => {
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: values.email }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Subscription failed')
+      }
+      form.reset()
+      setSubmissions(false)
+      setShowAlert(true)
+      console.log('success')
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -92,15 +113,14 @@ export function Navbar() {
             </Button>
           </div>
           <div className={css.rightSection}>
-            {/* <ActionIcon
+            <ActionIcon
               variant="transparent"
               className={css.rules}
-              // onClick={toggle}
-
+              onClick={() => setSubmissions(!submissions)}
               size="lg"
             >
               <IconBulb size={32} />
-            </ActionIcon> */}
+            </ActionIcon>
 
             <ActionIcon
               variant="outline"
@@ -113,7 +133,52 @@ export function Navbar() {
           </div>
         </div>
       </Box>
-      <></>
+
+      <Modal
+        opened={submissions}
+        onClose={() => setSubmissions(false)}
+        fullScreen={isMobile ? true : false}
+      >
+        <Title order={2} fw={700} className={css.title}>
+          Player-Created Puzzles Coming Soon!
+        </Title>
+        <List spacing="xs" size="sm" p="sm" center>
+          <List.Item>
+            <Text fz="sm" fw={500} className={css.title}>
+              Design and submit your own{' '}
+              <Text fs="italic" c="#46B1C9" span>
+                themantics{' '}
+              </Text>
+              challenges.
+            </Text>
+          </List.Item>
+          <List.Item>
+            <Text fz="sm" fw={500} className={css.title}>
+              Community puzzles will be featured every Monday & Friday.
+            </Text>
+          </List.Item>
+          <List.Item>
+            <Text fz="sm" fw={500} className={css.title}>
+              Join our waiting list to be notified when submissions open!
+            </Text>
+          </List.Item>
+        </List>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <TextInput
+            withAsterisk
+            label="Email"
+            placeholder="your@email.com"
+            key={form.key('email')}
+            {...form.getInputProps('email')}
+          />
+
+          <Group justify="flex-end" mt="md">
+            <Button type="submit" variant="outline">
+              Submit
+            </Button>
+          </Group>
+        </form>
+      </Modal>
 
       <Modal
         opened={opened}
@@ -162,8 +227,10 @@ export function Navbar() {
                 Select your answer and tap{' '}
                 <Badge variant="outline" radius="sm">
                   submit
-                </Badge>{' '}
-                or tap{' '}
+                </Badge>
+                <Text ml="sm" span>
+                  or tap{' '}
+                </Text>
                 <Badge variant="outline" radius="sm">
                   next
                 </Badge>{' '}
@@ -303,6 +370,19 @@ export function Navbar() {
           </Text>
         </div>
       </Modal>
+      {showAlert ? (
+        <Alert
+          variant="light"
+          color="green"
+          icon={icon}
+          withCloseButton
+          closeButtonLabel="Dismiss"
+          onClose={() => setShowAlert(false)}
+        >
+          Thanks for signing up and please consider a small contribution to help
+          keep the themantics coming!
+        </Alert>
+      ) : null}
     </>
   )
 }
