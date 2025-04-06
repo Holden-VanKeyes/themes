@@ -142,9 +142,9 @@ export function Navbar() {
         <Title order={2} fw={700} className={css.title}>
           Player-Created Puzzles Coming Soon!
         </Title>
-        <List spacing="xs" size="sm" center>
+        <List spacing="xs" size="sm" p="sm" center>
           <List.Item>
-            <Text fz="sm" fw={500} ml="sm" className={css.title}>
+            <Text fz="sm" fw={500} className={css.title}>
               Design and submit your own{' '}
               <Text fs="italic" c="#46B1C9" span>
                 themantics{' '}
@@ -153,12 +153,12 @@ export function Navbar() {
             </Text>
           </List.Item>
           <List.Item>
-            <Text fz="sm" fw={500} ml="sm" className={css.title}>
+            <Text fz="sm" fw={500} className={css.title}>
               Community puzzles will be featured every Monday & Friday.
             </Text>
           </List.Item>
           <List.Item>
-            <Text fz="sm" fw={500} ml="sm" className={css.title}>
+            <Text fz="sm" fw={500} className={css.title}>
               Join our waiting list to be notified when submissions open!
             </Text>
           </List.Item>
