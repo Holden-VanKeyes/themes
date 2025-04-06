@@ -18,6 +18,7 @@ import {
   Badge,
   em,
   TextInput,
+  Alert,
 } from '@mantine/core'
 import {
   IconStarFilled,
@@ -27,7 +28,7 @@ import {
   IconBrandPaypal,
   IconCash,
   IconRobot,
-  IconRobotFace,
+  IconHeartHandshake,
   IconX,
   IconCheck,
   IconCircleFilled,
@@ -46,24 +47,53 @@ import { useMediaQuery } from '@mantine/hooks'
 import { useScrollIntoView } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 
+interface FormProps {
+  email: string
+}
+
 export function Navbar() {
   const [opened, { toggle }] = useDisclosure(false)
   const [checked, setChecked] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
   const [submissions, setSubmissions] = useState(false)
   const { isHardMode, toggleGameMode, isLocked } = useGameMode()
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
+  const icon = <IconHeartHandshake />
 
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
       email: '',
-      termsOfService: false,
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   })
+
+  const handleSubmit = async (values: FormProps) => {
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: values.email }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Subscription failed')
+      }
+      form.reset()
+      setSubmissions(false)
+      setShowAlert(true)
+      console.log('success')
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -133,7 +163,7 @@ export function Navbar() {
             </Text>
           </List.Item>
         </List>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             withAsterisk
             label="Email"
@@ -340,6 +370,19 @@ export function Navbar() {
           </Text>
         </div>
       </Modal>
+      {showAlert ? (
+        <Alert
+          variant="light"
+          color="green"
+          icon={icon}
+          withCloseButton
+          closeButtonLabel="Dismiss"
+          onClose={() => setShowAlert(false)}
+        >
+          Thanks for signing up and please consider a small contribution to help
+          keep the themantics coming!
+        </Alert>
+      ) : null}
     </>
   )
 }
