@@ -1,9 +1,15 @@
 'use client'
 
 import React, { useEffect, createContext, useContext } from 'react'
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, createTheme } from '@mantine/core'
 import { useLocalStorage } from '@mantine/hooks'
-
+import {
+  Inter,
+  Spectral,
+  Libre_Baskerville,
+  Source_Serif_4,
+  JetBrains_Mono,
+} from 'next/font/google'
 // Create a context for the theme toggle function
 interface ThemeContextType {
   toggleColorScheme: (value?: 'light' | 'dark') => void
@@ -16,6 +22,23 @@ const ThemeContext = createContext<ThemeContextType>({
 })
 
 export const useThemeContext = () => useContext(ThemeContext)
+
+const inter = Inter({ subsets: ['latin'] })
+
+const theme = createTheme({
+  fontFamily: inter.style.fontFamily,
+  components: {
+    TextInput: {
+      styles: {
+        input: {
+          fontSize: '16px',
+        },
+      },
+    },
+    // Apply to other input components as needed
+  },
+  /** Put your mantine theme override here */
+})
 
 export default function ThemeProvider({
   children,
@@ -53,7 +76,7 @@ export default function ThemeProvider({
 
   return (
     <ThemeContext.Provider value={{ toggleColorScheme, colorScheme }}>
-      <MantineProvider>{children}</MantineProvider>
+      <MantineProvider theme={theme}>{children}</MantineProvider>
     </ThemeContext.Provider>
   )
 }
