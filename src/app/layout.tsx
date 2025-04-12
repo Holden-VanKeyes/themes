@@ -8,9 +8,15 @@ import {
 } from 'next/font/google'
 import './globals.scss'
 import '@mantine/core/styles.css'
-import { createTheme, MantineProvider } from '@mantine/core'
-import { ColorSchemeScript } from '@mantine/core'
+import {
+  createTheme,
+  MantineProvider,
+  MantineColorScheme,
+  ColorSchemeScript,
+} from '@mantine/core'
 import { Analytics } from '@vercel/analytics/react'
+import { useLocalStorage } from '@mantine/hooks'
+import ThemeProvider from './globalHelpers/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 const spectral = Spectral({ subsets: ['latin'], weight: ['400', '700'] })
@@ -24,6 +30,16 @@ export const metadata: Metadata = {
 }
 const theme = createTheme({
   fontFamily: inter.style.fontFamily,
+  components: {
+    TextInput: {
+      styles: {
+        input: {
+          fontSize: '16px',
+        },
+      },
+    },
+    // Apply to other input components as needed
+  },
   /** Put your mantine theme override here */
 })
 
@@ -38,7 +54,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={inter.className}>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>
     </html>

@@ -46,6 +46,7 @@ import { useGameMode } from '../globalHelpers/GameMode'
 import { useMediaQuery } from '@mantine/hooks'
 import { useScrollIntoView } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
+import { ThemeToggle } from './ThemeToggle'
 
 interface FormProps {
   email: string
@@ -114,20 +115,16 @@ export function Navbar() {
           </div>
           <div className={css.rightSection}>
             <ActionIcon
-              variant="transparent"
-              className={css.rules}
+              variant="outline"
               onClick={() => setSubmissions(!submissions)}
               size="lg"
             >
               <IconBulb size={32} />
             </ActionIcon>
 
-            <ActionIcon
-              variant="outline"
-              radius="lg"
-              className={css.rules}
-              onClick={toggle}
-            >
+            <ThemeToggle />
+
+            <ActionIcon variant="outline" size="lg" onClick={toggle}>
               <IconQuestionMark size={28} />
             </ActionIcon>
           </div>
