@@ -27,12 +27,12 @@ const source = Source_Serif_4({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Themantics',
   description: 'A word game with a twist',
-  icons: {
-    icon: '/themantics-block.ico',
-    // You can also provide different sizes
-    // apple: '/apple-icon.png',
-    // shortcut: '/shortcut-icon.png',
-  },
+  // icons: {
+  //   icon: '/themantics-block.ico',
+  //   // You can also provide different sizes
+  //   // apple: '/apple-icon.png',
+  //   // shortcut: '/shortcut-icon.png',
+  // },
   openGraph: {
     title: 'Themantics',
     description: 'A word game with a twist',
