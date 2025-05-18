@@ -25,10 +25,10 @@ const jet = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '700'] })
 const source = Source_Serif_4({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Themeantics',
+  title: 'Themantics',
   description: 'A word game with a twist',
   openGraph: {
-    title: 'Themeantics',
+    title: 'Themantics',
     description: 'A word game with a twist',
     url: 'https://themeantics.vercel.app/',
     siteName: 'Themeantics',
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
     type: 'website',
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Themeantics',
+    card: 'summary',
+    title: 'Themantics',
     description: 'A word game with a twist',
     images: ['images/themantics.jpeg'],
   },
