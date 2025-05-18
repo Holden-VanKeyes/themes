@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: 'Themantics',
     description: 'A word game with a twist',
     url: 'https://themeantics.vercel.app/',
-    siteName: 'Your App Name',
+    siteName: 'Themeantics',
     images: [
       {
         url: 'https://themeantics.vercel.app/themantics.jpg',
