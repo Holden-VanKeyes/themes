@@ -17,6 +17,7 @@ import {
 import { StatsCard } from './StatsCard'
 import { IconX, IconCheck } from '@tabler/icons-react'
 import { useGameMode } from '../globalHelpers/GameMode'
+import { useThemeContext } from '../globalHelpers/ThemeProvider'
 
 const date = new Date()
 const today =
@@ -35,6 +36,7 @@ interface GameState {
 }
 
 export default function GameBoard() {
+  const { colorScheme } = useThemeContext()
   const [isInitialized, setIsInitialized] = useState(false)
   const { isHardMode, setIsLocked, isLocked } = useGameMode()
   const [gameState, setGameState] = useState<GameState>({
@@ -300,7 +302,8 @@ export default function GameBoard() {
             >
               <Button
                 className={css.nextButton}
-                variant="outline"
+                variant={colorScheme === 'dark' ? 'filled' : 'outline'}
+                color={colorScheme === 'dark' ? 'white' : 'null'}
                 radius="lg"
                 onClick={() => {
                   handleNext()
@@ -310,7 +313,8 @@ export default function GameBoard() {
               </Button>
               <Button
                 className={css.submitButton}
-                variant="outline"
+                variant={colorScheme === 'dark' ? 'filled' : 'outline'}
+                color={colorScheme === 'dark' ? 'white' : 'null'}
                 radius="lg"
                 disabled={
                   Object.keys(gameState.submittedSets).length === 4

@@ -72,6 +72,40 @@
     border: 2.5px solid #0ad904;
   }
 
+  // Dark mode specific styles
+  [data-mantine-color-scheme='dark'] & {
+    // Dark mode adjustments for selected rows (if needed)
+    &.selected {
+      border-color: #5d8bbd; // brighter border for dark mode
+      box-shadow: inset 0 0 0 1px rgba(100, 170, 255, 0.2);
+
+      &[id='set1'] {
+        background-color: darken(
+          $color-set1,
+          15%
+        ); // Darken for better visibility
+      }
+      &[id='set2'] {
+        background-color: darken($color-set2, 15%);
+      }
+      &[id='set3'] {
+        background-color: darken($color-set3, 15%);
+      }
+      &[id='set4'] {
+        background-color: darken($color-set4, 15%);
+      }
+    }
+
+    // Dark mode disabled state
+    &.disabled {
+      background-color: #2c2e33; // Darker disabled color for dark mode
+    }
+
+    // Adjust highlight color for dark mode if needed
+    &.highlightAnswer {
+      background-color: #496a8c; // Darker highlight color
+    }
+  }
   .hintPrefix {
     color: #4682b4;
 
