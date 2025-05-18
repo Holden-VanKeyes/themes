@@ -145,7 +145,7 @@ export const answerKey: AnswerKey = {
       },
       {
         hint: 'Greek',
-        answers: ['Aristotle', 'Napolean', 'Caesar', 'Rome', 'Gladiator'],
+        answers: ['Aristotle', 'Napoleon', 'Caesar', 'Rome', 'Gladiator'],
         correct: 'Caesar',
         explanation: 'Greek salad | Caesar salad',
       },
@@ -276,7 +276,7 @@ export const answerKey: AnswerKey = {
       {
         hint: 'Piper',
         answers: ['Fiddler', 'Organ', 'Steamboat', 'Smokestack', 'Kiln'],
-        correct: '',
+        correct: 'Steamboat',
         explanation: 'Ricky Steamboat | Rowdy Roddy Piper',
       },
       {
@@ -289,7 +289,7 @@ export const answerKey: AnswerKey = {
         hint: 'Flair',
         answers: ['Hunk', 'Elan', 'Beefcake', 'Pizzazz', 'Babe'],
         correct: 'Beefcake',
-        explanation: 'Brutus Beefcake | Rick Flair',
+        explanation: 'Brutus Beefcake | Ric Flair',
       },
     ],
   },
@@ -527,7 +527,7 @@ export const answerKey: AnswerKey = {
           'No One Knows',
           'Not Reasonable Actors',
           'New Kid Prank',
-          'Now Your Talking',
+          "Now You're Talking",
         ],
         correct: 'Not Reasonable Actors',
         explanation:
@@ -877,7 +877,7 @@ export const answerKey: AnswerKey = {
   '20250610': {
     rule: {
       pattern: 'The color pink',
-      explanation: 'all answers are associted with pink',
+      explanation: 'all answers are associated with pink',
     },
     sets: [
       {
@@ -1128,8 +1128,8 @@ export const answerKey: AnswerKey = {
         explanation: 'S(pine) -> Pine | Con(fir)m -> Fir',
       },
       {
-        hint: 'Naplam',
-        answers: ['Maim', 'Scar', 'Difigure', 'Explode', 'Erupt'],
+        hint: 'Napalm',
+        answers: ['Maim', 'Scar', 'Disfigure', 'Explode', 'Erupt'],
         correct: 'Disfigure',
         explanation: 'Na(palm) -> Palm | Dis(fig)ure -> Fig',
       },
