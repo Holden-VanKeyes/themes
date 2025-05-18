@@ -56,7 +56,7 @@ export default function GameBoard() {
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [justSubmitted, setJustSubmitted] = useState(false)
-  const fallbackGame = answerKey['20250220']
+  const fallbackGame = answerKey['fallback']
   const todaysGame = answerKey[today] || fallbackGame
 
   const redDot = '#FF3C38'
@@ -200,6 +200,13 @@ export default function GameBoard() {
       updateGameState({ gameAdvancer: 0 })
     } else updateGameState({ gameAdvancer: gameState.gameAdvancer + 1 })
 
+    //hard mode always charge skip
+    if (isHardMode) {
+      updateGameState({ skips: gameState.skips + 1 })
+      setJustSubmitted(false)
+      return
+    }
+
     if (justSubmitted || gameState.submittedSets[localPosition]) {
       setJustSubmitted(false)
     } else {
@@ -208,8 +215,16 @@ export default function GameBoard() {
     }
     return
   }
+
   const handleSkips = (indx: number) => {
     updateGameState({ gameAdvancer: indx })
+    //hard mode always charge skip
+    if (isHardMode) {
+      updateGameState({ skips: gameState.skips + 1 })
+      setJustSubmitted(false)
+      return
+    }
+
     if (gameState.submittedSets[indx] || justSubmitted) {
       setJustSubmitted(false)
     } else {
