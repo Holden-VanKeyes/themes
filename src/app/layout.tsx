@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: 'Themeantics',
     images: [
       {
-        url: 'https://themeantics.vercel.app/images/themantics.jpg',
+        url: 'https://themeantics.vercel.app/themantics.svg',
         width: 1200,
         height: 630,
         alt: 'Your App Preview',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Themeantics',
     description: 'A word game with a twist',
-    images: ['https://themeantics.vercel.app/images/themantics.jpg'],
+    images: ['https://themeantics.vercel.app/themantics.svg'],
   },
 }
 
