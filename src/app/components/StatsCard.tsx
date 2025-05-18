@@ -27,6 +27,7 @@ import { GAME_EMOJIS } from '../constants/answerKey'
 import type { GameSet } from '../constants/answerKey'
 import type { GameDay } from '../constants/answerKey'
 import { useState } from 'react'
+import { useThemeContext } from '../globalHelpers/ThemeProvider'
 
 interface GameProps {
   // gameAdvancer: number
@@ -49,6 +50,7 @@ export function StatsCard({
   today,
   skips,
 }: GameProps) {
+  const { colorScheme } = useThemeContext()
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
   const clipboardData = scoreKeeper.map((score) => {
     if (score === 1) {
@@ -228,7 +230,8 @@ export function StatsCard({
         </div>
 
         <Button
-          variant="outline"
+          variant={colorScheme === 'dark' ? 'filled' : 'outline'}
+          color={colorScheme === 'dark' ? 'white' : 'null'}
           radius="lg"
           className={css.shareResultsBtn}
           onClick={() => handleShare()}
