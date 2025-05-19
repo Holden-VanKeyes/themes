@@ -225,10 +225,10 @@ export function Navbar() {
                 <Badge variant="outline" radius="sm">
                   submit
                 </Badge>
-                <Text ml="sm" span>
+                <Text ml={'4px'} span>
                   or tap{' '}
                 </Text>
-                <Badge variant="outline" radius="sm">
+                <Badge variant="outline" radius="sm" ml="sm">
                   next
                 </Badge>{' '}
                 to skip to the next set.
@@ -311,14 +311,14 @@ export function Navbar() {
                 Hint
                 <Text span fs="normal">
                   {' '}
-                  = Alter Trip
+                  = Red Water
                 </Text>
               </Text>
               <Text fs="italic" fw={500}>
                 Answer
                 <Text span fs="normal">
                   {' '}
-                  = Ego (Alter Ego | Ego Trip)
+                  = Hot (Red Hot | Hot Water)
                 </Text>
               </Text>
             </List.Item>
