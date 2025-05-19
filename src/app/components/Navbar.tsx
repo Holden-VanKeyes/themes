@@ -220,19 +220,19 @@ export function Navbar() {
                 </ThemeIcon>
               }
             >
-              <Text fz="md" ml="sm" span>
-                Select your answer and tap{' '}
-                <Badge variant="outline" radius="sm">
-                  submit
-                </Badge>
-                <Text ml={'4px'} span>
-                  or tap{' '}
+              <Box ml="sm">
+                <Text fz="md" span>
+                  Select your answer and tap{' '}
+                  <Badge variant="outline" radius="sm">
+                    submit
+                  </Badge>{' '}
+                  <Text span>or tap </Text>
+                  <Badge variant="outline" radius="sm">
+                    next
+                  </Badge>{' '}
+                  to skip to the next set.
                 </Text>
-                <Badge variant="outline" radius="sm" ml="sm">
-                  next
-                </Badge>{' '}
-                to skip to the next set.
-              </Text>
+              </Box>
             </List.Item>
           </List>
         </div>
