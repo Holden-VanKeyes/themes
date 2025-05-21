@@ -18,6 +18,7 @@ import { StatsCard } from './StatsCard'
 import { IconX, IconCheck } from '@tabler/icons-react'
 import { useGameMode } from '../globalHelpers/GameMode'
 import { useThemeContext } from '../globalHelpers/ThemeProvider'
+import FeedbackForm from './FeedbackForm'
 
 const date = new Date()
 const today =
@@ -53,9 +54,10 @@ export default function GameBoard() {
     skips: 0,
     hardMode: isHardMode,
   })
-
+  const [hasSubmittedFeedback, setHasSubmittedFeedback] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
+  const [openFeedbackModal, setOpenFeedbackModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [justSubmitted, setJustSubmitted] = useState(false)
   const fallbackGame = answerKey['fallback']
@@ -237,6 +239,15 @@ export default function GameBoard() {
       setJustSubmitted(false)
     }
   }
+
+  const handleFeedback = (value: string) => {
+    if (value === 'submitted') {
+      setHasSubmittedFeedback(true)
+      setOpenFeedbackModal(false)
+    } else if (value === 'open') {
+      setOpenFeedbackModal(true)
+    } else setOpenFeedbackModal(false)
+  }
   return (
     <>
       <div className={css.gridBoard}>
@@ -361,8 +372,14 @@ export default function GameBoard() {
           scoreKeeper={gameState.scoreKeeper}
           today={today}
           skips={gameState.skips}
+          handleFeedback={handleFeedback}
+          hasSubmittedFeedback={hasSubmittedFeedback}
         />
       </Modal>
+      <FeedbackForm
+        openFeedbackModal={openFeedbackModal}
+        handleFeedBack={handleFeedback}
+      />
     </>
   )
 }

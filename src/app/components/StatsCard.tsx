@@ -37,6 +37,8 @@ interface GameProps {
   scoreKeeper: number[]
   today: string
   skips: number
+  hasSubmittedFeedback: boolean
+  handleFeedback?: (value: string) => void
 }
 
 interface AlertState {
@@ -49,6 +51,8 @@ export function StatsCard({
   scoreKeeper,
   today,
   skips,
+  hasSubmittedFeedback,
+  handleFeedback,
 }: GameProps) {
   const { colorScheme } = useThemeContext()
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
@@ -73,6 +77,14 @@ export function StatsCard({
 
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />
   const errorIcon = <IconX style={{ width: rem(20), height: rem(20) }} />
+
+  const openFeedbackForm = () => {
+    if (hasSubmittedFeedback) {
+      handleShare()
+      return
+    }
+    handleFeedback && handleFeedback('open')
+  }
 
   const handleShare = async () => {
     const gameNumber = getGameNumber()
@@ -234,7 +246,8 @@ export function StatsCard({
           color={colorScheme === 'dark' ? 'white' : 'null'}
           radius="lg"
           className={css.shareResultsBtn}
-          onClick={() => handleShare()}
+          // onClick={() => handleShare()}
+          onClick={() => openFeedbackForm()}
         >
           Share Results
         </Button>
