@@ -61,6 +61,9 @@ export default function GameBoard() {
   const fallbackGame = answerKey['fallback']
   const todaysGame = answerKey[today] || fallbackGame
 
+  // uncomment to test specific games
+  // const todaysGame = answerKey['20250614']
+
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
   const correctAnswer = todaysGame.sets[gameState.gameAdvancer].correct
@@ -147,7 +150,7 @@ export default function GameBoard() {
         id={'set' + `${gameState.gameAdvancer + 1}`}
         onClick={() => handleGuessSelect(indx)}
       >
-        <Title key={indx} order={2}>
+        <Title key={indx} order={answerSet[indx].length > 18 ? 3 : 2}>
           {answerSet[indx].toUpperCase()}
         </Title>
       </div>
@@ -244,7 +247,9 @@ export default function GameBoard() {
             <div className={css.setHeader}>
               <div className={`${css.row} ${css.hintRow}`}>
                 <span className={css.hintPrefix}>hint:</span>
-                <Title order={3}>{hint.toUpperCase()}</Title>
+                <Title order={hint.length > 10 ? 5 : 3}>
+                  {hint.toUpperCase()}
+                </Title>
               </div>
               {isHardMode ? (
                 <Badge variant="outline" color="#C5283D" size="sm" mt="xs">
