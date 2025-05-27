@@ -7,46 +7,37 @@ import {
   Group,
   Badge,
   Slider,
-  TextInput,
-  Checkbox,
+  Textarea,
+  Radio,
   Stack,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
 interface FeedbackFormProps {
-  openFeedbackModal: boolean
   handleFeedBack?: (value: string) => void
 }
 
-export default function FeedbackForm({
-  openFeedbackModal,
-  handleFeedBack,
-}: FeedbackFormProps) {
-  const [difficulty, setDifficulty] = useState(1)
-
+export default function FeedbackForm({ handleFeedBack }: FeedbackFormProps) {
+  const [didRate, setDidRate] = useState(0)
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
-      email: '',
-      termsOfService: false,
+      difficulty: 1,
+      question: '',
+      feedback: '',
     },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      question: (value) => (value ? null : 'Please select an option'),
+      difficulty: (value) =>
+        value === didRate ? null : 'Please rate the difficulty',
     },
   })
 
-  const formSubmit = async (values: {
-    email: string
-    termsOfService: boolean
-  }) => {
-    const { email, termsOfService } = values
-
-    if (termsOfService) {
-      // Handle form submission logic here
-      console.log('Form submitted:', { email, termsOfService })
-      handleFeedBack?.('submitted')
+  const formSubmit = async () => {
+    if (form.isTouched('difficulty')) {
+      setDidRate(form.values.difficulty)
     }
+    handleFeedBack?.('submitted')
   }
 
   const marks = [
@@ -57,42 +48,57 @@ export default function FeedbackForm({
     { value: 5, label: '5' },
   ]
   return (
-    <Modal
-      opened={openFeedbackModal}
-      onClose={() => handleFeedBack?.('close')}
-      size="lg"
+    // <Modal
+    //   opened={openFeedbackModal}
+    //   onClose={() => handleFeedBack?.('close')}
+    //   size="lg"
+    // >
+    <form
+      style={{ padding: '20px' }}
+      onSubmit={form.onSubmit(() => formSubmit())}
     >
-      <form
-        style={{ padding: '20px' }}
-        onSubmit={form.onSubmit((values) => formSubmit(values))}
-      >
-        <Stack gap="lg">
-          <Text size="sm">How hard was today's game?</Text>
-          <Slider
-            defaultValue={1}
-            value={difficulty}
-            onChange={setDifficulty}
-            label={null}
-            step={1}
-            min={1}
-            max={5}
-            marks={marks}
-            //   styles={{ markLabel: { display: 'none' } }}
-            my="lg"
-          />
-
-          {/* <Checkbox
-          mt="md"
-          label="I agree to sell my privacy"
-          key={form.key('termsOfService')}
-          {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-        /> */}
-
-          <Group justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
+      <Title order={5} mb="md">
+        To view and share results please provide this quick feedback
+      </Title>
+      <Stack>
+        <Text size="sm">How hard was today's game?</Text>
+        <Slider
+          {...form.getInputProps('difficulty')}
+          //   defaultValue={1}
+          //   value={difficulty}
+          //   onChange={setDifficulty}
+          label={null}
+          step={1}
+          min={1}
+          max={5}
+          marks={marks}
+          mb="xl"
+        />
+        <Radio.Group
+          {...form.getInputProps('question')} // Connect to form
+          name="question"
+          label="Did game instructions give clear understanding of gaameplay?"
+          //   description="This is anonymous"
+          withAsterisk
+        >
+          <Group mt="xs">
+            <Radio value="yes" label="Yes" />
+            <Radio value="no" label="No" />
           </Group>
-        </Stack>
-      </form>
-    </Modal>
+        </Radio.Group>
+        <Textarea
+          {...form.getInputProps('feedback')} // Connect to form
+          mt="lg"
+          label="Anything else?"
+          // description="Input description"
+          // placeholder="Input placeholder"
+        />
+
+        <Group justify="flex-end" mt="md">
+          <Button type="submit">Submit</Button>
+        </Group>
+      </Stack>
+    </form>
+    // </Modal>
   )
 }

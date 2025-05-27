@@ -9,7 +9,6 @@ import {
   Title,
   Box,
   Button,
-  ActionIcon,
   Notification,
   Alert,
   Badge,
@@ -37,8 +36,6 @@ interface GameProps {
   scoreKeeper: number[]
   today: string
   skips: number
-  hasSubmittedFeedback: boolean
-  handleFeedback?: (value: string) => void
 }
 
 interface AlertState {
@@ -51,8 +48,6 @@ export function StatsCard({
   scoreKeeper,
   today,
   skips,
-  hasSubmittedFeedback,
-  handleFeedback,
 }: GameProps) {
   const { colorScheme } = useThemeContext()
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
@@ -78,21 +73,13 @@ export function StatsCard({
   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />
   const errorIcon = <IconX style={{ width: rem(20), height: rem(20) }} />
 
-  const openFeedbackForm = () => {
-    if (hasSubmittedFeedback) {
-      handleShare()
-      return
-    }
-    handleFeedback && handleFeedback('open')
-  }
-
   const handleShare = async () => {
     const gameNumber = getGameNumber()
 
     if (!isMobile) {
       try {
         await navigator.clipboard.writeText(
-          `Themes - Game #${gameNumber}\n` +
+          `Themantics - Game #${gameNumber}\n` +
             // '\n' +
             // `x ${numberOfGuesses} correct\n` +
             `${clipboardData.join(' ')}\n` +
@@ -113,23 +100,17 @@ export function StatsCard({
     } else {
       try {
         await navigator.share({
-          // title: `Themes - Game #${gameNumber}`,
           text:
-            `Themes - Game #${gameNumber}\n` +
+            `Themantics - Game #${gameNumber}\n` +
             `${clipboardData.join(' ')}\n` +
             `Skips: ${skips}`,
-          // url: window.location.href,
         })
       } catch (error) {
         console.log('error copying to clipboard')
-        // setClipboardAlert({
-        //   type: 'error',
-        //   show: true,
-        // })
-        // setTimeout(() => setClipboardAlert({ type: '', show: false }), 2500)
       }
     }
   }
+
   return (
     <Paper className={css.card} mt={40} p="xl">
       <ThemeIcon className={css.icon} size={60} radius={60} style={{}}>
@@ -246,8 +227,7 @@ export function StatsCard({
           color={colorScheme === 'dark' ? 'white' : 'null'}
           radius="lg"
           className={css.shareResultsBtn}
-          // onClick={() => handleShare()}
-          onClick={() => openFeedbackForm()}
+          onClick={() => handleShare()}
         >
           Share Results
         </Button>

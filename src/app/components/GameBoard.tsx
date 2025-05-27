@@ -57,7 +57,6 @@ export default function GameBoard() {
   const [hasSubmittedFeedback, setHasSubmittedFeedback] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
-  const [openFeedbackModal, setOpenFeedbackModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [justSubmitted, setJustSubmitted] = useState(false)
   const fallbackGame = answerKey['fallback']
@@ -242,12 +241,13 @@ export default function GameBoard() {
 
   const handleFeedback = (value: string) => {
     if (value === 'submitted') {
+      console.log('Feedback submitted')
       setHasSubmittedFeedback(true)
-      setOpenFeedbackModal(false)
-    } else if (value === 'open') {
-      setOpenFeedbackModal(true)
-    } else setOpenFeedbackModal(false)
+    }
+    return
   }
+
+  console.log('END', endGameModal)
   return (
     <>
       <div className={css.gridBoard}>
@@ -358,6 +358,7 @@ export default function GameBoard() {
         onClose={() => {
           setEndGameModal(false)
         }}
+        title={!hasSubmittedFeedback ? 'Thanks for beta testing!' : null}
         fullScreen
         size="70%"
         radius={0}
@@ -367,19 +368,17 @@ export default function GameBoard() {
           enterDelay: 400,
         }}
       >
-        <StatsCard
-          todaysGame={todaysGame}
-          scoreKeeper={gameState.scoreKeeper}
-          today={today}
-          skips={gameState.skips}
-          handleFeedback={handleFeedback}
-          hasSubmittedFeedback={hasSubmittedFeedback}
-        />
+        {hasSubmittedFeedback ? (
+          <StatsCard
+            todaysGame={todaysGame}
+            scoreKeeper={gameState.scoreKeeper}
+            today={today}
+            skips={gameState.skips}
+          />
+        ) : (
+          <FeedbackForm handleFeedBack={handleFeedback} />
+        )}
       </Modal>
-      <FeedbackForm
-        openFeedbackModal={openFeedbackModal}
-        handleFeedBack={handleFeedback}
-      />
     </>
   )
 }
