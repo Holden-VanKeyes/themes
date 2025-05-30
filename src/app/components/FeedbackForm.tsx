@@ -14,6 +14,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { submitFeedback } from '../actions/submitFeedback'
+import { notifications } from '@mantine/notifications'
 
 interface FeedbackFormProps {
   todaysGame: string
@@ -60,6 +61,13 @@ export default function FeedbackForm({
 
     if (result.success) {
       handleFeedBack?.('submitted')
+      notifications.show({
+        title: 'Feedback Submitted',
+        message: 'Thank you for your feedback!',
+        color: 'green',
+        autoClose: 4000,
+        position: 'top-right',
+      })
     } else {
       console.error('Failed to submit feedback:', result.error)
     }

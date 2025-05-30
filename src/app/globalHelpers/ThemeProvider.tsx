@@ -3,6 +3,8 @@
 import React, { useEffect, createContext, useContext } from 'react'
 import { MantineProvider, createTheme } from '@mantine/core'
 import { useLocalStorage } from '@mantine/hooks'
+import { Notifications } from '@mantine/notifications'
+import '@mantine/notifications/styles.css'
 import {
   Inter,
   Spectral,
@@ -76,7 +78,10 @@ export default function ThemeProvider({
 
   return (
     <ThemeContext.Provider value={{ toggleColorScheme, colorScheme }}>
-      <MantineProvider theme={theme}>{children}</MantineProvider>
+      <MantineProvider theme={theme}>
+        <Notifications />
+        {children}
+      </MantineProvider>
     </ThemeContext.Provider>
   )
 }
