@@ -11,11 +11,9 @@ import {
 } from '@mantine/core'
 import getUsers from '@/app/actions/getUsers'
 import { revalidatePath } from 'next/cache'
-import Grid from './components/GridDisplay'
 import insertToDB from './actions/dbUpdates'
 import { Navbar } from './components/Navbar'
 import React from 'react'
-import GridDisplay from './components/GridDisplay'
 import GameBoard from './components/GameBoard'
 import { GameModeProvider } from './globalHelpers/GameMode'
 
@@ -44,7 +42,6 @@ export default async function Home() {
       <GameModeProvider>
         <Navbar />
         <Center>
-          {/* <GridDisplay /> */}
           <GameBoard />
         </Center>
       </GameModeProvider>

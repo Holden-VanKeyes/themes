@@ -46,7 +46,6 @@ const config: Record<string, Knex.Config> = {
     pool: { min: 0, max: 7 },
   },
 }
-
 export default config
 
 // const config: { [key: string]: Knex.Config } = {

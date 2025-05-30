@@ -64,9 +64,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <head> */}
-      <ColorSchemeScript />
-      {/* </head> */}
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={inter.className}>
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />

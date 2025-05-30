@@ -4,7 +4,6 @@ import db from '../../../../db'
 export async function POST(request: Request) {
   try {
     const { email } = await request.json()
-    console.log('In Back', email)
 
     // Insert email into database
     await db('subscribers').insert({ email })

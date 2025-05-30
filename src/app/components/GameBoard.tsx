@@ -241,13 +241,11 @@ export default function GameBoard() {
 
   const handleFeedback = (value: string) => {
     if (value === 'submitted') {
-      console.log('Feedback submitted')
       setHasSubmittedFeedback(true)
     }
     return
   }
 
-  console.log('END', endGameModal)
   return (
     <>
       <div className={css.gridBoard}>
@@ -376,7 +374,7 @@ export default function GameBoard() {
             skips={gameState.skips}
           />
         ) : (
-          <FeedbackForm handleFeedBack={handleFeedback} />
+          <FeedbackForm handleFeedBack={handleFeedback} todaysGame={today} />
         )}
       </Modal>
     </>
