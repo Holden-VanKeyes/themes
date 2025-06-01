@@ -151,7 +151,7 @@ export default function GameBoard() {
         id={'set' + `${gameState.gameAdvancer + 1}`}
         onClick={() => handleGuessSelect(indx)}
       >
-        <Title key={indx} order={answerSet[indx].length > 18 ? 3 : 2}>
+        <Title key={indx} order={answerSet[indx].length > 18 ? 4 : 2}>
           {answerSet[indx].toUpperCase()}
         </Title>
       </div>
