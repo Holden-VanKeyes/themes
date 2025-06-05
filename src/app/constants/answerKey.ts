@@ -694,7 +694,7 @@ export const answerKey: AnswerKey = {
     sets: [
       {
         hint: 'Chairman',
-        answers: ['Harvest', 'Circus', 'Wisdom', 'Wizard', ''],
+        answers: ['Harvest', 'Circus', 'Wisdom', 'Wizard', 'Head'],
         correct: 'Harvest',
         explanation: 'C(hair)man -> Hair || Har(vest) -> Vest',
       },
