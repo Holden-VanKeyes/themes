@@ -231,6 +231,10 @@ export function Navbar() {
                     next
                   </Badge>{' '}
                   to skip to the next set.
+                  <Text c="dimmed" fz="xs">
+                    {' '}
+                    *you get 1 free skip at the start of each game!
+                  </Text>
                 </Text>
               </Box>
             </List.Item>

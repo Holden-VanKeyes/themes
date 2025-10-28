@@ -36,6 +36,8 @@ interface GameProps {
   scoreKeeper: number[]
   today: string
   skips: number
+  trialGamesCounter: number
+  handleTrialNext: () => void
 }
 
 interface AlertState {
@@ -48,6 +50,8 @@ export function StatsCard({
   scoreKeeper,
   today,
   skips,
+  handleTrialNext,
+  trialGamesCounter,
 }: GameProps) {
   const { colorScheme } = useThemeContext()
   const numberOfGuesses = scoreKeeper.reduce((a, b) => a + b)
@@ -221,16 +225,29 @@ export function StatsCard({
             }`}
           />
         </div>
-
-        <Button
-          variant={colorScheme === 'dark' ? 'filled' : 'outline'}
-          color={colorScheme === 'dark' ? 'white' : 'null'}
-          radius="lg"
-          className={css.shareResultsBtn}
-          onClick={() => handleShare()}
-        >
-          Share Results
-        </Button>
+        <Group>
+          <Button
+            variant={colorScheme === 'dark' ? 'filled' : 'outline'}
+            color={colorScheme === 'dark' ? 'white' : 'null'}
+            radius="lg"
+            className={css.shareResultsBtn}
+            onClick={() => handleShare()}
+          >
+            Share Results
+          </Button>
+          <Button
+            // variant={colorScheme === 'dark' ? 'filled' : 'outline'}
+            // color={colorScheme === 'dark' ? 'white' : 'null'}
+            color="#4682b4"
+            variant="filled"
+            radius="lg"
+            disabled={trialGamesCounter >= 6}
+            // className={css.shareResultsBtn}
+            onClick={() => handleTrialNext()}
+          >
+            Play Next?
+          </Button>
+        </Group>
       </Center>
     </Paper>
   )

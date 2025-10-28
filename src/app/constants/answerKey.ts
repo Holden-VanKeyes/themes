@@ -786,25 +786,31 @@ export const answerKey: AnswerKey = {
         hint: 'Hulk Hogan',
         answers: ['Heroes', 'Villains', 'Cheaters', 'Saviors', 'Snakes'],
         correct: 'Heroes',
-        explanation: "Hogan's Heroes",
+        explanation: "Hulk Hogan | Hogan's Heroes",
       },
       {
         hint: 'Sally Field',
         answers: ['Movies', 'Stars', 'Wishes', 'Dreams', 'Awards'],
         correct: 'Dreams',
-        explanation: 'Field of Dreams',
+        explanation: 'Sally Field | Field of Dreams',
       },
       {
         hint: 'Prince Charles',
-        answers: ['Credit', 'Charge', 'Cash', 'Check', 'Debt'],
-        correct: 'Charge',
-        explanation: 'Charles in Charge',
+        answers: [
+          'In Over My Head',
+          'In Charge',
+          'In Love',
+          'In Deep',
+          'In Debt',
+        ],
+        correct: 'In Charge',
+        explanation: 'Prince Charles | Charles in Charge',
       },
       {
         hint: 'Barry White',
         answers: ['Iris', 'Lotus', 'Rose', 'Daisy', 'Cactus'],
         correct: 'Lotus',
-        explanation: 'White Lotus',
+        explanation: 'Barry White | White Lotus',
       },
     ],
   },
@@ -1267,7 +1273,7 @@ export const answerKey: AnswerKey = {
   },
   '20250621': {
     rule: {
-      pattern: 'hidden words associated with atlas/map',
+      pattern: 'Hidden words associated with atlas/map',
       explanation:
         'hidden words commonly used with geography, atlases and maps',
     },
@@ -1298,4 +1304,134 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
+  '20250622': {
+    rule: {
+      pattern: 'Where to go when ya gotta go',
+      explanation: 'every answer is a synonym for toilet',
+    },
+    sets: [
+      {
+        hint: 'John',
+        answers: ['Woo', 'Loo', 'Candy', 'Waters', 'Rivers'],
+        correct: 'Loo',
+        explanation: 'A toilet is called a John or a Loo',
+      },
+      {
+        hint: 'Privy',
+        answers: ['Can', 'Bin', 'Basket', 'Trash', 'Divy'],
+        correct: 'Can',
+        explanation: 'A toilet is called a Privy or a Can',
+      },
+      {
+        hint: 'Facilities',
+        answers: ['Dens', 'Offices', 'Bedrooms', 'Bathrooms', 'Kitchens'],
+        correct: 'Bathrooms',
+        explanation: 'Facilities often refers to Bathrooms',
+      },
+      {
+        hint: 'Head',
+        answers: ['Ear', 'Eye', 'Canteen', 'Machete', 'Latrine'],
+        correct: 'Latrine',
+        explanation:
+          'Head is a nautical term for toilet | Latrine is military for toilet',
+      },
+    ],
+  },
+  '20250623': {
+    rule: {
+      pattern: 'Cooking oils',
+      explanation: 'Common cooking oils',
+    },
+    sets: [
+      {
+        hint: 'Avocado',
+        answers: ['Mango', 'Banana', 'Papaya', 'Kiwi', 'Coconut'],
+        correct: 'Coconut',
+        explanation: 'Avocado oil | Coconut oil',
+      },
+      {
+        hint: 'Sesame',
+        answers: ['Smurf', 'Peanut', 'Peewee', 'Chipmunk', 'Shrimp'],
+        correct: 'Peanut',
+        explanation: 'Sesame oil | Peanut oil',
+      },
+      {
+        hint: 'Soybean',
+        answers: ['Popeye', 'Spinach', 'Bluto', 'Olive', 'Wimpy'],
+        correct: 'Olive',
+        explanation: 'Soybean oil | Olive oil',
+      },
+      {
+        hint: 'Sunflower',
+        answers: ['Corn', 'Wheat', 'Rye', 'White', 'Spelt'],
+        correct: 'Corn',
+        explanation: 'Sunflower oil | Corn oil',
+      },
+    ],
+  },
+  '20250624': {
+    rule: {
+      pattern: '___as a___',
+      explanation:
+        "Combine hint and answer with 'as a' to form a common phrase",
+    },
+    sets: [
+      {
+        hint: 'Dead',
+        answers: ['Hangnail', 'Toenail', 'Doornail', 'Snail mail', 'Oxtail'],
+        correct: 'Doornail',
+        explanation: 'Dead as a doornail',
+      },
+      {
+        hint: 'Sick',
+        answers: ['Bro', 'Dog', 'Rad', 'Groovy', 'Dude'],
+        correct: 'Dog',
+        explanation: 'Sick as a dog',
+      },
+      {
+        hint: 'Free',
+        answers: ['Word', 'Steep', 'Cheap', 'Cheep', 'Bird'],
+        correct: 'Bird',
+        explanation: 'Free as a bird',
+      },
+      {
+        hint: 'Happy',
+        answers: ['Buck', 'Money', 'Clam', 'Coin', 'Shark'],
+        correct: '',
+        explanation: '',
+      },
+    ],
+  },
 }
+// '20241201': {
+//     rule: {
+//       pattern: '',
+//       explanation: '',
+//     },
+//     sets: [
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//       {
+//         hint: '',
+//         answers: ['', '', '', '', ''],
+//         correct: '',
+//         explanation: '',
+//       },
+//     ],
+//   },

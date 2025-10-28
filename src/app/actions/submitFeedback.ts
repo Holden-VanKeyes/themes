@@ -3,7 +3,8 @@ import db from '../../../db'
 
 export async function submitFeedback(feedbackData: {
   puzzle_date: string
-  difficulty: number
+  difficulty?: number
+  email: string
   question_response: string
   feedback?: string
   skips_used: number

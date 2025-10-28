@@ -11,6 +11,8 @@ import {
   Textarea,
   Radio,
   Stack,
+  TextInput,
+  Checkbox,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { submitFeedback } from '../actions/submitFeedback'
@@ -30,6 +32,7 @@ export default function FeedbackForm({
     mode: 'uncontrolled',
     initialValues: {
       difficulty: 0,
+      email: '',
       question: '',
       feedback: '',
     },
@@ -38,6 +41,7 @@ export default function FeedbackForm({
     },
 
     validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       question: (value) => (value ? null : 'Please select an option'),
       difficulty: (value) =>
         value > 0 ? null : 'Please rate the difficulty (1-5)',
@@ -50,6 +54,7 @@ export default function FeedbackForm({
 
     const feedbackData = {
       puzzle_date: todaysGame,
+      email: values.email,
       difficulty: values.difficulty,
       question_response: values.question,
       feedback: values.feedback,
@@ -87,7 +92,7 @@ export default function FeedbackForm({
       onSubmit={form.onSubmit(() => formSubmit())}
     >
       <Title order={5} mb="md">
-        To view and share your results please provide this quick feedback
+        Join our testing group to unlock all 6 trial puzzles!
       </Title>
       <Stack>
         <Text size="sm">How hard was today's game?</Text>
@@ -106,22 +111,38 @@ export default function FeedbackForm({
             {form.errors.difficulty}
           </Text>
         )}
-        <Radio.Group
+        <TextInput
+          withAsterisk
+          label="Email"
+          placeholder="your@email.com"
+          key={form.key('email')}
+          {...form.getInputProps('email')}
+        />
+        <Checkbox.Group
           {...form.getInputProps('question')}
           key={form.key('question')}
           label="Did game instructions give clear understanding of gameplay?"
           withAsterisk
         >
           <Group my="xs">
-            <Radio value="yes" label="Yes" />
-            <Radio value="no" label="No" />
+            <Checkbox
+              value="create"
+              label="Create and access community puzzles"
+            />
+            <Checkbox value="playAll" label="Play all past daily puzzles " />
+            <Checkbox
+              value="leaderboard"
+              label="View leaderboard and progress over time"
+            />
+            <Checkbox value="hints" label="Get hints during gameplay" />
+            <Checkbox value="none" label="None of these interest me" />
           </Group>
-        </Radio.Group>
+        </Checkbox.Group>
         <Textarea
           {...form.getInputProps('feedback')}
           key={form.key('feedback')}
           mt="lg"
-          label="Anything else?"
+          label="Any other feedback or words of encouragment?"
         />
 
         <Group justify="flex-end" mt="md">

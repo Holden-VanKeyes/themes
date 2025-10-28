@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { answerKey } from '../constants/answerKey'
+import { trialAnswerKey } from '../constants/trialAnswerkey'
 import css from './GameBoard.module.scss'
 import {
   Button,
@@ -13,7 +14,9 @@ import {
   Badge,
   LoadingOverlay,
   Center,
+  Drawer,
 } from '@mantine/core'
+import { notifications } from '@mantine/notifications'
 import { StatsCard } from './StatsCard'
 import { IconX, IconCheck } from '@tabler/icons-react'
 import { useGameMode } from '../globalHelpers/GameMode'
@@ -54,16 +57,30 @@ export default function GameBoard() {
     skips: 0,
     hardMode: isHardMode,
   })
+  const [openDrawer, { open, close }] = useDisclosure(false)
+
+  //TESTING
+  const testingDay = date.getDay()
+  const [trialGamesCounter, setTrialGamesCounter] = useState(0)
+  //TESTING ABOVE
   const [hasSubmittedFeedback, setHasSubmittedFeedback] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [justSubmitted, setJustSubmitted] = useState(false)
   const fallbackGame = answerKey['fallback']
-  const todaysGame = answerKey[today] || fallbackGame
+  const [freeSkip, setFreeSkip] = useState(0)
+  const [testingGameDayPosition, setTestingGameDayPosition] =
+    useState(testingDay)
 
+  // For trial period, use trialAnswerKey
+  const todaysGame = trialAnswerKey[testingGameDayPosition] || fallbackGame
+
+  // THIS is the main game day logic - switch between trial and main answer keys
+  // const todaysGame = answerKey[today] || fallbackGame
   // uncomment to test specific games
   // const todaysGame = answerKey['20250614']
+  console.log('COUNT', trialGamesCounter)
 
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
@@ -78,7 +95,6 @@ export default function GameBoard() {
     const initGame = () => {
       const savedGame = window.localStorage.getItem('gameState')
       const lastPlayed = window.localStorage.getItem('lastPlayed')
-
       // If it's a new day or no saved game, return fresh state
       if (lastPlayed !== today || !savedGame) {
         window.localStorage.clear()
@@ -200,6 +216,7 @@ export default function GameBoard() {
   //if the gameSet you're on has already been answered then do nothing - don't add skips when landing on answered set
   //consider not charging skip if all but one answered
   const handleNext = () => {
+    setFreeSkip(freeSkip + 1)
     const localPosition =
       gameState.gameAdvancer === 3 ? 0 : gameState.gameAdvancer + 1
     if (localPosition === 0) {
@@ -210,6 +227,17 @@ export default function GameBoard() {
     if (isHardMode) {
       updateGameState({ skips: gameState.skips + 1 })
       setJustSubmitted(false)
+      return
+    }
+    //don't charge skip until first submission
+    if (gameState.submittedSets[localPosition] === undefined && freeSkip < 1) {
+      notifications.show({
+        title: 'That Was Your Freebie!',
+        message: "You'll be charged for skips going forward.",
+        color: 'orange',
+        autoClose: 3000,
+        position: 'top-right',
+      })
       return
     }
 
@@ -224,10 +252,23 @@ export default function GameBoard() {
 
   const handleSkips = (indx: number) => {
     updateGameState({ gameAdvancer: indx })
+    setFreeSkip(freeSkip + 1)
     //hard mode always charge skip
     if (isHardMode) {
       updateGameState({ skips: gameState.skips + 1 })
       setJustSubmitted(false)
+      return
+    }
+
+    //don't charge skip until first submission
+    if (gameState.submittedSets[indx] === undefined && freeSkip < 1) {
+      notifications.show({
+        title: 'That Was Your Freebie!',
+        message: "You'll be charged for skips going forward.",
+        color: 'orange',
+        autoClose: 3000,
+        position: 'top-right',
+      })
       return
     }
 
@@ -244,6 +285,42 @@ export default function GameBoard() {
       setHasSubmittedFeedback(true)
     }
     return
+  }
+  const handleTrialNext = () => {
+    if (gameOver && trialGamesCounter >= 6) return
+    setEndGameModal(false)
+    setSelected(0)
+    setTrialGamesCounter(trialGamesCounter + 1)
+    if (trialGamesCounter >= 6) {
+      setGameOver(true)
+      notifications.show({
+        title: 'All Done!',
+        message: 'You have completed all the trial puzzles.',
+        color: 'purple',
+        autoClose: 4000,
+        position: 'top-right',
+      })
+    } else {
+      setGameOver(false)
+      localStorage.clear()
+      setGameState({
+        submittedSets: {},
+        guessDotColors: {
+          0: '#888888',
+          1: '#888888',
+          2: '#888888',
+          3: '#888888',
+        },
+        scoreKeeper: [0, 0, 0, 0],
+        gameAdvancer: 0,
+        lastPlayed: '',
+        skips: 0,
+        hardMode: isHardMode,
+      })
+      if (testingGameDayPosition >= 7) {
+        setTestingGameDayPosition(1)
+      } else setTestingGameDayPosition(testingGameDayPosition + 1)
+    }
   }
 
   return (
@@ -356,7 +433,7 @@ export default function GameBoard() {
         onClose={() => {
           setEndGameModal(false)
         }}
-        title={!hasSubmittedFeedback ? 'Thanks for beta testing!' : null}
+        // title={!hasSubmittedFeedback ? 'Thanks for beta testing!' : null}
         fullScreen
         size="70%"
         radius={0}
@@ -366,7 +443,15 @@ export default function GameBoard() {
           enterDelay: 400,
         }}
       >
-        {hasSubmittedFeedback ? (
+        <StatsCard
+          todaysGame={todaysGame}
+          scoreKeeper={gameState.scoreKeeper}
+          today={today}
+          skips={gameState.skips}
+          handleTrialNext={handleTrialNext}
+          trialGamesCounter={trialGamesCounter}
+        />
+        {/* {hasSubmittedFeedback ? (
           <StatsCard
             todaysGame={todaysGame}
             scoreKeeper={gameState.scoreKeeper}
@@ -375,8 +460,11 @@ export default function GameBoard() {
           />
         ) : (
           <FeedbackForm handleFeedBack={handleFeedback} todaysGame={today} />
-        )}
+        )} */}
       </Modal>
+      <Drawer opened={openDrawer} onClose={close}>
+        <FeedbackForm handleFeedBack={handleFeedback} todaysGame={today} />
+      </Drawer>
     </>
   )
 }
