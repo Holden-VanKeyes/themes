@@ -77,40 +77,6 @@ export const trialAnswerKey: AnswerKey = {
   // Trial Puzzle 2 - Tuesday
   2: {
     rule: {
-      pattern: 'Words containing animals',
-      explanation: 'Each word has the name of an animal within the spelling',
-    },
-    sets: [
-      {
-        hint: 'Spigot',
-        answers: ['Tap', 'Scathing', 'Swine', 'Water', 'Wine'],
-        correct: 'Scathing',
-        explanation: 'S(cat)hing -> Cat | S(pig)ot -> Pig',
-      },
-      {
-        hint: 'Selfish',
-        answers: ['Growl', 'Mean', 'Anger', 'Keep', 'Hide'],
-        correct: 'Growl',
-        explanation: 'Gr(owl) -> Owl | Sel(fish) -> Fish',
-      },
-      {
-        hint: 'Dogma',
-        answers: ['Religion', 'Hero', 'Villain', 'Caper', 'Damsel'],
-        correct: 'Caper',
-        explanation: 'C(ape)r -> Ape | (Dog)ma -> Dog',
-      },
-      {
-        hint: 'Share',
-        answers: ['Hope', 'Lend', 'Like', 'Tweet', 'Feel'],
-        correct: 'Feel',
-        explanation: 'F(eel) -> Eel | S(hare) -> Hare',
-      },
-    ],
-  },
-
-  // Trial Puzzle 3 - Wednesday
-  3: {
-    rule: {
       pattern: "Last names of 80's wrestlers",
       explanation: "The 80's were wild y'all!",
     },
@@ -142,8 +108,8 @@ export const trialAnswerKey: AnswerKey = {
     ],
   },
 
-  // Trial Puzzle 4 - Thursday
-  4: {
+  // Trial Puzzle 3 - Wednesday
+  3: {
     rule: {
       pattern: 'Things typically found or used in pairs',
       explanation:
@@ -178,8 +144,8 @@ export const trialAnswerKey: AnswerKey = {
     ],
   },
 
-  // Trial Puzzle 5 - Friday
-  5: {
+  // Trial Puzzle 4 - Thursday
+  4: {
     rule: {
       pattern: 'Missing link',
       explanation:
@@ -219,39 +185,71 @@ export const trialAnswerKey: AnswerKey = {
     ],
   },
 
-  // Trial Puzzle 6 - Saturday
-  6: {
+  // Trial Puzzle 5 - Friday
+  5: {
     rule: {
-      pattern: 'One removed',
-      explanation: 'the hint and answer are tied together by a common word',
+      pattern: 'Cooking oils',
+      explanation: 'Common cooking oils',
     },
     sets: [
       {
-        hint: 'Baker',
-        answers: ['Loaf', 'Cash', 'Butcher', 'Josephine', 'Pastry'],
-        correct: 'Cash',
-        explanation:
-          'A baker bakes bread and works with dough which are words for',
+        hint: 'Avocado',
+        answers: ['Mango', 'Banana', 'Papaya', 'Kiwi', 'Coconut'],
+        correct: 'Coconut',
+        explanation: 'Avocado oil | Coconut oil',
       },
       {
-        hint: 'Toolbox',
-        answers: ['Stranger', 'River', 'Planet', 'Cocktail', 'Dough'],
-        correct: 'Cocktail',
-        explanation:
-          'A toolbox holds a screwdriver and a screwdriver is a cocktail',
+        hint: 'Sesame',
+        answers: ['Smurf', 'Peanut', 'Peewee', 'Chipmunk', 'Shrimp'],
+        correct: 'Peanut',
+        explanation: 'Sesame oil | Peanut oil',
       },
       {
-        hint: 'Actor',
-        answers: ['Role', 'Cher', 'Power', 'Biology', 'Code'],
-        correct: 'Code',
-        explanation: 'An actor reads a script and a script is a piece of code',
+        hint: 'Soybean',
+        answers: ['Popeye', 'Spinach', 'Bluto', 'Olive', 'Wimpy'],
+        correct: 'Olive',
+        explanation: 'Soybean oil | Olive oil',
       },
       {
-        hint: 'Landscaper',
-        answers: ['Mushrooms', 'Marijuana', 'Cocaine', 'Acid', 'Ecstasy'],
-        correct: 'Marijuana',
-        explanation:
-          'A landscaper cuts grass and pulls weeds which are names for Marijuana',
+        hint: 'Sunflower',
+        answers: ['Corn', 'Wheat', 'Rye', 'White', 'Spelt'],
+        correct: 'Corn',
+        explanation: 'Sunflower oil | Corn oil',
+      },
+    ],
+  },
+
+  // Trial Puzzle 6 - Saturday
+  6: {
+    rule: {
+      pattern: 'Go Fish',
+      explanation:
+        'Add the hint letter to one of the potential answers to get a fish',
+    },
+    sets: [
+      {
+        hint: 'T',
+        answers: ['Sanitizer', 'Medic', 'Mask', 'Surgeon', 'Nurse'],
+        correct: 'Surgeon',
+        explanation: 'Surgeon + t = Sturgeon',
+      },
+      {
+        hint: 'M',
+        answers: ['Studio', 'Salon', 'Beauty', 'Barber', 'Perm'],
+        correct: 'Salon',
+        explanation: 'Salon + m = Salmon',
+      },
+      {
+        hint: 'P',
+        answers: ['Car', 'Truck', 'Van', 'Plane', 'Canoe'],
+        correct: 'Car',
+        explanation: 'Car + p = Carp',
+      },
+      {
+        hint: 'R',
+        answers: ['Comment', 'Say', 'Talk', 'Speak', 'Tout'],
+        correct: 'Tout',
+        explanation: 'Tout + r = Trout',
       },
     ],
   },
