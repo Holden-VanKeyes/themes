@@ -230,7 +230,11 @@ export default function GameBoard() {
       return
     }
     //don't charge skip until first submission
-    if (gameState.submittedSets[localPosition] === undefined && freeSkip < 1) {
+    if (
+      gameState.submittedSets[localPosition] === undefined &&
+      freeSkip < 1 &&
+      !justSubmitted
+    ) {
       notifications.show({
         title: 'That Was Your Freebie!',
         message: "You'll be charged for skips going forward.",
@@ -261,7 +265,11 @@ export default function GameBoard() {
     }
 
     //don't charge skip until first submission
-    if (gameState.submittedSets[indx] === undefined && freeSkip < 1) {
+    if (
+      gameState.submittedSets[indx] === undefined &&
+      freeSkip < 1 &&
+      !justSubmitted
+    ) {
       notifications.show({
         title: 'That Was Your Freebie!',
         message: "You'll be charged for skips going forward.",
@@ -288,6 +296,12 @@ export default function GameBoard() {
   }
   const handleTrialNext = () => {
     if (gameOver && trialGamesCounter >= 6) return
+
+    if (!hasSubmittedFeedback) {
+      open()
+      return
+    }
+
     setEndGameModal(false)
     setSelected(0)
     setTrialGamesCounter(trialGamesCounter + 1)
@@ -462,7 +476,7 @@ export default function GameBoard() {
           <FeedbackForm handleFeedBack={handleFeedback} todaysGame={today} />
         )} */}
       </Modal>
-      <Drawer opened={openDrawer} onClose={close}>
+      <Drawer opened={openDrawer} onClose={close} withCloseButton={false}>
         <FeedbackForm handleFeedBack={handleFeedback} todaysGame={today} />
       </Drawer>
     </>

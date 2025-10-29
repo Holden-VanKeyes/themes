@@ -43,27 +43,30 @@ export default function FeedbackForm({
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       question: (value) => (value ? null : 'Please select an option'),
-      difficulty: (value) =>
-        value > 0 ? null : 'Please rate the difficulty (1-5)',
+      // difficulty: (value) =>
+      //   value > 0 ? null : 'Please rate the difficulty (1-5)',
     },
   })
 
   const formSubmit = async () => {
+    console.log('Submitting feedback...')
+
     const values = form.getValues()
     const gameState = JSON.parse(localStorage.getItem('gameState') || '{}')
 
     const feedbackData = {
       puzzle_date: todaysGame,
       email: values.email,
-      difficulty: values.difficulty,
-      question_response: values.question,
+      // difficulty: values.difficulty,
+      question_response: Object.values(values.question).join(', '),
       feedback: values.feedback,
       skips_used: gameState.skips || 0,
       hard_mode: gameState.hardMode || false,
       score_keeper: JSON.stringify(gameState.scoreKeeper) || '[]',
     }
-    const result = await submitFeedback(feedbackData)
 
+    const result = await submitFeedback(feedbackData)
+    console.log('Feedback submission result:', result)
     if (result.success) {
       handleFeedBack?.('submitted')
       notifications.show({
@@ -95,7 +98,7 @@ export default function FeedbackForm({
         Join our testing group to unlock all 6 trial puzzles!
       </Title>
       <Stack>
-        <Text size="sm">How hard was today's game?</Text>
+        {/* <Text size="sm">How hard was today's game?</Text>
         <Slider
           {...form.getInputProps('difficulty')}
           key={form.key('difficulty')}
@@ -110,7 +113,7 @@ export default function FeedbackForm({
           <Text c="red" size="xs" mt="xs">
             {form.errors.difficulty}
           </Text>
-        )}
+        )} */}
         <TextInput
           withAsterisk
           label="Email"
