@@ -145,7 +145,12 @@ export default function FeedbackForm({
           {...form.getInputProps('feedback')}
           key={form.key('feedback')}
           mt="lg"
-          label="Any other feedback or words of encouragment?"
+          label="Any other feedback or words of encouragement?"
+          styles={{
+            input: {
+              fontSize: '16px',
+            },
+          }}
         />
 
         <Group justify="flex-end" mt="md">
