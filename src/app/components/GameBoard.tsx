@@ -254,12 +254,6 @@ export default function GameBoard() {
   }
 
   const handleSkips = (indx: number) => {
-    console.log(
-      'Handle Skips Clicked',
-      freeSkip,
-      gameState.submittedSets[indx],
-      justSubmitted
-    )
     updateGameState({ gameAdvancer: indx })
     setFreeSkip(freeSkip + 1)
     //hard mode always charge skip
@@ -292,7 +286,6 @@ export default function GameBoard() {
       setJustSubmitted(false)
     }
   }
-
   const handleFeedback = (value: string) => {
     if (value === 'submitted') {
       close()
@@ -483,7 +476,10 @@ export default function GameBoard() {
         )} */}
       </Modal>
       <Drawer opened={openDrawer} onClose={close} withCloseButton={false}>
-        <FeedbackForm handleFeedBack={handleFeedback} todaysGame={today} />
+        <FeedbackForm
+          handleFeedBack={handleFeedback}
+          todaysGame={testingGameDayPosition.toString()}
+        />
       </Drawer>
     </>
   )
