@@ -241,7 +241,7 @@ export function StatsCard({
             color="#4682b4"
             variant="filled"
             radius="lg"
-            disabled={trialGamesCounter >= 6}
+            disabled={trialGamesCounter >= 7}
             // className={css.shareResultsBtn}
             onClick={() => handleTrialNext()}
           >

@@ -66,7 +66,6 @@ export default function FeedbackForm({
     }
 
     const result = await submitFeedback(feedbackData)
-    console.log('Feedback submission result:', result)
     if (result.success) {
       handleFeedBack?.('submitted')
       notifications.show({
@@ -80,6 +79,7 @@ export default function FeedbackForm({
       console.error('Failed to submit feedback:', result.error)
     }
     // handleFeedBack?.('submitted')
+    return
   }
   const marks = [
     { value: 0, label: '0' },

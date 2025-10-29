@@ -80,7 +80,6 @@ export default function GameBoard() {
   // const todaysGame = answerKey[today] || fallbackGame
   // uncomment to test specific games
   // const todaysGame = answerKey['20250614']
-  console.log('COUNT', trialGamesCounter)
 
   const redDot = '#FF3C38'
   const greenDot = '#0ad904'
@@ -255,6 +254,12 @@ export default function GameBoard() {
   }
 
   const handleSkips = (indx: number) => {
+    console.log(
+      'Handle Skips Clicked',
+      freeSkip,
+      gameState.submittedSets[indx],
+      justSubmitted
+    )
     updateGameState({ gameAdvancer: indx })
     setFreeSkip(freeSkip + 1)
     //hard mode always charge skip
@@ -290,12 +295,22 @@ export default function GameBoard() {
 
   const handleFeedback = (value: string) => {
     if (value === 'submitted') {
+      close()
       setHasSubmittedFeedback(true)
     }
     return
   }
   const handleTrialNext = () => {
-    if (gameOver && trialGamesCounter >= 6) return
+    if (gameOver && trialGamesCounter >= 6) {
+      notifications.show({
+        title: 'All Done!',
+        message: 'You have completed all the trial puzzles.',
+        color: 'purple',
+        autoClose: 4000,
+        position: 'top-right',
+      })
+      return
+    }
 
     if (!hasSubmittedFeedback) {
       open()
@@ -305,36 +320,57 @@ export default function GameBoard() {
     setEndGameModal(false)
     setSelected(0)
     setTrialGamesCounter(trialGamesCounter + 1)
-    if (trialGamesCounter >= 6) {
-      setGameOver(true)
-      notifications.show({
-        title: 'All Done!',
-        message: 'You have completed all the trial puzzles.',
-        color: 'purple',
-        autoClose: 4000,
-        position: 'top-right',
-      })
-    } else {
-      setGameOver(false)
-      localStorage.clear()
-      setGameState({
-        submittedSets: {},
-        guessDotColors: {
-          0: '#888888',
-          1: '#888888',
-          2: '#888888',
-          3: '#888888',
-        },
-        scoreKeeper: [0, 0, 0, 0],
-        gameAdvancer: 0,
-        lastPlayed: '',
-        skips: 0,
-        hardMode: isHardMode,
-      })
-      if (testingGameDayPosition >= 7) {
-        setTestingGameDayPosition(1)
-      } else setTestingGameDayPosition(testingGameDayPosition + 1)
-    }
+    setFreeSkip(0)
+    setJustSubmitted(false)
+    setGameOver(false)
+    localStorage.clear()
+    setGameState({
+      submittedSets: {},
+      guessDotColors: {
+        0: '#888888',
+        1: '#888888',
+        2: '#888888',
+        3: '#888888',
+      },
+      scoreKeeper: [0, 0, 0, 0],
+      gameAdvancer: 0,
+      lastPlayed: '',
+      skips: 0,
+      hardMode: isHardMode,
+    })
+    if (testingGameDayPosition >= 7) {
+      setTestingGameDayPosition(1)
+    } else setTestingGameDayPosition(testingGameDayPosition + 1)
+    // if (trialGamesCounter >= 6) {
+    //   setGameOver(true)
+    //   notifications.show({
+    //     title: 'All Done!',
+    //     message: 'You have completed all the trial puzzles.',
+    //     color: 'purple',
+    //     autoClose: 4000,
+    //     position: 'top-right',
+    //   })
+    // } else {
+    //   setGameOver(false)
+    //   localStorage.clear()
+    //   setGameState({
+    //     submittedSets: {},
+    //     guessDotColors: {
+    //       0: '#888888',
+    //       1: '#888888',
+    //       2: '#888888',
+    //       3: '#888888',
+    //     },
+    //     scoreKeeper: [0, 0, 0, 0],
+    //     gameAdvancer: 0,
+    //     lastPlayed: '',
+    //     skips: 0,
+    //     hardMode: isHardMode,
+    //   })
+    //   if (testingGameDayPosition >= 7) {
+    //     setTestingGameDayPosition(1)
+    //   } else setTestingGameDayPosition(testingGameDayPosition + 1)
+    // }
   }
 
   return (
