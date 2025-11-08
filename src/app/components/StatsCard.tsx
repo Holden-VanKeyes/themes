@@ -87,7 +87,10 @@ export function StatsCard({
             // '\n' +
             // `x ${numberOfGuesses} correct\n` +
             `${clipboardData.join(' ')}\n` +
-            `Skips: ${skips}`
+            `Skips: ${skips}\n` +
+            `Score: ${
+              numberOfGuesses === 0 ? 0 : numberOfGuesses * 25 - skips * 5
+            }`
         )
         setClipboardAlert({
           type: 'success',
@@ -107,7 +110,10 @@ export function StatsCard({
           text:
             `Themantics - Game #${gameNumber}\n` +
             `${clipboardData.join(' ')}\n` +
-            `Skips: ${skips}`,
+            `Skips: ${skips}\n` +
+            `Score: ${
+              numberOfGuesses === 0 ? 0 : numberOfGuesses * 25 - skips * 5
+            }`,
         })
       } catch (error) {
         console.log('error copying to clipboard')
@@ -199,9 +205,15 @@ export function StatsCard({
             {numberOfGuesses === 5 ? numberOfGuesses - 1 : numberOfGuesses}
           </Text>
         </Group> */}
-        <Badge variant="outline" color="#4682b4" size="sm" mt="xs">
-          Skips: +{skips}
-        </Badge>
+        <Group>
+          <Badge variant="outline" color="#153424ff" size="sm" mt="xs">
+            Score:{' '}
+            {numberOfGuesses === 0 ? 0 : numberOfGuesses * 25 - skips * 5}
+          </Badge>
+          <Badge variant="outline" color="#153424ff" size="sm" mt="xs">
+            Skips: +{skips}
+          </Badge>
+        </Group>
 
         <div className={css.shareContainer}>
           <div

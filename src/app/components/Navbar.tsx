@@ -282,6 +282,10 @@ export function Navbar() {
                 </Text>{' '}
                 possible!
               </Text>
+              <Text c="dimmed" fz="xs" ml="sm">
+                {' '}
+                *scoring method: 25 points per correct guess - (skips * 5)
+              </Text>
             </List.Item>
           </List>
         </div>
