@@ -36,8 +36,8 @@ interface GameProps {
   scoreKeeper: number[]
   today: string
   skips: number
-  trialGamesCounter: number
-  handleTrialNext: () => void
+  trialGamesCounter?: number
+  handleTrialNext?: () => void
 }
 
 interface AlertState {
@@ -247,18 +247,16 @@ export function StatsCard({
           >
             Share Results
           </Button>
-          <Button
-            // variant={colorScheme === 'dark' ? 'filled' : 'outline'}
-            // color={colorScheme === 'dark' ? 'white' : 'null'}
+          {/* <Button
+          //use this button for triel mode
             color="#4682b4"
             variant="filled"
             radius="lg"
             disabled={trialGamesCounter >= 7}
-            // className={css.shareResultsBtn}
             onClick={() => handleTrialNext()}
           >
             Play Next?
-          </Button>
+          </Button> */}
         </Group>
       </Center>
     </Paper>

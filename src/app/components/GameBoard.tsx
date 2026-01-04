@@ -60,8 +60,10 @@ export default function GameBoard() {
   const [openDrawer, { open, close }] = useDisclosure(false)
 
   //TESTING
-  const testingDay = date.getDay()
-  const [trialGamesCounter, setTrialGamesCounter] = useState(0)
+  // const testingDay = date.getDay()
+  // const [trialGamesCounter, setTrialGamesCounter] = useState(0)
+  // const [testingGameDayPosition, setTestingGameDayPosition] =
+  //   useState(testingDay)
   //TESTING ABOVE
   const [hasSubmittedFeedback, setHasSubmittedFeedback] = useState(false)
   const [gameOver, setGameOver] = useState(false)
@@ -70,14 +72,12 @@ export default function GameBoard() {
   const [justSubmitted, setJustSubmitted] = useState(false)
   const fallbackGame = answerKey['fallback']
   const [freeSkip, setFreeSkip] = useState(0)
-  const [testingGameDayPosition, setTestingGameDayPosition] =
-    useState(testingDay)
 
   // For trial period, use trialAnswerKey
-  const todaysGame = trialAnswerKey[testingGameDayPosition] || fallbackGame
+  // const todaysGame = trialAnswerKey[testingGameDayPosition] || fallbackGame
 
   // THIS is the main game day logic - switch between trial and main answer keys
-  // const todaysGame = answerKey[today] || fallbackGame
+  const todaysGame = answerKey[today] || fallbackGame
   // uncomment to test specific games
   // const todaysGame = answerKey['20250614']
 
@@ -293,48 +293,48 @@ export default function GameBoard() {
     }
     return
   }
-  const handleTrialNext = () => {
-    if (gameOver && trialGamesCounter >= 6) {
-      notifications.show({
-        title: 'All Done!',
-        message: 'You have completed all the trial puzzles.',
-        color: 'purple',
-        autoClose: 4000,
-        position: 'top-right',
-      })
-      return
-    }
+  // const handleTrialNext = () => {
+  //   if (gameOver && trialGamesCounter >= 6) {
+  //     notifications.show({
+  //       title: 'All Done!',
+  //       message: 'You have completed all the trial puzzles.',
+  //       color: 'purple',
+  //       autoClose: 4000,
+  //       position: 'top-right',
+  //     })
+  //     return
+  //   }
 
-    if (!hasSubmittedFeedback) {
-      open()
-      return
-    }
+  //   if (!hasSubmittedFeedback) {
+  //     open()
+  //     return
+  //   }
 
-    setEndGameModal(false)
-    setSelected(0)
-    setTrialGamesCounter(trialGamesCounter + 1)
-    setFreeSkip(0)
-    setJustSubmitted(false)
-    setGameOver(false)
-    localStorage.clear()
-    setGameState({
-      submittedSets: {},
-      guessDotColors: {
-        0: '#888888',
-        1: '#888888',
-        2: '#888888',
-        3: '#888888',
-      },
-      scoreKeeper: [0, 0, 0, 0],
-      gameAdvancer: 0,
-      lastPlayed: '',
-      skips: 0,
-      hardMode: isHardMode,
-    })
-    if (testingGameDayPosition >= 7) {
-      setTestingGameDayPosition(1)
-    } else setTestingGameDayPosition(testingGameDayPosition + 1)
-  }
+  //   setEndGameModal(false)
+  //   setSelected(0)
+  //   setTrialGamesCounter(trialGamesCounter + 1)
+  //   setFreeSkip(0)
+  //   setJustSubmitted(false)
+  //   setGameOver(false)
+  //   localStorage.clear()
+  //   setGameState({
+  //     submittedSets: {},
+  //     guessDotColors: {
+  //       0: '#888888',
+  //       1: '#888888',
+  //       2: '#888888',
+  //       3: '#888888',
+  //     },
+  //     scoreKeeper: [0, 0, 0, 0],
+  //     gameAdvancer: 0,
+  //     lastPlayed: '',
+  //     skips: 0,
+  //     hardMode: isHardMode,
+  //   })
+  //   if (testingGameDayPosition >= 7) {
+  //     setTestingGameDayPosition(1)
+  //   } else setTestingGameDayPosition(testingGameDayPosition + 1)
+  // }
 
   return (
     <>
@@ -461,8 +461,8 @@ export default function GameBoard() {
           scoreKeeper={gameState.scoreKeeper}
           today={today}
           skips={gameState.skips}
-          handleTrialNext={handleTrialNext}
-          trialGamesCounter={trialGamesCounter}
+          // handleTrialNext={handleTrialNext}
+          // trialGamesCounter={trialGamesCounter}
         />
         {/* {hasSubmittedFeedback ? (
           <StatsCard
@@ -478,7 +478,7 @@ export default function GameBoard() {
       <Drawer opened={openDrawer} onClose={close} withCloseButton={false}>
         <FeedbackForm
           handleFeedBack={handleFeedback}
-          todaysGame={testingGameDayPosition.toString()}
+          todaysGame={todaysGame.toString()}
         />
       </Drawer>
     </>
