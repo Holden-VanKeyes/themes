@@ -47,6 +47,8 @@ import { useMediaQuery } from '@mantine/hooks'
 import { useScrollIntoView } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
 import { ThemeToggle } from './ThemeToggle'
+import FeedbackForm from './FeedbackForm'
+import { getTodaysGame } from '../constants/answerKey'
 
 interface FormProps {
   email: string
@@ -60,6 +62,7 @@ export function Navbar() {
   const { isHardMode, toggleGameMode, isLocked } = useGameMode()
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
   const icon = <IconHeartHandshake />
+  const { todaysGame, dayNumber, puzzleNumber } = getTodaysGame()
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -136,7 +139,8 @@ export function Navbar() {
         onClose={() => setSubmissions(false)}
         fullScreen={isMobile ? true : false}
       >
-        <Title order={2} fw={700} className={css.title}>
+        <FeedbackForm todaysGame={dayNumber.toString()} />
+        {/* <Title order={2} fw={700} className={css.title}>
           Player-Created Puzzles Coming Soon!
         </Title>
         <List spacing="xs" size="sm" p="sm" center>
@@ -174,7 +178,7 @@ export function Navbar() {
               Submit
             </Button>
           </Group>
-        </form>
+        </form> */}
       </Modal>
 
       <Modal

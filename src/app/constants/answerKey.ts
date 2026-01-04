@@ -1408,7 +1408,7 @@ export const fallbackPuzzle: GameDay = {
  * Get today's puzzle based on days since launch
  * Automatically rotates through available puzzles
  */
-export function getTodaysPuzzle(): {
+export function getTodaysGame(): {
   todaysGame: GameDay
   dayNumber: number
   puzzleNumber: number

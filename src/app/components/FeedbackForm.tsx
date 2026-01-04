@@ -95,7 +95,7 @@ export default function FeedbackForm({
       onSubmit={form.onSubmit(() => formSubmit())}
     >
       <Title order={5} mb="md">
-        Join our testing group to unlock all 6 trial puzzles!
+        Thanks for your feedback!
       </Title>
       <Stack>
         {/* <Text size="sm">How hard was today's game?</Text>
@@ -124,7 +124,7 @@ export default function FeedbackForm({
         <Checkbox.Group
           {...form.getInputProps('question')}
           key={form.key('question')}
-          label="Did game instructions give clear understanding of gameplay?"
+          label="Which of these features interest you most?"
           withAsterisk
         >
           <Group my="xs">

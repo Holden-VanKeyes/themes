@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useDisclosure } from '@mantine/hooks'
-import { getTodaysPuzzle } from '../constants/answerKey'
+import { getTodaysGame } from '../constants/answerKey'
 import { trialAnswerKey } from '../constants/trialAnswerkey'
 import css from './GameBoard.module.scss'
 import {
@@ -83,7 +83,7 @@ export default function GameBoard() {
 
   // THIS is the main game day logic - switch between trial and main answer keys
   // const todaysGame = answerKey[puzzleIndex] || fallbackGame
-  const { todaysGame, dayNumber, puzzleNumber } = getTodaysPuzzle()
+  const { todaysGame, dayNumber, puzzleNumber } = getTodaysGame()
   // uncomment to test specific games
   // const todaysGame = answerKey['20250614']
 
