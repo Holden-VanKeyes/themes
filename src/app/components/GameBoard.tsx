@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useDisclosure } from '@mantine/hooks'
-import { answerKey } from '../constants/answerKey'
+import { getTodaysPuzzle } from '../constants/answerKey'
 import { trialAnswerKey } from '../constants/trialAnswerkey'
 import css from './GameBoard.module.scss'
 import {
@@ -23,11 +23,10 @@ import { useGameMode } from '../globalHelpers/GameMode'
 import { useThemeContext } from '../globalHelpers/ThemeProvider'
 import FeedbackForm from './FeedbackForm'
 
-const date = new Date()
-const today =
-  date.getFullYear() +
-  String(date.getMonth() + 1).padStart(2, '0') +
-  String(date.getDate()).padStart(2, '0')
+// const today =
+//   date.getFullYear() +
+//   String(date.getMonth() + 1).padStart(2, '0') +
+//   String(date.getDate()).padStart(2, '0')
 
 interface GameState {
   submittedSets: Record<number, number>
@@ -59,6 +58,12 @@ export default function GameBoard() {
   })
   const [openDrawer, { open, close }] = useDisclosure(false)
 
+  const date = new Date()
+  const today =
+    date.getFullYear() +
+    String(date.getMonth() + 1).padStart(2, '0') +
+    String(date.getDate()).padStart(2, '0')
+
   //TESTING
   // const testingDay = date.getDay()
   // const [trialGamesCounter, setTrialGamesCounter] = useState(0)
@@ -70,14 +75,15 @@ export default function GameBoard() {
   const [endGameModal, setEndGameModal] = useState(false)
   const [selected, setSelected] = useState(0)
   const [justSubmitted, setJustSubmitted] = useState(false)
-  const fallbackGame = answerKey['fallback']
+  // const fallbackGame = answerKey['fallback']
   const [freeSkip, setFreeSkip] = useState(0)
 
   // For trial period, use trialAnswerKey
   // const todaysGame = trialAnswerKey[testingGameDayPosition] || fallbackGame
 
   // THIS is the main game day logic - switch between trial and main answer keys
-  const todaysGame = answerKey[today] || fallbackGame
+  // const todaysGame = answerKey[puzzleIndex] || fallbackGame
+  const { todaysGame, dayNumber, puzzleNumber } = getTodaysPuzzle()
   // uncomment to test specific games
   // const todaysGame = answerKey['20250614']
 

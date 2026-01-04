@@ -14,10 +14,6 @@ export type GameDay = {
   sets: GameSet[]
 }
 
-type AnswerKey = {
-  [key: string]: GameDay
-}
-
 type GameMsgs = {
   [key: number]: string
   [key: string]: string
@@ -38,43 +34,13 @@ export const GAME_EMOJIS: GameMsgs = {
   1: '🧀',
   0: '🧊',
 }
-export const answerKey: AnswerKey = {
-  fallback: {
-    rule: {
-      pattern: 'Words with double consonants',
-      explanation:
-        'Each correct answer contains two of the same consonant letters next to each other',
-    },
-    sets: [
-      {
-        hint: 'strawberry',
-        answers: ['peel', 'bread', 'monkey', 'cheddar', 'grape'],
-        correct: 'cheddar',
-        explanation: "cheddar -> 'dd'",
-      },
-      {
-        hint: 'pinnacle',
-        answers: ['acme', 'mountain', 'climber', 'craggy', 'volcano'],
-        correct: 'craggy',
-        explanation: "craggy -> 'gg'",
-      },
-      {
-        hint: 'baseball',
-        answers: ['bat', 'strike', 'mitt', 'umpire', 'natural'],
-        correct: 'mitt',
-        explanation: "mitt -> 'tt'",
-      },
-      {
-        hint: 'channel',
-        answers: ['television', 'England', 'teller', 'loch', 'remote'],
-        correct: 'teller',
-        explanation: "teller -> 'll'",
-      },
-    ],
-  },
-  // Last two games now first (from original set)
 
-  '20250520': {
+// Launch date - when the game first went live
+export const LAUNCH_DATE = new Date('2026-01-01')
+
+// Array of all puzzles (order matters for rotation)
+export const puzzles: GameDay[] = [
+  {
     rule: {
       pattern: 'Right down the middle',
       explanation:
@@ -131,7 +97,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250521': {
+  {
     rule: {
       pattern: 'Toss me',
       explanation: 'Types of salad',
@@ -163,8 +129,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  // Rest in random order
-  '20250522': {
+  {
     rule: {
       pattern: 'Words containing animals',
       explanation: 'Each word has the name of an animal within the spelling',
@@ -196,7 +161,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250523': {
+  {
     rule: {
       pattern: 'Hairy Creatures',
       explanation: 'Famous hairy/furry creatures from another planet',
@@ -228,7 +193,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250524': {
+  {
     rule: {
       pattern: 'Words with double consonants',
       explanation:
@@ -261,7 +226,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250525': {
+  {
     rule: {
       pattern: "Last names of 80's wrestlers",
       explanation: "The 80's were wild y'all!",
@@ -293,7 +258,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250526': {
+  {
     rule: {
       pattern: 'Go Fish',
       explanation: 'Hint and answer start with the name of a fish',
@@ -325,7 +290,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250527': {
+  {
     rule: {
       pattern: 'Popular acronyms',
       explanation:
@@ -384,7 +349,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250528': {
+  {
     rule: {
       pattern: 'Subtract To Make New',
       explanation:
@@ -417,7 +382,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250529': {
+  {
     rule: {
       pattern: 'One to the other',
       explanation: 'A word that connects hint to answer',
@@ -449,7 +414,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250530': {
+  {
     rule: {
       pattern: 'Types of chili pepper',
       explanation: '🌶️',
@@ -487,7 +452,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250531': {
+  {
     rule: {
       pattern: 'Famous Organization Acronyms',
       explanation:
@@ -548,7 +513,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250601': {
+  {
     rule: {
       pattern: 'As a [type]',
       explanation: 'Well known phrases using as a',
@@ -580,7 +545,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250602': {
+  {
     rule: {
       pattern: 'Things typically found or used in pairs',
       explanation:
@@ -614,7 +579,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250603': {
+  {
     rule: {
       pattern: 'Adam or Addams',
       explanation: 'associated with Adam or Addams',
@@ -646,7 +611,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250604': {
+  {
     rule: {
       pattern: 'Candy bars',
       explanation: 'Types of candy bars',
@@ -685,7 +650,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250605': {
+  {
     rule: {
       pattern: 'Words containing other 4-letter words',
       explanation:
@@ -718,7 +683,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250606': {
+  {
     rule: {
       pattern: 'Word associations',
       explanation:
@@ -775,7 +740,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250607': {
+  {
     rule: {
       pattern: 'Missing link',
       explanation:
@@ -814,7 +779,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250608': {
+  {
     rule: {
       pattern: 'Drop the last letter',
       explanation:
@@ -847,7 +812,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250609': {
+  {
     rule: {
       pattern: 'One to the other',
       explanation:
@@ -880,7 +845,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250610': {
+  {
     rule: {
       pattern: 'The color pink',
       explanation: 'all answers are associated with pink',
@@ -918,7 +883,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250611': {
+  {
     rule: {
       pattern: 'One removed',
       explanation: 'the hint and answer are tied together by a common word',
@@ -953,7 +918,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250612': {
+  {
     rule: {
       pattern: 'Words with different meanings based on pronunciation',
       explanation:
@@ -986,7 +951,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250613': {
+  {
     rule: {
       pattern: 'Hidden Public Figures',
       explanation:
@@ -1019,7 +984,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250614': {
+  {
     rule: {
       pattern: 'Well known company acronyms',
       explanation:
@@ -1076,7 +1041,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250615': {
+  {
     rule: {
       pattern: 'Go Fish',
       explanation:
@@ -1109,7 +1074,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250616': {
+  {
     rule: {
       pattern: 'Hidden Trees',
       explanation: 'the name of a tree is hidden in hint and answer',
@@ -1141,7 +1106,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250617': {
+  {
     rule: {
       pattern: 'State abbreviations',
       explanation:
@@ -1174,7 +1139,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250618': {
+  {
     rule: {
       pattern: 'A double vowel somewhere in the answer',
       explanation:
@@ -1207,7 +1172,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250619': {
+  {
     rule: {
       pattern: 'Missing connector',
       explanation: 'Each hint answer pair has a word that connects them',
@@ -1239,7 +1204,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250620': {
+  {
     rule: {
       pattern: 'Vowel swap',
       explanation: 'Change a vowel for new word',
@@ -1271,7 +1236,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250621': {
+  {
     rule: {
       pattern: 'Hidden words associated with atlas/map',
       explanation:
@@ -1304,7 +1269,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250622': {
+  {
     rule: {
       pattern: 'Where to go when ya gotta go',
       explanation: 'every answer is a synonym for toilet',
@@ -1337,7 +1302,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250623': {
+  {
     rule: {
       pattern: 'Cooking oils',
       explanation: 'Common cooking oils',
@@ -1369,7 +1334,7 @@ export const answerKey: AnswerKey = {
       },
     ],
   },
-  '20250624': {
+  {
     rule: {
       pattern: '___as a___',
       explanation:
@@ -1397,41 +1362,103 @@ export const answerKey: AnswerKey = {
       {
         hint: 'Happy',
         answers: ['Buck', 'Money', 'Clam', 'Coin', 'Shark'],
-        correct: '',
-        explanation: '',
+        correct: 'Clam',
+        explanation: 'Happy as a clam',
       },
     ],
   },
+]
+
+// Fallback puzzle (shown if something goes wrong)
+export const fallbackPuzzle: GameDay = {
+  rule: {
+    pattern: 'Words with double consonants',
+    explanation:
+      'Each correct answer contains two of the same consonant letters next to each other',
+  },
+  sets: [
+    {
+      hint: 'strawberry',
+      answers: ['peel', 'bread', 'monkey', 'cheddar', 'grape'],
+      correct: 'cheddar',
+      explanation: "cheddar -> 'dd'",
+    },
+    {
+      hint: 'pinnacle',
+      answers: ['acme', 'mountain', 'climber', 'craggy', 'volcano'],
+      correct: 'craggy',
+      explanation: "craggy -> 'gg'",
+    },
+    {
+      hint: 'baseball',
+      answers: ['bat', 'strike', 'mitt', 'umpire', 'natural'],
+      correct: 'mitt',
+      explanation: "mitt -> 'tt'",
+    },
+    {
+      hint: 'channel',
+      answers: ['television', 'England', 'teller', 'loch', 'remote'],
+      correct: 'teller',
+      explanation: "teller -> 'll'",
+    },
+  ],
 }
-// '20241201': {
-//     rule: {
-//       pattern: '',
-//       explanation: '',
-//     },
-//     sets: [
-//       {
-//         hint: '',
-//         answers: ['', '', '', '', ''],
-//         correct: '',
-//         explanation: '',
-//       },
-//       {
-//         hint: '',
-//         answers: ['', '', '', '', ''],
-//         correct: '',
-//         explanation: '',
-//       },
-//       {
-//         hint: '',
-//         answers: ['', '', '', '', ''],
-//         correct: '',
-//         explanation: '',
-//       },
-//       {
-//         hint: '',
-//         answers: ['', '', '', '', ''],
-//         correct: '',
-//         explanation: '',
-//       },
-//     ],
-//   },
+
+/**
+ * Get today's puzzle based on days since launch
+ * Automatically rotates through available puzzles
+ */
+export function getTodaysPuzzle(): {
+  todaysGame: GameDay
+  dayNumber: number
+  puzzleNumber: number
+} {
+  try {
+    const today = new Date()
+    const daysSinceLaunch = Math.floor(
+      (today.getTime() - LAUNCH_DATE.getTime()) / (1000 * 60 * 60 * 24)
+    )
+
+    // Handle dates before launch
+    if (daysSinceLaunch < 0) {
+      return {
+        todaysGame: fallbackPuzzle,
+        dayNumber: 0,
+        puzzleNumber: 0,
+      }
+    }
+
+    // Calculate which puzzle to show (with rotation)
+    const puzzleIndex = daysSinceLaunch % puzzles.length
+
+    return {
+      todaysGame: puzzles[puzzleIndex],
+      dayNumber: daysSinceLaunch + 1,
+      puzzleNumber: puzzleIndex + 1,
+    }
+  } catch (error) {
+    console.error("Error getting today's puzzle:", error)
+    return {
+      todaysGame: fallbackPuzzle,
+      dayNumber: 0,
+      puzzleNumber: 0,
+    }
+  }
+}
+
+/**
+ * Get a specific puzzle by index (useful for testing or preview)
+ */
+export function getPuzzleByIndex(index: number): GameDay {
+  if (index < 0 || index >= puzzles.length) {
+    return fallbackPuzzle
+  }
+  return puzzles[index]
+}
+
+/**
+ * Get total number of available puzzles
+ */
+export function getTotalPuzzles(): number {
+  return puzzles.length
+}
